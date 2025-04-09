@@ -62,11 +62,13 @@
 - [ ] Results screen
     - [ ] Ranking songs
     - [ ] BUG: The rank displayed has some sort of delay to show the actual rank
+    - [ ] RECOMMENDATION: Polish the results screen, it feels very empty
 
 ## OTHER
 
 - [ ] Cutscene???
 - [ ] Dialogues
+- [ ] Mechanics
 
 ## SPECIFIC
 
@@ -76,3 +78,5 @@
 - [ ] BUG: Options menu dialogues are bugged when you play some of them at the same time
 - [ ] ENHANCEMENT: Dialogue speech box lights
 - [ ] ENHANCEMENT: Improve dialogue portraits
+- [ ] RECOMMENDATION: Needs more difficulty, new players ain't playing Y Sides first so we can add something to make it a bit harder (such as health drain)
+- [ ] RECOMMENDATION: In middle scroll, some elements of HUD are in the way of the notes, make it uncomfortable to play
