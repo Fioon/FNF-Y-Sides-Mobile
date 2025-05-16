@@ -3622,6 +3622,7 @@ class PlayState extends MusicBeatState
 					case 656:
 						FlxTween.tween(spaceMechanicButton, {alpha: 0}, 0.3);
 						forcedLiftingSection = false;
+						startedLift = false;
 				}
 			case 'Test':
 				switch(curStep)
