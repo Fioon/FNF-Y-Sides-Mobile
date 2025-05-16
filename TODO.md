@@ -84,7 +84,7 @@
 - [x] BUG: During Dad Battle's dialogue, you can press SPACE and start lifting dumbbells
 - [x] BUG: When the forced lifting section ends up and you're still lifting, you can't finish it and you eventually miss it
 - [ ] BUG: Ending a dialogue can randomly play one of the sounds previously played
-- [ ] BUG: Options menu dialogues are bugged when you play some of them at the same time
+- [x] BUG: Options menu dialogues are bugged when you play some of them at the same time
 - [ ] ENHANCEMENT: Dialogue speech box lights
 - [ ] ENHANCEMENT: Improve dialogue portraits
 - [ ] RECOMMENDATION: Needs more difficulty, new players ain't playing Y Sides first so we can add something to make it a bit harder (such as health drain)

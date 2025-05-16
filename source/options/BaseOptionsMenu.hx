@@ -347,6 +347,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			character.playAnim(animName);
 		}
 		catch(exc) { trace ('Error: $exc'); }
+
+		FlxTween.cancelTweensOf(dialogueBox);
+		FlxTween.cancelTweensOf(dialogueText);
+
 		FlxTween.tween(dialogueBox, {alpha: 0.6, y: dialogueBox.y - 10}, 0.35, {ease: FlxEase.linear});
 		FlxTween.tween(dialogueText, {alpha: 1, y: dialogueText.y - 10}, 0.35, {ease: FlxEase.linear});
 		//dialogueBox.alpha = 0;
@@ -359,6 +363,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			character.playAnim('idle');
 		}
 		catch(exc) { trace ('Error: $exc'); }
+		
+		FlxTween.cancelTweensOf(dialogueBox);
+		FlxTween.cancelTweensOf(dialogueText);
 
 		FlxTween.tween(dialogueBox, {alpha: 0, y: dialogueBox.y + 10}, 0.35, {ease: FlxEase.linear});
 		FlxTween.tween(dialogueText, {alpha: 0, y: dialogueText.y + 10}, 0.35, {ease: FlxEase.linear});
