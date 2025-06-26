@@ -56,6 +56,15 @@
 - [ ] Philly Nice
 - [ ] Blammed
 
+## SPRITES
+
+- [ ] Girlfriend (NEW)
+- [ ] Girlfriend (SPOOKY VERSION)
+- [ ] Boyfriend (SPOOKY VERSION)
+- [ ] Spooky kids
+- [ ] Monster
+- [ ] Pico
+
 ## HUD
 
 - [ ] Pico icons
