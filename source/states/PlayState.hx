@@ -3363,12 +3363,14 @@ class PlayState extends MusicBeatState
 
 			if(healthDrain)
 			{
+				var drainHealth:Bool = true;
+				if (guitarHeroSustains && note.isSustainNote) drainHealth = false;
 				switch(curSong)
 				{
 					case 'Tutorial': // do nothing
+					case 'Dad Battle':
+						if (drainHealth && health > 0.1) health -= 0.025;
 					default:
-						var drainHealth:Bool = true; // prevent health drain, *if* sustains are treated as a singular note
-						if (guitarHeroSustains && note.isSustainNote) drainHealth = false;
 						if (drainHealth && health > 0.1) health -= 0.01;
 				}
 			}
