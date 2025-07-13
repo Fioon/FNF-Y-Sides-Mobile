@@ -231,6 +231,8 @@ class GalleryStateImages extends MusicBeatState
     var barBottom:FlxSprite;
     var titleText:FlxText;
     var descText:FlxText;
+    var leftArrow:FlxSprite;
+    var rightArrow:FlxSprite;
     
     var lines:FlxBackdrop = new FlxBackdrop(Paths.image('gallery/lines'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else XY #end);
 
@@ -284,6 +286,24 @@ class GalleryStateImages extends MusicBeatState
 
         imageGrp = new FlxTypedGroup<GalleryObject>();
         add(imageGrp);
+
+        leftArrow = new FlxSprite(45, 0);
+        leftArrow.loadGraphic(Paths.image('gallery/arrow'));
+        leftArrow.screenCenter(Y);
+        leftArrow.antialiasing = ClientPrefs.data.antialiasing;
+        leftArrow.scale.set(0.8, 0.8);
+        leftArrow.updateHitbox();
+        add(leftArrow);
+
+        rightArrow = new FlxSprite(45, 0);
+        rightArrow.loadGraphic(Paths.image('gallery/arrow'));
+        rightArrow.screenCenter(Y);
+        rightArrow.antialiasing = ClientPrefs.data.antialiasing;
+        rightArrow.x = FlxG.width - rightArrow.width - 45;
+        rightArrow.flipX = true;
+        rightArrow.scale.set(0.8, 0.8);
+        rightArrow.updateHitbox();
+        add(rightArrow);
 
         var imagesOnFolder = FileSystem.readDirectory('assets/shared/images/gallery/$folderName');
         
@@ -340,23 +360,21 @@ class GalleryStateImages extends MusicBeatState
             wiggleBg.update(elapsed);
         }
 
-        /*
-        var leftMult:Float = FlxMath.lerp(leftArrow.scale.x, 1, elapsed * 9);
+        var leftMult:Float = FlxMath.lerp(leftArrow.scale.x, 0.8, elapsed * 12);
         leftArrow.scale.set(leftMult, leftMult);
 
-        var rightMult:Float = FlxMath.lerp(rightArrow.scale.x, 1, elapsed * 9);
+        var rightMult:Float = FlxMath.lerp(rightArrow.scale.x, 0.8, elapsed * 12);
         rightArrow.scale.set(rightMult, rightMult);
-        */
         
         if(controls.UI_RIGHT_P)
         {
             changeSelect(1);
-            //rightArrow.scale.set(1.25, 1.075);
+            rightArrow.scale.set(0.9, 0.85);
         }
         if(controls.UI_LEFT_P)
         {
             changeSelect(-1);
-            //leftArrow.scale.set(1.25, 1.075);
+            leftArrow.scale.set(0.9, 0.85);
         }
 
         if(controls.BACK)
