@@ -81,6 +81,8 @@
     - [x] BUG: If you get a FC in the last song but you missed in a previous song of the week, it counts as a Week FC
     - [ ] RECOMMENDATION: Polish the results screen, it feels very empty
 - [ ] Gallery
+- [ ] Crdits menu
+    - [ ] ENHANCEMENT: Improve sub-states where roles of each developer and their social medias are displayed
 
 ## OTHER
 
@@ -115,3 +117,4 @@
 - [x] ENHANCEMENT: Dialogue speech box lights
 - [ ] ENHANCEMENT: Improve dialogue portraits
 - [x] RECOMMENDATION: Needs more difficulty, new players ain't playing Y Sides first so we can add something to make it a bit harder (such as health drain)
+- [ ] NEW: Add a "Time Played" system, where the game constantly record how much have you been playing the mod
