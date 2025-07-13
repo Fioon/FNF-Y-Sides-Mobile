@@ -400,10 +400,12 @@ class GalleryStateImages extends MusicBeatState
             }
         }
 
-        trace('lol: $imagesOnFolder');
+        #if debug trace('lol: $imagesOnFolder'); #end
         for(num => image in imagesOnFolder)
         {
-            trace(' * $image');
+            #if debug
+                trace(' * $image');
+            #end
             
             // removing the extension .png
             var imageName = StringTools.replace(image, '.png', '');
@@ -412,19 +414,23 @@ class GalleryStateImages extends MusicBeatState
                 var content = File.getContent('assets/shared/images/gallery/$folderName/$imageName.json');
                 var imageData = Json.parse(content);
 
+                #if debug
                 trace('$num: ${imageData.name}');
                 trace('$num: ${imageData.description}');
+                #end
 
                 imageDataArray.push(imageData);
             } 
             catch(exc)
             {
-                trace('No json has been found for the image with ID $num');
+                #if debug trace('No json has been found for the image with ID $num'); #end
             }
 
             var spr = new GalleryObject();
             spr.loadGraphic(Paths.image('gallery/$folderName/$imageName'));
+            #if debug
             trace(' - [$num] Path: ${'assets/shared/images/gallery/$folderName/$imageName.png'}');
+            #end
             spr.antialiasing = ClientPrefs.data.antialiasing;
             spr.screenCenter();
             spr.startPosition = new FlxPoint(spr.x, spr.y);
