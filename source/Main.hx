@@ -1,5 +1,6 @@
 package;
 
+import backend.PlayedTime;
 #if android
 import android.content.Context;
 #end
@@ -203,6 +204,9 @@ class Main extends Sprite
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
 		#end
+
+		// start playtime thing
+		PlayedTime.loadPlayedTime();
 
 		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {

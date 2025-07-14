@@ -41,6 +41,10 @@ class MusicBeatState extends FlxState
 		
 		var sprite = new FlxSprite().loadGraphic(Paths.image('mouse'));
 		FlxG.mouse.load(sprite.pixels);
+		
+		new FlxTimer().start(1, function(t:FlxTimer) {
+			PlayedTime.updateTime();
+		}, 0);
 	}
 
 	public function initPsychCamera():PsychCamera
