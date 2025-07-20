@@ -38,6 +38,7 @@ class PerformanceWarning extends MusicBeatState
 		//iUnderstand.x += (128 * i) - 80;
         iUnderstand.screenCenter(X);
 		iUnderstand.y += 10;
+		iUnderstand.alpha = 0;
 		add(iUnderstand);
 
 		FlxTween.tween(iUnderstand, {alpha: 1, y: iUnderstand.y - 10}, 0.2);
