@@ -81,7 +81,7 @@
     - [x] BUG: If you get a FC in the last song but you missed in a previous song of the week, it counts as a Week FC
     - [ ] RECOMMENDATION: Polish the results screen, it feels very empty
 - [ ] Gallery
-- [ ] Crdits menu
+- [ ] Credits menu
     - [ ] ENHANCEMENT: Improve sub-states where roles of each developer and their social medias are displayed
 
 ## OTHER
