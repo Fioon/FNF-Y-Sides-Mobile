@@ -69,7 +69,7 @@
 ## HUD
 
 - [ ] Pico icons
-- [ ] Spooky kids icons
+- [HALF] Spooky kids icons
 - [ ] Monster icons
 
 ## MENUS
