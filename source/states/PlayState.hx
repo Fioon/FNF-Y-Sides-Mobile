@@ -409,6 +409,7 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'stage': new StageWeek1();
+			case 'halloween': new HalloweenStage();
 		}
 		if(isPixelStage) introSoundsSuffix = '-pixel';
 
@@ -3853,11 +3854,11 @@ class PlayState extends MusicBeatState
 
 		iconP1.scale.set(1.2, 1.2);
 		iconP2.scale.set(1.2, 1.2);
-		iconP3.scale.set(1.2, 1.2);
+		if(iconP3 != null) iconP3.scale.set(1.2, 1.2);
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
-		iconP3.updateHitbox();
+		if(iconP3 != null) iconP3.updateHitbox();
 
 		characterBopper(curBeat);
 

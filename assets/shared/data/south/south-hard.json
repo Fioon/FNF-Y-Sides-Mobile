@@ -1,7 +1,6 @@
 {
-	"player1": "bf",
+	"player1": "bf-spooky",
 	"player2": "buhi",
-	"player3": "frank",
 	"events": [
 		[
 			18064.5161290323,
@@ -1558,6 +1557,7 @@
 		}
 	],
 	"gfVersion": "gf",
+	"player3": "frank",
 	"song": "South",
 	"needsVoices": true,
 	"stage": "halloween",
