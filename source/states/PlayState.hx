@@ -3561,9 +3561,9 @@ class PlayState extends MusicBeatState
 			var char:Character = dad;
 			pointsTo3Player = false;
 
-			if(note.thirdPlayerNote && !note.isSustainNote && player3 != null) 
+			if(note.thirdPlayerNote && player3 != null) 
 			{
-				pointsTo3Player = true;
+				if(!note.isSustainNote) pointsTo3Player = true;
 				char = player3;
 			}
 
