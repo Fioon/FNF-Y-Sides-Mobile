@@ -143,6 +143,16 @@ class Paths
 		FlxG.bitmap.remove(graphic);
 	}
 
+	public static function simpleImage(key:String, ?library:String):String // removing psych engine mods stuff
+	{
+	  return getPath('images/$key.png', IMAGE, library);
+	}
+	
+	public static function simpleSound(key:String, ?library:String):String
+	{
+	  return getPath('sounds/$key.$SOUND_EXT', SOUND, library);
+	}
+
 	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 		currentLevel = name.toLowerCase();

@@ -171,7 +171,10 @@ class Main extends Sprite
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
-		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		var game = new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
+		@:privateAccess
+		game._customSoundTray = backend.CustomSoundTray;
+		addChild(game);
 
 		#if !mobile
 		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
