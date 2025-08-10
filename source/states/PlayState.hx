@@ -628,7 +628,6 @@ class PlayState extends MusicBeatState
 		iconP2.y = healthBar.y + (healthBar.height / 2) - (iconP2.height / 2);
 		iconP2.visible = !ClientPrefs.data.hideHud;
 		iconP2.alpha = ClientPrefs.data.healthBarAlpha;
-		trace('HEIGHT ICONP2: ${iconP2.height}');
 		uiGroup.add(iconP2);
 
 		if(use3Player)
@@ -3731,14 +3730,6 @@ class PlayState extends MusicBeatState
 
 		if(player3Sings)
 		{
-			/*
-			iconP2.color = 0xFF666666;
-			iconP2.scale.set(noPlayableIconScale, noPlayableIconScale);
-			iconP2.updateHitbox();
-			iconP2.x = healthBar.x - iconOffset - 150;
-			iconP2.y = healthBar.y + (healthBar.height / 2) - (iconP2.height / 2) + 15;
-			*/
-
 			iconP2.bops = false;
 			uiGroup.remove(iconP2);
 			uiGroup.insert(6, iconP2);
@@ -3748,16 +3739,6 @@ class PlayState extends MusicBeatState
 			FlxTween.tween(iconP2, {"scale.x": noPlayableIconScale, "scale.y": noPlayableIconScale}, time);
 			FlxTween.tween(iconP2, {x: healthBar.x - iconOffset - 160}, time);
 			FlxTween.tween(iconP2, {y: healthBar.y + (healthBar.height / 2) - 45}, time);
-
-			trace('HEIGHT ICONP2: ${iconP2.height}');
-
-			/*
-			iconP3.color = 0xFFFFFFFF;
-			iconP3.scale.set(1, 1);
-			iconP3.updateHitbox();
-			iconP3.x = healthBar.x - iconOffset - 105;
-			iconP3.y = healthBar.y + (healthBar.height / 2) - (iconP3.height / 2);
-			*/
 
 			iconP3.bops = true;
 			uiGroup.remove(iconP3);
@@ -3771,18 +3752,6 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			/*
-			iconP2.color = 0xFFFFFFFF;
-			iconP2.bops = true;
-			iconP2.scale.set(1, 1);
-			iconP2.updateHitbox();
-			iconP2.x = healthBar.x - iconOffset - 105;
-			iconP2.y = healthBar.y + (healthBar.height / 2) - (iconP2.height / 2);
-
-			uiGroup.remove(iconP2);
-			uiGroup.insert(7, iconP2);
-			*/
-
 			iconP2.bops = true;
 			uiGroup.remove(iconP2);
 			uiGroup.insert(7, iconP2);
@@ -3792,18 +3761,6 @@ class PlayState extends MusicBeatState
 			FlxTween.tween(iconP2, {"scale.x": 1, "scale.y": 1}, time);
 			FlxTween.tween(iconP2, {x: healthBar.x - iconOffset - 105}, time);
 			FlxTween.tween(iconP2, {y: healthBar.y + (healthBar.height / 2) - 70}, time);
-
-			/*
-			iconP3.color = 0xFF666666;
-			iconP3.bops = false;
-			iconP3.scale.set(noPlayableIconScale, noPlayableIconScale);
-			iconP3.updateHitbox();
-			iconP3.x = healthBar.x - iconOffset - 150;
-			iconP3.y = healthBar.y + (healthBar.height / 2) - (iconP3.height / 2) + 15;
-
-			uiGroup.remove(iconP3);
-			uiGroup.insert(6, iconP3);
-			*/
 
 			iconP3.bops = false;
 			uiGroup.remove(iconP3);
