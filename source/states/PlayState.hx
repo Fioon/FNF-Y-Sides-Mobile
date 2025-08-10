@@ -2268,6 +2268,21 @@ class PlayState extends MusicBeatState
 		//iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 
 		healthBarArrow.x = healthBar.barCenter - (healthBarArrow.width / 2);
+
+		if (losingIconP1)
+			if (curStep % 4 == 0) iconP1.angle = FlxG.random.int(-3,3);
+		else
+		    iconP1.angle = 0;
+
+		if (losingIconP2)
+			if (curStep % 4 == 0) iconP2.angle = FlxG.random.int(-3,3);
+		else
+		    iconP2.angle = 0;
+
+		if (losingIconP3)
+			if (curStep % 4 == 0) iconP3.angle = FlxG.random.int(-3,3);
+		else
+		    iconP3.angle = 0;
 	}
 
 	var iconsAnimations:Bool = true;
