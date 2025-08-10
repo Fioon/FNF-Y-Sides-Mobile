@@ -3773,20 +3773,20 @@ class PlayState extends MusicBeatState
 			uiGroup.insert(6, iconP2);
 
 			FlxTween.cancelTweensOf(iconP2);
-			FlxTween.color(iconP2, time, iconP2.color, 0xFF666666);
-			FlxTween.tween(iconP2, {"scale.x": noPlayableIconScale, "scale.y": noPlayableIconScale}, time);
-			FlxTween.tween(iconP2, {x: healthBar.x - iconOffset - 160}, time);
-			FlxTween.tween(iconP2, {y: healthBar.y + (healthBar.height / 2) - 45}, time);
+			FlxTween.color(iconP2, time, iconP2.color, 0xFF666666, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP2, {"scale.x": noPlayableIconScale, "scale.y": noPlayableIconScale}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP2, {x: healthBar.x - iconOffset - 160}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP2, {y: healthBar.y + (healthBar.height / 2) - 45}, time, {ease: FlxEase.quartOut});
 
 			iconP3.bops = true;
 			uiGroup.remove(iconP3);
 			uiGroup.insert(7, iconP3);
 
 			FlxTween.cancelTweensOf(iconP3);
-			FlxTween.color(iconP3, time, 0xFF666666, 0xFFFFFFFF);
-			FlxTween.tween(iconP3, {"scale.x": 1, "scale.y": 1}, time);
-			FlxTween.tween(iconP3, {x: healthBar.x - iconOffset - 105}, time);
-			FlxTween.tween(iconP3, {y: healthBar.y + (healthBar.height / 2) - 70}, time);
+			FlxTween.color(iconP3, time, 0xFF666666, 0xFFFFFFFF, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP3, {"scale.x": 1, "scale.y": 1}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP3, {x: healthBar.x - iconOffset - 105}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP3, {y: healthBar.y + (healthBar.height / 2) - 70}, time, {ease: FlxEase.quartOut});
 		}
 		else
 		{
@@ -3795,20 +3795,20 @@ class PlayState extends MusicBeatState
 			uiGroup.insert(7, iconP2);
 
 			FlxTween.cancelTweensOf(iconP2);
-			FlxTween.color(iconP2, time, 0xFF666666, 0xFFFFFFFF);
-			FlxTween.tween(iconP2, {"scale.x": 1, "scale.y": 1}, time);
-			FlxTween.tween(iconP2, {x: healthBar.x - iconOffset - 105}, time);
-			FlxTween.tween(iconP2, {y: healthBar.y + (healthBar.height / 2) - 70}, time);
+			FlxTween.color(iconP2, time, 0xFF666666, 0xFFFFFFFF, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP2, {"scale.x": 1, "scale.y": 1}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP2, {x: healthBar.x - iconOffset - 105}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP2, {y: healthBar.y + (healthBar.height / 2) - 70}, time, {ease: FlxEase.quartOut});
 
 			iconP3.bops = false;
 			uiGroup.remove(iconP3);
 			uiGroup.insert(6, iconP3);
 
 			FlxTween.cancelTweensOf(iconP3);
-			FlxTween.color(iconP3, time, iconP3.color, 0xFF666666);
-			FlxTween.tween(iconP3, {"scale.x": noPlayableIconScale, "scale.y": noPlayableIconScale}, time);
-			FlxTween.tween(iconP3, {x: healthBar.x - iconOffset - 150}, time);
-			FlxTween.tween(iconP3, {y: healthBar.y + (healthBar.height / 2) - 45}, time);
+			FlxTween.color(iconP3, time, iconP3.color, 0xFF666666, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP3, {"scale.x": noPlayableIconScale, "scale.y": noPlayableIconScale}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP3, {x: healthBar.x - iconOffset - 150}, time, {ease: FlxEase.quartOut});
+			FlxTween.tween(iconP3, {y: healthBar.y + (healthBar.height / 2) - 45}, time, {ease: FlxEase.quartOut});
 		}
 	}
 
