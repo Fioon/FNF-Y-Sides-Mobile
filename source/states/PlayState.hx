@@ -3813,7 +3813,7 @@ class PlayState extends MusicBeatState
 			FlxTween.color(iconP3, time, iconP3.color, 0xFF666666);
 			FlxTween.tween(iconP3, {"scale.x": noPlayableIconScale, "scale.y": noPlayableIconScale}, time);
 			FlxTween.tween(iconP3, {x: healthBar.x - iconOffset - 150}, time);
-			FlxTween.tween(iconP3, {y: healthBar.y + (healthBar.height / 2) - 55}, time);
+			FlxTween.tween(iconP3, {y: healthBar.y + (healthBar.height / 2) - 45}, time);
 		}
 	}
 
