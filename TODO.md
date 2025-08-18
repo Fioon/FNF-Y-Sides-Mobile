@@ -52,7 +52,7 @@
 - [x] Spookeez
 - [x] South
 - [ ] Monster
-- [ ] Pico
+- [x] Pico
 - [x] Philly Nice
 - [ ] Blammed
 
