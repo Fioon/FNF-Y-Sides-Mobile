@@ -1,5 +1,7 @@
 package substates;
 
+import flixel.addons.display.FlxBackdrop;
+
 import states.StoryMenuState;
 import states.FreeplayState;
 
@@ -12,6 +14,10 @@ class ResultsScreen extends MusicBeatSubstate
         var bg = new FlxSprite();
         bg.makeGraphic(FlxG.width, FlxG.height, 0xFFCFC6F3);
         add(bg);
+
+        var patternDown = new ResultsScreenPattern(0, 0);
+        patternDown.y = FlxG.height - patternDown.height;
+        add(patternDown);
     }
 
     override function update(elapsed:Float)
@@ -30,5 +36,25 @@ class ResultsScreen extends MusicBeatSubstate
 			FlxTransitionableState.skipNextTransOut = true;
             MusicBeatState.switchState(new FreeplayState());
         }
+    }
+}
+
+/**
+ * Lettabox
+ */
+class ResultsScreenPattern extends FlxSpriteGroup
+{
+    var darkPattern:FlxBackdrop;
+    var lightPattern:FlxBackdrop;
+
+    public function new(x:Float, y:Float)
+    {
+        super(x, y);
+
+        darkPattern = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/lettaBoxDark'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else XY #end);
+        add(darkPattern);
+
+        lightPattern = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/lettaBoxLight'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else XY #end);
+        add(lightPattern);
     }
 }
