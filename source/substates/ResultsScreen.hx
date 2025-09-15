@@ -24,17 +24,20 @@ class ResultsScreen extends MusicBeatSubstate
     {
         super.update(elapsed);
 
-        if(PlayState.isStoryMode)
+        if(controls.BACK)
         {
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
-            MusicBeatState.switchState(new StoryMenuState());
-        }
-        else
-        {
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
-            MusicBeatState.switchState(new FreeplayState());
+            if(PlayState.isStoryMode)
+            {
+		    	FlxTransitionableState.skipNextTransIn = true;
+		    	FlxTransitionableState.skipNextTransOut = true;
+                MusicBeatState.switchState(new StoryMenuState());
+            }
+            else
+            {
+		    	FlxTransitionableState.skipNextTransIn = true;
+		    	FlxTransitionableState.skipNextTransOut = true;
+                MusicBeatState.switchState(new FreeplayState());
+            }
         }
     }
 }
@@ -51,10 +54,10 @@ class ResultsScreenPattern extends FlxSpriteGroup
     {
         super(x, y);
 
-        darkPattern = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/lettaBoxDark'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else XY #end);
+        darkPattern = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/lettaBoxDark'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else X #end);
         add(darkPattern);
 
-        lightPattern = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/lettaBoxLight'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else XY #end);
+        lightPattern = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/lettaBoxLight'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else X #end);
         add(lightPattern);
     }
 }
