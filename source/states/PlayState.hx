@@ -616,16 +616,16 @@ class PlayState extends MusicBeatState
 		uiGroup.add(fcSprite);
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		iconP1.x = healthBar.x + healthBar.width - 20;
-		iconP1.y = healthBar.y + (healthBar.height / 2) - (iconP1.height / 2);
+		iconP1.x = healthBar.x + healthBar.width - 20 + boyfriend.iconOffset[0];
+		iconP1.y = healthBar.y + (healthBar.height / 2) - (iconP1.height / 2) + boyfriend.iconOffset[1];
 		iconP1.visible = !ClientPrefs.data.hideHud;
 		iconP1.alpha = ClientPrefs.data.healthBarAlpha;
 		uiGroup.add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.flipX = iconP2.isAnimated;
-		iconP2.x = healthBar.x - iconOffset - 105;
-		iconP2.y = healthBar.y + (healthBar.height / 2) - (iconP2.height / 2);
+		iconP2.x = healthBar.x - iconOffset - 105 + dad.iconOffset[0];
+		iconP2.y = healthBar.y + (healthBar.height / 2) - (iconP2.height / 2) + dad.iconOffset[1];
 		iconP2.visible = !ClientPrefs.data.hideHud;
 		iconP2.alpha = ClientPrefs.data.healthBarAlpha;
 		uiGroup.add(iconP2);
@@ -634,8 +634,8 @@ class PlayState extends MusicBeatState
 		{
 			iconP3 = new HealthIcon(player3.healthIcon, false);
 			iconP3.flipX = iconP3.isAnimated;
-			iconP3.x = healthBar.x - iconOffset - 105;
-			iconP3.y = healthBar.y + (healthBar.height / 2) - (iconP3.height / 2);
+			iconP3.x = healthBar.x - iconOffset - 105 + player3.iconOffset[0];
+			iconP3.y = healthBar.y + (healthBar.height / 2) - (iconP3.height / 2) + player3.iconOffset[1];
 			iconP3.visible = !ClientPrefs.data.hideHud;
 			iconP3.alpha = ClientPrefs.data.healthBarAlpha;
 			uiGroup.add(iconP3);
