@@ -5,11 +5,24 @@ import flixel.addons.display.FlxBackdrop;
 import states.StoryMenuState;
 import states.FreeplayState;
 
+import objects.Character;
+
 class ResultsScreen extends MusicBeatSubstate
 {
     var stripeSpeed:Int = 25;
     var iconSpeed:Int = 15;
     var patternSpeed:Int = 15;
+
+    public var boyfriend:Character;
+
+    var scoreTxt:FlxText;
+    var missesTxt:FlxText;
+    var ratingTxt:FlxText;
+
+    var ratingName = '';
+    var bfAnimName = '';
+
+    var rating = PlayState.instance.ratingPercent * 100;
 
     override function create() 
     {
@@ -32,6 +45,19 @@ class ResultsScreen extends MusicBeatSubstate
         bgStripe.velocity.set(stripeSpeed, 0);
         bgStripe.blend = ADD;
         add(bgStripe);
+
+        boyfriend = new Character(0, 150, 'bf-WinScreen');
+        boyfriend.screenCenter(Y);
+        boyfriend.y += -120;
+        boyfriend.antialiasing = ClientPrefs.data.antialiasing;
+        boyfriend.isPlayer = true;
+        boyfriend.alpha = 0;
+
+        boyfriend.animation.finishCallback = function(name:String)
+        {
+            boyfriend.playAnim('${name}loop');
+        }
+        add(boyfriend);
 
         var bfIconLeft = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/icon'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else Y #end);
         bfIconLeft.velocity.set(0, -iconSpeed);
@@ -65,6 +91,69 @@ class ResultsScreen extends MusicBeatSubstate
         board.x += FlxG.width / 6;
         board.antialiasing = ClientPrefs.data.antialiasing;
         add(board);
+
+        boyfriend.x = board.x - 380;
+
+        scoreTxt = new FlxText(0, board.y + 15, 0, "SCORE: " + PlayState.instance.songScore);
+        scoreTxt.setFormat(Paths.font('vcr.ttf'), 32, 0xFF000000, 'center');
+        scoreTxt.x = board.x + 15;
+        add(scoreTxt);
+
+        missesTxt = new FlxText(0, scoreTxt.y + 40, 0, "MISSES: " + PlayState.instance.songMisses);
+        missesTxt.setFormat(Paths.font('vcr.ttf'), 32, 0xFF000000, 'center');
+        missesTxt.x = board.x + 15;
+        add(missesTxt);
+
+        ratingTxt = new FlxText(0, missesTxt.y + 40, 0, "RATING: " + rating);
+        ratingTxt.setFormat(Paths.font('vcr.ttf'), 32, 0xFF000000, 'center');
+        ratingTxt.x = board.x + 15;
+        add(ratingTxt);
+
+        ratingAnimData();
+        startBfAnim();
+    }
+
+    function startBfAnim()
+    {
+        boyfriend.alpha = 1;
+        //ranks.alpha = 1;
+
+        boyfriend.playAnim(bfAnimName);
+        //ranks.animation.play(ratingName);
+    }
+
+    function ratingAnimData()
+    {
+        if(rating >= 90)
+        {
+            bfAnimName = '90%';
+            ratingName = 'S';
+        }
+        else if(rating >= 75 && rating < 90)
+        {
+            bfAnimName = '75%';
+            ratingName = 'A';
+        }
+        else if(rating >= 65 && rating < 75)
+        {
+            bfAnimName = '65%';
+            ratingName = 'B';
+        }
+        else if(rating >= 55 && rating < 65)
+        {
+            bfAnimName = '55%';
+            ratingName = 'C';
+        }
+        else if(rating >= 40 && rating < 55)
+        {
+            bfAnimName = '0%';
+            ratingName = 'D';
+        }
+        else
+        {
+            bfAnimName = '0%';
+            ratingName = 'E';
+        }
     }
 
     override function update(elapsed:Float)
