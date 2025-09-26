@@ -1,53 +1,53 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [0, 8],
-			"loop": false,
-			"fps": 24,
 			"anim": "idle",
-			"indices": [],
-			"name": "idle"
+			"fps": 24,
+			"name": "idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [2, 9],
-			"loop": false,
-			"fps": 24,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "left"
+			"fps": 24,
+			"name": "left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [0, -172],
-			"loop": false,
-			"fps": 24,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "down"
+			"fps": 24,
+			"name": "down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [-3, 87],
-			"loop": false,
-			"fps": 24,
 			"anim": "singUP",
-			"indices": [],
-			"name": "up"
+			"fps": 24,
+			"name": "up",
+			"indices": []
 		},
 		{
-			"offsets": [-11, 18],
 			"loop": false,
-			"fps": 24,
+			"offsets": [-11, 18],
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "right"
+			"fps": 24,
+			"name": "right",
+			"indices": []
 		}
 	],
 	"vocals_file": "",
 	"no_antialiasing": false,
 	"image": "characters/strawberrymonster",
 	"position": [120, -120],
-	"healthicon": "frank",
+	"healthicon": "monster",
 	"flip_x": false,
-	"healthbar_colors": [172, 220, 187],
+	"healthbar_colors": [153, 51, 102],
 	"camera_position": [0, 0],
 	"sing_duration": 4,
 	"scale": 1.1,

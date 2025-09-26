@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="icon-monster.png">
+	<!-- Created with Adobe Animate version 22.0.2.168 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="lose_loop0000" x="5" y="5" width="154" height="156"/>
+	<SubTexture name="lose_loop0001" x="5" y="5" width="154" height="156"/>
+	<SubTexture name="lose_loop0002" x="5" y="5" width="154" height="156"/>
+	<SubTexture name="lose_loop0003" x="5" y="5" width="154" height="156"/>
+	<SubTexture name="lose_loop0004" x="197" y="5" width="154" height="156"/>
+	<SubTexture name="lose_loop0005" x="197" y="5" width="154" height="156"/>
+	<SubTexture name="lose_loop0006" x="197" y="5" width="154" height="156"/>
+	<SubTexture name="lose_loop0007" x="197" y="5" width="154" height="156"/>
+	<SubTexture name="lose_to_normal0000" x="5" y="199" width="154" height="156"/>
+	<SubTexture name="lose_to_normal0001" x="5" y="199" width="154" height="156"/>
+	<SubTexture name="lose_to_normal0002" x="773" y="5" width="154" height="156"/>
+	<SubTexture name="lose_to_normal0003" x="773" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0000" x="389" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0001" x="389" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0002" x="389" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0003" x="389" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0004" x="581" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0005" x="581" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0006" x="581" y="5" width="154" height="156"/>
+	<SubTexture name="normal_loop0007" x="581" y="5" width="154" height="156"/>
+	<SubTexture name="normal_to_lose0000" x="773" y="5" width="154" height="156"/>
+	<SubTexture name="normal_to_lose0001" x="773" y="5" width="154" height="156"/>
+	<SubTexture name="normal_to_lose0002" x="5" y="199" width="154" height="156"/>
+	<SubTexture name="normal_to_lose0003" x="5" y="199" width="154" height="156"/>
+</TextureAtlas>
