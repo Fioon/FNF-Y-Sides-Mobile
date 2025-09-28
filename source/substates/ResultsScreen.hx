@@ -35,6 +35,8 @@ class ResultsScreen extends MusicBeatSubstate
     var bad:Int = 0;
     var shit:Int = 0;
 
+    var rank:ResultsScreenRank;
+
     override function create() 
     {
         super.create();
@@ -43,6 +45,8 @@ class ResultsScreen extends MusicBeatSubstate
         good = PlayState.instance.ratingsData[1].hits;
         bad = PlayState.instance.ratingsData[2].hits;
         shit = PlayState.instance.ratingsData[3].hits;
+
+        rank = new ResultsScreenRank(0, 0, 's');
 
         FlxG.sound.playMusic(Paths.music('winScreen'));
 
@@ -151,6 +155,10 @@ class ResultsScreen extends MusicBeatSubstate
         shitsTxt.x = board.x + 25;
         add(shitsTxt);
 
+        rank.x = board.x + board.width - rank.width - 10;
+        rank.y = board.y + board.height - rank.height - 10;
+        add(rank);
+
         ratingAnimData();
         startBfAnim();
     }
@@ -240,5 +248,36 @@ class ResultsScreenPattern extends FlxSpriteGroup
         lightPattern.y = flipPatternY ? darkPattern.y : darkPattern.y + darkPattern.height - lightPattern.height;
         lightPattern.antialiasing = ClientPrefs.data.antialiasing;
         add(lightPattern);
+    }
+}
+
+class ResultsScreenRank extends FlxSprite
+{
+    public function new(x:Float, y:Float, rank:String)
+    {
+        super(x, y);
+
+        var graphic = Paths.image('resultsScreen/newResultsScreen/ranks');
+        //var iSize = Math.round(graphic.width / graphic.height);
+        loadGraphic(graphic, true, 228, 232);
+
+		animation.add(rank, [for(i in 0...frames.frames.length) i], 0, false, false);
+		animation.play(rank);
+
+        switch(rank)
+        {
+            case 's':
+                animation.curAnim.curFrame = 0;
+            case 'a':
+                animation.curAnim.curFrame = 1;
+            case 'b':
+                animation.curAnim.curFrame = 2;
+            case 'c':
+                animation.curAnim.curFrame = 3;
+            case 'd':
+                animation.curAnim.curFrame = 4;
+            case 'e':
+                animation.curAnim.curFrame = 5;
+        }
     }
 }
