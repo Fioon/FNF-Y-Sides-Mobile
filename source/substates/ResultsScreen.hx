@@ -117,47 +117,58 @@ class ResultsScreen extends MusicBeatSubstate
         scoreTxt = new FlxText(0, board.y + 30, 0, "SCORE: " + PlayState.instance.songScore);
         scoreTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 28, 0xFFB996D4, LEFT);
         scoreTxt.x = board.x + 25;
+        scoreTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(scoreTxt);
 
         missesTxt = new FlxText(board.x + 30, scoreTxt.y, board.width - 80, "MISSES: " + PlayState.instance.songMisses);
         missesTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 28, 0xFFB996D4, RIGHT);
         missesTxt.x = board.x + 25;
+        missesTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(missesTxt);
 
         rating = FlxMath.roundDecimal(rating, 2);
         ratingTxt = new FlxText(0, missesTxt.y + 45, 0, "RATING: " + rating + "%");
         ratingTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 28, 0xFFB996D4, LEFT);
         ratingTxt.x = board.x + 25;
+        ratingTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(ratingTxt);
 
         statsTxt = new FlxText(0, ratingTxt.y + 100, 0, "STATUS:");
         statsTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 28, 0xFFB996D4, LEFT);
         statsTxt.x = board.x + 25;
+        statsTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(statsTxt);
 
         sicksTxt = new FlxText(0, statsTxt.y + 40, 0, "Sicks: " + sick);
         sicksTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 18, 0xFFB996D4, LEFT);
         sicksTxt.x = board.x + 25;
+        sicksTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(sicksTxt);
 
         goodsTxt = new FlxText(0, sicksTxt.y + 25, 0, "Goods: " + good);
         goodsTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 18, 0xFFB996D4, LEFT);
         goodsTxt.x = board.x + 25;
+        goodsTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(goodsTxt);
 
         badsTxt = new FlxText(0, goodsTxt.y + 25, 0, "Bads: " + bad);
         badsTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 18, 0xFFB996D4, LEFT);
         badsTxt.x = board.x + 25;
+        badsTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(badsTxt);
 
         shitsTxt = new FlxText(0, badsTxt.y + 25, 0, "Shits: " + shit);
         shitsTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 18, 0xFFB996D4, LEFT);
         shitsTxt.x = board.x + 25;
+        shitsTxt.antialiasing = ClientPrefs.data.antialiasing;
         add(shitsTxt);
 
         rank.x = board.x + board.width - rank.width - 30;
         rank.y = board.y + board.height - rank.height - 20;
+        rank.antialiasing = ClientPrefs.data.antialiasing;
         add(rank);
+
+        FlxTween.angle(rank, -5, 5, 4, {ease: FlxEase.quartInOut, type: PINGPONG});
 
         ratingAnimData();
         startBfAnim();
