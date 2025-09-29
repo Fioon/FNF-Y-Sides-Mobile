@@ -36,6 +36,7 @@ class ResultsScreen extends MusicBeatSubstate
     var shit:Int = 0;
 
     var rank:ResultsScreenRank;
+    var rankName:String = "";
 
     override function create() 
     {
@@ -46,9 +47,9 @@ class ResultsScreen extends MusicBeatSubstate
         bad = PlayState.instance.ratingsData[2].hits;
         shit = PlayState.instance.ratingsData[3].hits;
 
-        rank = new ResultsScreenRank(0, 0, 's');
+        rank = new ResultsScreenRank(0, 0, getRankName());
 
-        FlxG.sound.playMusic(Paths.music('winScreen'));
+        FlxG.sound.playMusic(Paths.music(getRankName() == 'e' ? 'winScreenbad' : 'winScreen'));
 
         var bg = new FlxSprite();
         bg.makeGraphic(FlxG.width, FlxG.height, 0xFFCFC6F3);
@@ -174,6 +175,16 @@ class ResultsScreen extends MusicBeatSubstate
         startBfAnim();
     }
 
+    function getRankName():String
+    {
+        if (rating >= 90) return 's';
+        if (rating >= 75) return 'a';
+        if (rating >= 65) return 'b';
+        if (rating >= 55) return 'c';
+        if (rating >= 40) return 'd';
+        return 'e';
+    }
+
     function startBfAnim()
     {
         boyfriend.alpha = 1;
@@ -185,35 +196,15 @@ class ResultsScreen extends MusicBeatSubstate
 
     function ratingAnimData()
     {
-        if(rating >= 90)
+        switch(getRankName())
         {
-            bfAnimName = '90%';
-            ratingName = 'S';
-        }
-        else if(rating >= 75 && rating < 90)
-        {
-            bfAnimName = '75%';
-            ratingName = 'A';
-        }
-        else if(rating >= 65 && rating < 75)
-        {
-            bfAnimName = '65%';
-            ratingName = 'B';
-        }
-        else if(rating >= 55 && rating < 65)
-        {
-            bfAnimName = '55%';
-            ratingName = 'C';
-        }
-        else if(rating >= 40 && rating < 55)
-        {
-            bfAnimName = '0%';
-            ratingName = 'D';
-        }
-        else
-        {
-            bfAnimName = '0%';
-            ratingName = 'E';
+            case 's': bfAnimName = '90%'; ratingName = 'S';
+            case 'a': bfAnimName = '75%'; ratingName = 'A';
+            case 'b': bfAnimName = '65%'; ratingName = 'B';
+            case 'c': bfAnimName = '55%'; ratingName = 'C';
+            case 'd': bfAnimName = '0%'; ratingName = 'D';
+            case 'e': bfAnimName = '0%'; ratingName = 'E';
+            default: bfAnimName = '90%'; ratingName = 'S';
         }
     }
 
@@ -267,6 +258,8 @@ class ResultsScreenRank extends FlxSprite
     public function new(x:Float, y:Float, rank:String)
     {
         super(x, y);
+
+        if(rank == null || rank == '') rank = 's'; // duh avoiding silly crashes
 
         var graphic = Paths.image('resultsScreen/newResultsScreen/ranks');
         //var iSize = Math.round(graphic.width / graphic.height);
