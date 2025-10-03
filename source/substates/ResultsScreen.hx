@@ -13,7 +13,17 @@ class ResultsScreen extends MusicBeatSubstate
     var iconSpeed:Int = 15;
     var patternSpeed:Int = 15;
 
+    var bg:FlxSprite;
+    var lines:FlxBackdrop;
+    var bgStripe:FlxBackdrop;
+
     public var boyfriend:Character;
+
+    var bfIconLeft:FlxBackdrop;
+    var bfIconRight:FlxBackdrop;
+    var patternDown:ResultsScreenPattern;
+    var patternUp:ResultsScreenPattern;
+    var board:FlxSprite;
 
     var scoreTxt:FlxText;
     var missesTxt:FlxText;
@@ -52,21 +62,29 @@ class ResultsScreen extends MusicBeatSubstate
         FlxG.sound.playMusic(Paths.music(getRankName() == 'e' ? 'winScreenbad' : 'winScreen'));
         Conductor.bpm = getRankName() == 'e' ? 105 : 127;
 
-        var bg = new FlxSprite();
+        bg = new FlxSprite();
         bg.makeGraphic(FlxG.width, FlxG.height, 0xFFCFC6F3);
+        bg.alpha = 0;
         add(bg);
 
-        var lines:FlxBackdrop = new FlxBackdrop(Paths.image('gallery/lines'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else XY #end);
+        FlxTween.tween(bg, {alpha: 1}, 0.7);
+
+        lines = new FlxBackdrop(Paths.image('gallery/lines'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else XY #end);
         lines.velocity.set(75, 75);
-        lines.alpha = 0.45;
+        lines.alpha = 0;
         lines.antialiasing = ClientPrefs.data.antialiasing;
         add(lines);
 
-        var bgStripe = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/stripe'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else X #end);
+        FlxTween.tween(lines, {alpha: 0.45}, 0.7);
+
+        bgStripe = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/stripe'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else X #end);
         bgStripe.antialiasing = ClientPrefs.data.antialiasing;
         bgStripe.velocity.set(stripeSpeed, 0);
         bgStripe.blend = ADD;
+        bgStripe.alpha = 0;
         add(bgStripe);
+
+        FlxTween.tween(bgStripe, {alpha: 1}, 0.7);
 
         boyfriend = new Character(0, 150, 'bf-WinScreen');
         boyfriend.screenCenter(Y);
@@ -81,33 +99,37 @@ class ResultsScreen extends MusicBeatSubstate
         }
         add(boyfriend);
 
-        var bfIconLeft = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/icon'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else Y #end);
+        bfIconLeft = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/icon'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else Y #end);
         bfIconLeft.velocity.set(0, -iconSpeed);
         bfIconLeft.antialiasing = ClientPrefs.data.antialiasing;
         add(bfIconLeft);
         
-        var bfIconRight = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/icon'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else Y #end);
+        bfIconRight = new FlxBackdrop(Paths.image('resultsScreen/newResultsScreen/icon'), #if (flixel <= "5.0.0") 0.2, 0.2, true, true #else Y #end);
         bfIconRight.x = FlxG.width - bfIconRight.width;
         bfIconRight.velocity.set(0, iconSpeed);
         bfIconRight.antialiasing = ClientPrefs.data.antialiasing;
         add(bfIconRight);
 
-        var patternDown = new ResultsScreenPattern(0, 0);
-        patternDown.y = FlxG.height - patternDown.height;
+        patternDown = new ResultsScreenPattern(0, 0);
+        patternDown.y = FlxG.height;
         patternDown.darkPattern.velocity.set(patternSpeed, 0);
         patternDown.lightPattern.velocity.set(-patternSpeed, 0);
         patternDown.antialiasing = ClientPrefs.data.antialiasing;
         add(patternDown);
 
-        var patternUp = new ResultsScreenPattern(0, 0, true);
-        patternUp.y = 0;
+        FlxTween.tween(patternDown, {y: FlxG.height - patternDown.height}, 1, {ease: FlxEase.expoOut});
+
+        patternUp = new ResultsScreenPattern(0, 0, true);
+        patternUp.y = 0 - patternUp.height;
         patternUp.flipY = true;
         patternUp.darkPattern.velocity.set(-patternSpeed, 0);
         patternUp.lightPattern.velocity.set(patternSpeed, 0);
         patternUp.antialiasing = ClientPrefs.data.antialiasing;
         add(patternUp);
 
-        var board = new FlxSprite();
+        FlxTween.tween(patternUp, {y: 0}, 1, {ease: FlxEase.expoOut});
+
+        board = new FlxSprite();
         board.loadGraphic(Paths.image('resultsScreen/newResultsScreen/board'));
         board.screenCenter();
         board.x += FlxG.width / 6;
