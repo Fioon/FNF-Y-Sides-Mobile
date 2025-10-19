@@ -22,10 +22,16 @@ class HalloweenCreepyStage extends BaseStage
 
 		var bgmain:BGSprite = new BGSprite('spooky/monster/bgmain', -1230, -1378, 1, 1);
 		add(bgmain);
+
 	}
 
 	override function createPost()
 	{
+
+		var gradient:BGSprite = new BGSprite('spooky/monster/gradient', -1230, -1378, 1, 1);
+		gradient.blend = ADD;
+		add(gradient);
+
 		var bloom = new BloomShader();
 
 		bloom.dim.value = [1.8]; // 1.8
