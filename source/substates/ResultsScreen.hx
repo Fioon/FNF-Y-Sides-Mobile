@@ -86,9 +86,9 @@ class ResultsScreen extends MusicBeatSubstate
 
         FlxTween.tween(bgStripe, {alpha: 1}, 0.7);
 
-        boyfriend = new Character(0, 150, 'bf-WinScreen');
+        boyfriend = new Character(0, 300, 'bf-WinScreen');
         boyfriend.screenCenter(Y);
-        boyfriend.y += -120;
+        boyfriend.y += 20;
         boyfriend.antialiasing = ClientPrefs.data.antialiasing;
         boyfriend.isPlayer = true;
         boyfriend.alpha = 0;
@@ -136,7 +136,7 @@ class ResultsScreen extends MusicBeatSubstate
         board.antialiasing = ClientPrefs.data.antialiasing;
         add(board);
 
-        boyfriend.x = board.x - 380;
+        boyfriend.x = board.x - 390;
 
         scoreTxt = new FlxText(0, board.y + 30, 0, "SCORE: " + PlayState.instance.songScore);
         scoreTxt.setFormat(Paths.font('FredokaOne-Regular.ttf'), 28, 0xFFB996D4, LEFT);
