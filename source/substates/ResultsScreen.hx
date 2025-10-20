@@ -207,6 +207,7 @@ class ResultsScreen extends MusicBeatSubstate
         rank.x = board.x + board.width - rank.width - 30;
         rank.y = board.y + board.height - rank.height - 20;
         rank.antialiasing = ClientPrefs.data.antialiasing;
+        rank.alpha = 0;
         add(rank);
 
         FlxTween.angle(rank, -5, 5, 4, {ease: FlxEase.quartInOut, type: PINGPONG});
@@ -386,6 +387,14 @@ class ResultsScreen extends MusicBeatSubstate
 
                     whiteBackground.alpha = 1;
                     FlxTween.tween(whiteBackground, {alpha: 0}, 0.5);
+
+                    // rank anim
+                    rank.scale.set(0.01, 0.01);
+                    rank.alpha = 1;
+
+                    FlxTween.tween(rank, {"scale.x": 1.04, "scale.y": 1.04}, 0.3, {ease: FlxEase.quartOut, onComplete: (_) ->{
+                        FlxTween.tween(rank, {"scale.x": 1, "scale.y": 1}, 0.3, {ease: FlxEase.quartInOut});
+                    }});
                 }
         }
 
