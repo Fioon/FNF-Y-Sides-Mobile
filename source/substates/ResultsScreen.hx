@@ -433,22 +433,12 @@ class ResultsScreenRank extends FlxSprite
 
         if(rank == null || rank == '') rank = 's'; // duh avoiding silly crashes
 
-        var graphic = Paths.image('resultsScreen/newResultsScreen/ranks');
+        var gFrames = Paths.getSparrowAtlas('resultsScreen/newResultsScreen/ranks');
         //var iSize = Math.round(graphic.width / graphic.height);
-        loadGraphic(graphic, true, 228, 232);
+        //loadGraphic(graphic, true, 228, 232);
+        frames = gFrames;
 
-		animation.add(rank, [for(i in 0...frames.frames.length) i], 0, false, false);
+		animation.addByPrefix(rank, rank, 24, false, false);
 		animation.play(rank);
-
-        animation.curAnim.curFrame = switch(rank)
-        {
-            case 's': 0;
-            case 'a': 1;
-            case 'b': 2;
-            case 'c': 3;
-            case 'd': 4;
-            case 'e': 5;
-            default: 0;
-        }
     }
 }
