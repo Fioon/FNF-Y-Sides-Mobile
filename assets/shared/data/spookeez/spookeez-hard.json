@@ -54,7 +54,7 @@
 				[7153.84615384615, 4, 0, "Third Player Note"],
 				[7269.23076923077, 5, 0, "Third Player Note"]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -300,7 +300,7 @@
 				[27230.7692307692, 4, 0, ""],
 				[27461.5384615385, 5, 0, ""]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -321,7 +321,7 @@
 				[29307.6923076923, 5, 0, "No Animation"],
 				[29423.0769230769, 4, 0, "No Animation"]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -406,7 +406,7 @@
 				[36461.5384615385, 6, 0, ""],
 				[36692.3076923077, 4, 0, ""]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -492,7 +492,7 @@
 				[44076.9230769231, 4, 0, "Third Player Note"],
 				[44192.3076923077, 5, 0, "Third Player Note"]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -605,7 +605,7 @@
 				[55153.8461538461, 4, 0, ""],
 				[55269.2307692308, 7, 0, ""]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -679,7 +679,7 @@
 				[62538.4615384615, 4, 0, ""],
 				[62653.8461538461, 7, 0, ""]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -790,7 +790,7 @@
 				[71538.4615384615, 4, 0, ""],
 				[71769.2307692308, 5, 0, ""]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -811,7 +811,7 @@
 				[73615.3846153846, 5, 0, "No Animation"],
 				[73730.7692307692, 4, 0, "No Animation"]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,
@@ -869,7 +869,7 @@
 				[78807.6923076923, 4, 0, ""],
 				[79153.8461538462, 7, 0, ""]
 			],
-			"gfSection": true,
+			"gfSection": false,
 			"altAnim": false,
 			"mustHitSection": false,
 			"changeBPM": false,

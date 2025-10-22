@@ -241,6 +241,12 @@ class PlayState extends MusicBeatState
 	public static var campaignScore:Int = 0;
 	public static var campaignMisses:Int = 0;
 	public static var campaignRating:Int = 0;
+
+	public static var campaignSicks:Int = 0;
+	public static var campaignGoods:Int = 0;
+	public static var campaignBads:Int = 0;
+	public static var campaignShits:Int = 0;
+
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
 
@@ -2988,6 +2994,12 @@ class PlayState extends MusicBeatState
 				campaignMisses += songMisses;
 				campaignRating += Std.int(ratingPercent * 100);
 				totalSongsPlayed++;
+				trace('SUMA $totalSongsPlayed');
+
+				campaignSicks += ratingsData[0].hits;
+				campaignGoods += ratingsData[1].hits;
+				campaignBads += ratingsData[2].hits;
+				campaignShits += ratingsData[3].hits;
 
 				storyPlaylist.remove(storyPlaylist[0]);
 
@@ -3093,7 +3105,7 @@ class PlayState extends MusicBeatState
 		eventNotes = [];
 	}
 
-	public var totalSongsPlayed:Int = 0;
+	public static var totalSongsPlayed:Int = 0;
 	public var totalPlayed:Int = 0;
 	public var totalNotesHit:Float = 0.0;
 

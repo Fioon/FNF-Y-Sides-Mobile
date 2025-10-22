@@ -38,8 +38,6 @@ class ResultsScreen extends MusicBeatSubstate
     var ratingName = '';
     var bfAnimName = '';
 
-    var rating = PlayState.instance.ratingPercent * 100;
-
     var sick:Int = 0;
     var good:Int = 0;
     var bad:Int = 0;
@@ -52,14 +50,23 @@ class ResultsScreen extends MusicBeatSubstate
     var whiteBackground:FlxSprite;
     var fullBlackBackground:FlxSprite;
 
+    var totalScore:Int = 0;
+    var totalMisses:Int = 0;
+    var totalRating:Float = 0;
+
     override function create() 
     {
         super.create();
 
-        sick = PlayState.instance.ratingsData[0].hits;
-        good = PlayState.instance.ratingsData[1].hits;
-        bad = PlayState.instance.ratingsData[2].hits;
-        shit = PlayState.instance.ratingsData[3].hits;
+        totalScore = PlayState.isStoryMode ? PlayState.campaignScore : totalScore;
+        totalMisses = PlayState.isStoryMode ? PlayState.campaignMisses : totalMisses;
+        totalRating = PlayState.isStoryMode ? PlayState.campaignRating / PlayState.totalSongsPlayed : PlayState.instance.ratingPercent * 100;
+        trace('${PlayState.campaignRating} / ${PlayState.totalSongsPlayed} = $totalRating');
+
+        sick = PlayState.isStoryMode ? PlayState.campaignSicks : PlayState.instance.ratingsData[0].hits;
+        good = PlayState.isStoryMode ? PlayState.campaignGoods : PlayState.instance.ratingsData[1].hits;
+        bad = PlayState.isStoryMode ? PlayState.campaignBads : PlayState.instance.ratingsData[2].hits;
+        shit = PlayState.isStoryMode ? PlayState.campaignShits : PlayState.instance.ratingsData[3].hits;
 
         rank = new ResultsScreenRank(0, 0, getRankName());
 
@@ -223,18 +230,17 @@ class ResultsScreen extends MusicBeatSubstate
 
         new FlxTimer().start(2, (_) -> {
             var tweenDur:Float = 1;
-            FlxTween.num(0, PlayState.instance.songScore, tweenDur, {ease: FlxEase.linear}, function(value:Float)
+            FlxTween.num(0, totalScore, tweenDur, {ease: FlxEase.linear}, function(value:Float)
             {
                 scoreTxt.text = 'SCORE: ${Std.int(value)}';
             });
 
-            FlxTween.num(0, PlayState.instance.songMisses, tweenDur, {ease: FlxEase.linear}, function(value:Float)
+            FlxTween.num(0, totalMisses, tweenDur, {ease: FlxEase.linear}, function(value:Float)
             {
                 missesTxt.text = 'MISSES: ${Std.int(value)}';
             });
 
-            rating = FlxMath.roundDecimal(rating, 2);
-            FlxTween.num(0, rating, tweenDur, {ease: FlxEase.linear}, function(value:Float)
+            FlxTween.num(0, totalRating, tweenDur, {ease: FlxEase.linear}, function(value:Float)
             {
                 ratingTxt.text = 'RATING: ${FlxMath.roundDecimal(value, 2)}%';
             });
@@ -278,11 +284,11 @@ class ResultsScreen extends MusicBeatSubstate
 
     function getRankName():String
     {
-        if (rating >= 90) return 's';
-        if (rating >= 75) return 'a';
-        if (rating >= 65) return 'b';
-        if (rating >= 55) return 'c';
-        if (rating >= 40) return 'd';
+        if (totalRating >= 90) return 's';
+        if (totalRating >= 75) return 'a';
+        if (totalRating >= 65) return 'b';
+        if (totalRating >= 55) return 'c';
+        if (totalRating >= 40) return 'd';
         return 'e';
     }
 
