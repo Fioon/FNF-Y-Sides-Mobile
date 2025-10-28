@@ -562,7 +562,7 @@ class MainMenuState extends MusicBeatState
 						FlxTransitionableState.skipNextTransIn = true;
 						FlxTransitionableState.skipNextTransOut = true;
 						
-						MusicBeatState.switchState(new GalleryState());
+						MusicBeatState.switchState(new states.gallery.GalleryState());
 					#end
 				});
 			}});
