@@ -427,6 +427,8 @@ class FreeplayState extends MusicBeatState
 				FlxTween.cancelTweensOf(icons);
 				FlxTween.cancelTweensOf(bg);
 				FlxTween.cancelTweensOf(scoreThing);
+				FlxTween.cancelTweensOf(diffArrowUp);
+				FlxTween.cancelTweensOf(diffArrowDown);
 				FlxTween.cancelTweensOf(bf);
 				FlxTween.cancelTweensOf(cloud);
 				FlxTween.cancelTweensOf(currentIcon);
@@ -436,10 +438,14 @@ class FreeplayState extends MusicBeatState
 				FlxTween.color(bg, 0.4, bg.color, 0xFFFFFFFF);
 
 				bopTweenAnim(scoreThing, 820, 0);
+				bopTweenAnim(diffArrowUp, 820, 0);
+				bopTweenAnim(diffArrowDown, 820, 0);
 				bopTweenAnim(bf, 820, 0);
 				bopTweenAnim(cloud, 820, 0);
 
 				FlxTween.tween(scoreThing, {alpha: 0}, 0.2);
+				FlxTween.tween(diffArrowUp, {alpha: 0}, 0.2);
+				FlxTween.tween(diffArrowDown, {alpha: 0}, 0.2);
 				FlxTween.tween(bf, {alpha: 0}, 0.2);
 				FlxTween.tween(cloud, {alpha: 0}, 0.2);
 				FlxTween.tween(currentIcon, {alpha: 0}, 0.2);
