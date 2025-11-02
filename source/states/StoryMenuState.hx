@@ -107,6 +107,7 @@ class StoryMenuState extends MusicBeatState
 		add(weekCharacter);
 
 		FlxTween.tween(weekCharacter, {alpha: 1}, 1, {ease: FlxEase.quartOut});
+		FlxTween.tween(weekCharacter, {alpha: 1, y: weekCharacter.y - 10}, 0.1, {ease: FlxEase.quartOut});
 
 		tv = new FlxSprite();
 		tv.loadGraphic(Paths.image('storymenu/TV'));
