@@ -591,6 +591,9 @@ class StoryMenuState extends MusicBeatState
 
 		FlxTween.cancelTweensOf(weekCharacter);
 		FlxTween.tween(weekCharacter, {alpha: 1, y: weekCharacter.y - 10}, 0.1, {ease: FlxEase.quartOut});
+		
+		weekCharacter.angle = 3;
+		FlxTween.tween(weekCharacter, {angle: -3}, 6, {ease: FlxEase.quartInOut, type: PINGPONG});
 
 		if(Difficulty.list.contains(Difficulty.getDefault()))
 			curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(Difficulty.getDefault())));
