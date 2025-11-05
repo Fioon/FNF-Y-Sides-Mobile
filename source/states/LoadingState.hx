@@ -431,6 +431,7 @@ class LoadingState extends MusicBeatState
 		txtLoading.screenCenter(X);
 		tvLoading.animation.play('loaded', true);
 		rayLoading.animation.play('loaded', true);
+		rayLoading.x = tvLoading.x + 280 + 530; // set the ray at the end
 		canStartSong = true;
 	}
 
