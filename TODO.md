@@ -54,7 +54,7 @@
 - [ ] Monster
 - [x] Pico
 - [x] Philly Nice
-- [ ] Blammed
+- [x] Blammed
 
 ## SPRITES
 
@@ -74,12 +74,12 @@
 
 ## MENUS
 
-- [ ] Title menu (NEW)
+- [x] Title menu (NEW)
 - [ ] Results screen
-    - [ ] Ranking songs
+    - [HALF] Ranking songs
     - [x] BUG: The rank displayed has some sort of delay to show the actual rank
     - [x] BUG: If you get a FC in the last song but you missed in a previous song of the week, it counts as a Week FC
-    - [ ] RECOMMENDATION: Polish the results screen, it feels very empty
+    - [x] RECOMMENDATION: Polish the results screen, it feels very empty
 - [ ] Gallery
 - [ ] Credits menu
     - [ ] ENHANCEMENT: Improve sub-states where roles of each developer and their social medias are displayed
@@ -104,9 +104,9 @@
 - [x] New volume soundtray
 
 - [ ] Test (SONGCARD)
-- [ ] Tutorial (SONGCARD)
-- [ ] Bopeebo (SONGCARD)
-- [ ] Fresh (SONGCARD)
+- [x] Tutorial (SONGCARD)
+- [x] Bopeebo (SONGCARD)
+- [x] Fresh (SONGCARD)
 - [ ] Dad Battle (SONGCARD)
 - [ ] Spookeez (SONGCARD)
 - [ ] South (SONGCARD)
