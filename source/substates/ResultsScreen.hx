@@ -330,7 +330,7 @@ class ResultsScreen extends MusicBeatSubstate
 
 		FlxG.watch.addQuick("beatShit", curBeat);
 
-        if(controls.BACK)
+        if(controls.BACK || controls.ACCEPT)
         {
             FlxTween.tween(fullBlackBackground, {alpha: 1}, 0.6);
 
