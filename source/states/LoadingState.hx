@@ -310,7 +310,7 @@ class LoadingState extends MusicBeatState
 			//bar.scale.x = barWidth * curPercent;
 			//bar.updateHitbox();
 
-			rayLoading.x = tvLoading.x + 280 + (530 * curPercent);
+			rayLoading.x = tvLoading.x + 280 + (480 * curPercent);
 		}
 		
 		#if HSCRIPT_ALLOWED
@@ -425,7 +425,7 @@ class LoadingState extends MusicBeatState
 	function onLoad()
 	{
 		canStartSong = true;
-		
+
 		_loaded();
 		pressEnter.alpha = 1;
 		txtLoading.animation.play('ready', true);
@@ -433,7 +433,7 @@ class LoadingState extends MusicBeatState
 		txtLoading.screenCenter(X);
 		tvLoading.animation.play('loaded', true);
 		rayLoading.animation.play('loaded', true);
-		rayLoading.x = tvLoading.x + 280 + 530; // set the ray at the end
+		rayLoading.x = tvLoading.x + 280 + 480; // set the ray at the end
 	}
 
 	static function _loaded()
