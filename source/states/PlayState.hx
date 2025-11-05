@@ -2280,7 +2280,7 @@ class PlayState extends MusicBeatState
 		else
 		    iconP1.angle = 0;
 
-		if (losingIconP2)
+		if (losingIconP2 && curSong != 'Tutorial') // why would gf shake cuz you're winning lol??
 			if (curStep % 4 == 0) iconP2.angle = FlxG.random.int(-3,3);
 		else
 		    iconP2.angle = 0;
