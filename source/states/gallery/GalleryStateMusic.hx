@@ -95,6 +95,8 @@ class GalleryStateMusic extends MusicBeatState
         {
             var spr = new GalleryMusicObject();
 		    spr.loadGraphic(Paths.image('songCards/${Paths.formatToSongPath(musicSongsArray[i])}'));
+            spr.scale.set(0.6, 0.6);
+            spr.updateHitbox();
             spr.antialiasing = ClientPrefs.data.antialiasing;
             spr.screenCenter(Y);
             spr.x = arrowUp.x + (arrowUp.width / 2) - (spr.width / 2);
