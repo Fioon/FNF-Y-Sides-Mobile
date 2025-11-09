@@ -110,16 +110,26 @@ class GalleryStateMusic extends MusicBeatState
         changeSelect(0, true);
     }
 
-    var preloadedMusicMap:Map<String, FlxSound> = new Map<String, FlxSound>();
+    var preloadedInstMap:Map<String, FlxSound> = new Map<String, FlxSound>();
+    var preloadedVoicesMap:Map<String, FlxSound> = new Map<String, FlxSound>();
+
     function preloadMusic()
     {
         for(song in musicSongsArray)
         {
-            if(!FileSystem.exists('assets/songs/$song/Full.ogg')) continue;
+            if(!FileSystem.exists('assets/songs/$song/Inst.ogg') || !FileSystem.exists('assets/songs/$song/Voices.ogg')) continue;
 
-            var embedMusic = new FlxSound();
-            embedMusic.loadEmbedded('assets/songs/$song/Full.ogg');
-            preloadedMusicMap.set(song, embedMusic);
+            var embedInst = new FlxSound();
+            embedInst.loadEmbedded('assets/songs/$song/Inst.ogg');
+            preloadedInstMap.set(song, embedInst);
+
+            #if debug trace('Loaded $song (INST)!'); #end
+
+            var embedVoices = new FlxSound();
+            embedVoices.loadEmbedded('assets/songs/$song/Voices.ogg');
+            preloadedVoicesMap.set(song, embedVoices);
+
+            #if debug trace('Loaded $song (VOICES)!'); #end
         }
     }
 
@@ -226,6 +236,10 @@ class GalleryStateMusic extends MusicBeatState
     }
     
     private static var curSelected:Int = 0;
+
+    var inst:FlxSound;
+    var voices:FlxSound;
+
     function changeSelect(change:Int = 0, firstTime:Bool = false)
     {
         curSelected = FlxMath.wrap(curSelected + change, 0, musicSongsGrp.length - 1);
@@ -238,14 +252,23 @@ class GalleryStateMusic extends MusicBeatState
             if(firstTime) item.snapToPosition();
 		}
 
-        if(FileSystem.exists('assets/songs/${musicSongsArray[curSelected]}/Full.ogg'))
+        if(FileSystem.exists('assets/songs/${musicSongsArray[curSelected]}/Inst.ogg') || FileSystem.exists('assets/songs/${musicSongsArray[curSelected]}/Voices.ogg'))
         {
             FlxG.sound.music.stop();
+            voices.stop();
+
+            #if debug trace('Changing song to ${musicSongsArray[curSelected]}'); #end
+
             //FlxG.sound.playMusic('assets/songs/${musicSongsArray[curSelected]}/Full.ogg');
-            var music = preloadedMusicMap.get(musicSongsArray[curSelected]);
+            inst = preloadedInstMap.get(musicSongsArray[curSelected]);
+            voices = preloadedVoicesMap.get(musicSongsArray[curSelected]);
             
+		    FlxG.sound.list.add(inst);
+		    FlxG.sound.list.add(voices);
+
 		    @:privateAccess
-            FlxG.sound.playMusic(music._sound);
+            FlxG.sound.playMusic(inst._sound);
+            voices.play();
         }
         else
         {
