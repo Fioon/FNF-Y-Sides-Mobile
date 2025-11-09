@@ -432,6 +432,7 @@ class LoadingState extends MusicBeatState
 	var canStartSong:Bool = false;
 	function onLoad()
 	{
+		trace('LOADED!!!! You can now press ENTER to continue.');
 		_loaded();
 		pressEnter.alpha = 1;
 		txtLoading.animation.play('ready', true);
