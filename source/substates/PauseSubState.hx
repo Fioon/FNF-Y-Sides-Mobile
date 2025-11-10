@@ -38,6 +38,8 @@ class PauseSubState extends MusicBeatSubstate
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 		FlxG.sound.list.add(pauseMusic);
 
+		pauseMusic.fadeIn(4);
+
 		// Fondo oscuro
 		bg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
 		bg.scale.set(FlxG.width, FlxG.height);
