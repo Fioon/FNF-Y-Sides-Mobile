@@ -75,12 +75,12 @@
 ## MENUS
 
 - [x] Title menu (NEW)
-- [ ] Results screen
-    - [HALF] Ranking songs
+- [x] Results screen
+    - [x] Ranking songs
     - [x] BUG: The rank displayed has some sort of delay to show the actual rank
     - [x] BUG: If you get a FC in the last song but you missed in a previous song of the week, it counts as a Week FC
     - [x] RECOMMENDATION: Polish the results screen, it feels very empty
-- [ ] Gallery
+- [x] Gallery
 - [ ] Credits menu
     - [ ] ENHANCEMENT: Improve sub-states where roles of each developer and their social medias are displayed
 
