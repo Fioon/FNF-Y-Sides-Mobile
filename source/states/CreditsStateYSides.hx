@@ -55,12 +55,8 @@ class CreditsStateYSides extends MusicBeatState
 
 		icons.setPosition(MainMenuState.iconsPos[0], MainMenuState.iconsPos[1]);
 
-        currentCharacter = new FlxSprite(120, 200);
-		currentCharacter.frames = Paths.getSparrowAtlas('credits2/people/gbv');
-		currentCharacter.animation.addByPrefix('idle', 'gbv_neutral', 24, true);
-		currentCharacter.animation.addByPrefix('select', 'gbv_selected', 24, true);
-		currentCharacter.animation.play('idle');
-        currentCharacter.scale.set(1.2, 1.2);
+        currentCharacter = new FlxSprite(60, 200);
+		currentCharacter.loadGraphic(Paths.image('credits2/people/gbv'));
         currentCharacter.screenCenter(Y);
 		currentCharacter.antialiasing = ClientPrefs.data.antialiasing;
 		add(currentCharacter);
@@ -136,11 +132,7 @@ class CreditsStateYSides extends MusicBeatState
         curSelected = FlxMath.wrap(curSelected + change, 0, developers.length - 1);
 
         // reload char
-        currentCharacter.frames = Paths.getSparrowAtlas('credits2/people/${developers[curSelected][1]}');
-		currentCharacter.animation.addByPrefix('idle', '${developers[curSelected][1]}_neutral', 24, true);
-		currentCharacter.animation.addByPrefix('select', '${developers[curSelected][1]}_selected', 24, true);
-		currentCharacter.animation.play('idle');
-        currentCharacter.scale.set(1.2, 1.2);
+		currentCharacter.loadGraphic(Paths.image('credits2/people/${developers[curSelected][1]}'));
         currentCharacter.screenCenter(Y);
 		currentCharacter.antialiasing = ClientPrefs.data.antialiasing;
 		add(currentCharacter);
