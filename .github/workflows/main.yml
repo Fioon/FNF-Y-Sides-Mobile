@@ -100,8 +100,6 @@ jobs:
           haxelib --global --quiet update haxelib
           haxelib fixrepo
           haxelib run hmm install --quiet
-          haxelib run hxcpp rebuild mac -verbose
-          haxelib run lime rebuild mac -verbose
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
       - name: Create Version Tag
@@ -110,6 +108,10 @@ jobs:
         run: |
           cd .haxelib/hxcpp/git/tools/hxcpp
           haxe compile.hxml
+      - name: Rebuild needed stuff
+        run: |
+          haxelib run hxcpp rebuild mac -verbose
+          haxelib run lime rebuild mac -verbose
       - name: Compile
         run: haxelib run lime build mac -verbose -final -release
       - name: Publish Artifact
