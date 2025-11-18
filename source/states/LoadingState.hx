@@ -197,10 +197,10 @@ class LoadingState extends MusicBeatState
 		checker.alpha = 0.55;
 		add(checker);
 
-		barTop = new FlxSprite().makeGraphic(1280, 80, 0xFF000000);
+		barTop = new FlxSprite().makeGraphic(1280, 80, 0xFF130024);
 		add(barTop);
 
-		barBottom = new FlxSprite().makeGraphic(1280, 80, 0xFF000000);
+		barBottom = new FlxSprite().makeGraphic(1280, 80, 0xFF130024);
 		barBottom.y = FlxG.height - barBottom.height;
 		add(barBottom);
 
