@@ -3,6 +3,7 @@ package states;
 import flixel.FlxObject;
 import objects.AttachedSprite;
 import flixel.addons.display.FlxBackdrop;
+import shaders.WiggleEffect;
 
 class CreditsStateYSides extends MusicBeatState
 {
@@ -11,15 +12,16 @@ class CreditsStateYSides extends MusicBeatState
 	var wentBack:Bool = false;
 
     var developers:Array<Dynamic> = [
-        ['gBv2209',         'gbv',      ['Concept Artist', 'Artist', 'Animator', 'Musician', 'Charter', 'Coder'], 		[['yt', 'https://www.youtube.com/@gBv2209'], ['x', 'https://x.com/gbv2209']]],
-        ['Mr. Madera',      'madera',   ['Main Coder', 'Charter'], 						                                [['yt', 'https://www.youtube.com/@mrmadera1235'], ['x', 'https://x.com/MrMadera625']]],
-        ['SFoxyDAC',        'foxy',     ['Artist', 'Animator'], 					                                    [['yt', 'https://www.youtube.com/@SFoxyDAC'], ['x', 'https://x.com/SFoxyDAC']]],
-        ['Bunny',           'bunny',    ['Charter'], 					                                                [['x', ['https://x.com/ArchDolphin_']]]],
-        ['Zhadnii',         'ema',  ['Musician'], 					                                                [['yt', 'https://youtube.com/@zhadnii_']]],
-        ['FlashMan07',      'flash',    ['Musician', 'Concept Artist', 'Artist'],                                       [['yt', 'https://www.youtube.com/@FlashMan07']]],
-        ['Heromax',         'hero',     ['Concept Artist', 'Artist', 'Charter'], 			                            [['x', 'https://x.com/heromax_2498']]],
-        ['ItsTapiiii',      'tapi',     ['Musician'], 					                                                [['yt', 'https://www.youtube.com/@ItsTapiiii']]],
-        ['E1000',           'emil',    ['Artist', 'Charter'], 					                                        [['yt', 'https://www.youtube.com/@E1000YT/videos'], ['x', 'https://x.com/E1000TWOF ']]]
+        ['gBv2209',         'gbv',      ['Concept Artist', 'Artist', 'Animator', 'Musician', 'Charter', 'Coder'], 		[['yt', 'https://www.youtube.com/@gBv2209'], ['x', 'https://x.com/gbv2209']], 0xFF2F6662],
+        ['Mr. Madera',      'madera',   ['Main Coder', 'Charter'], 						                                [['yt', 'https://www.youtube.com/@mrmadera1235'], ['x', 'https://x.com/MrMadera625']], 0xFF8ACCE1],
+        ['SFoxyDAC',        'foxy',     ['Artist', 'Animator'], 					                                    [['yt', 'https://www.youtube.com/@SFoxyDAC'], ['x', 'https://x.com/SFoxyDAC']], 0xFFDC7D6F],
+        ['Zhadnii',         'ema',  ['Musician'], 					                                                [['yt', 'https://youtube.com/@zhadnii_']], 0xFF363676],
+        ['FlashMan07',      'flash',    ['Musician', 'Concept Artist', 'Artist'],                                       [['yt', 'https://www.youtube.com/@FlashMan07']], 0xFF912197],
+        ['Heromax',         'hero',     ['Concept Artist', 'Artist', 'Charter'], 			                            [['x', 'https://x.com/heromax_2498']], 0xFF424452],
+        ['Snowlui',         'snowlui',  ['Musician'], 			                            							[['yt', 'https://www.youtube.com/channel/UCSt4Fyu2syVMeGBHeZaWzyA'], ['x', 'https://x.com/Snowlui0831']], 0xFF9C0053],
+        ['ItsTapiiii',      'tapi',     ['Musician'], 					                                                [['yt', 'https://www.youtube.com/@ItsTapiiii']], 0xFF363676],
+        ['EmmaPSX',      	'emma',     ['Charter'], 					                                                [['yt', 'https://www.youtube.com/channel/UCbTvTX7u7sYJfS5fIriLc_g'], ['x', 'https://x.com/emmapsx20']], 0xFFB56134],
+        ['E1000',           'emil',    ['Artist', 'Charter'], 					                                        [['yt', 'https://www.youtube.com/@E1000YT/videos'], ['x', 'https://x.com/E1000TWOF ']], 0xFF1A8758]
     ];
 
 	var bg:FlxSprite;
@@ -27,7 +29,7 @@ class CreditsStateYSides extends MusicBeatState
     var currentCharacter:FlxSprite;
     var devInfo:InfoAboutPerson;
 
-	var psych:FlxSprite;
+	var psychText:FlxText;
 	var icons:FlxBackdrop;
 
 	var topY:Float;
@@ -35,6 +37,9 @@ class CreditsStateYSides extends MusicBeatState
 
 	var tweenDuration:Float = 0.1;
     static var curSelected:Int = 0;
+
+	var leftArrow:Alphabet;
+	var rightArrow:Alphabet;
 
 	override function create() 
 	{
@@ -61,27 +66,36 @@ class CreditsStateYSides extends MusicBeatState
 		currentCharacter.antialiasing = ClientPrefs.data.antialiasing;
 		add(currentCharacter);
 
-        devInfo = new InfoAboutPerson('gbv2209', 		['Concept Artist', 'Artist', 'Animator', 'Musician', 'Charter', 'Coder'], 		[['yt', 'https://www.youtube.com/@gBv2209'], ['x', 'https://x.com/gbv2209']]);
+        devInfo = new InfoAboutPerson('gbv2209', 		['Concept Artist', 'Artist', 'Animator', 'Musician', 'Charter', 'Coder'], 		[['yt', 'https://www.youtube.com/@gBv2209'], ['x', 'https://x.com/gbv2209']], 0xFF666666);
         devInfo.x += 200;
         add(devInfo);
 
-		psych = new FlxSprite(500, 1010);
-		psych.loadGraphic(Paths.image('credits2/psychTeam'));
-		psych.screenCenter(X);
-		psych.updateHitbox();
-		psych.scrollFactor.set(0, 1);
-		psych.antialiasing = ClientPrefs.data.antialiasing;
-		add(psych);
+		psychText = new FlxText(0, 0, FlxG.width, 'Press TAB to view Psych Engine credits', 16);
+		psychText.setFormat(Paths.font("FredokaOne-Regular.ttf"), 28, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		psychText.borderSize = 1.25;
+		psychText.y = FlxG.height - psychText.height - 10;
+		psychText.scrollFactor.set(0, 1);
+		psychText.antialiasing = ClientPrefs.data.antialiasing;
+		add(psychText);
 
-		psych.alpha = 0;
-		FlxTween.tween(psych, {alpha: 1}, tweenDuration, {startDelay: 0.6});
+		leftArrow = new Alphabet(10, 300, '<', true);
+		add(leftArrow);
+
+		rightArrow = new Alphabet(10, 300, '>', true);
+		rightArrow.x = FlxG.width - rightArrow.width - 10;
+		add(rightArrow);
 
         changeSelection();
 	}
 
 	var psychScale:Float = 1;
 	override function update(elapsed:Float) {
+
+		super.update(elapsed);
+
 		if (controls.BACK && !watchingCredits) {
+
+			FlxG.sound.play(Paths.sound('cancelMenu'));
 			wentBack = true;
 		
 			backFromCredits = true;
@@ -108,28 +122,27 @@ class CreditsStateYSides extends MusicBeatState
             changeSelection(1);
         }
 
-		var mult = FlxMath.lerp(psych.scale.x, psychScale, elapsed * 7);
-		psych.scale.set(mult, mult);
-
-		if(FlxG.mouse.overlaps(psych) && !watchingCredits)
+		if(FlxG.keys.justPressed.TAB)
 		{
-			psychScale = 1.1;
-			if(FlxG.mouse.justPressed)
-			{
-				watchingCredits = false;
-				MusicBeatState.switchState(new CreditsState());	
-			}
-		}
-		else psychScale = 1;
+			watchingCredits = false;
+			FlxTransitionableState.skipNextTransIn = false;
+			FlxTransitionableState.skipNextTransOut = false;
 
-		super.update(elapsed);
+			MusicBeatState.switchState(new CreditsState());	
+		}
 
 		FlxG.mouse.visible = true;
 	}
 
     function changeSelection(change:Int = 0)
     {
+		FlxG.sound.play(Paths.sound('scrollMenu'));
         curSelected = FlxMath.wrap(curSelected + change, 0, developers.length - 1);
+
+		FlxTween.cancelTweensOf(currentCharacter);
+
+		currentCharacter.scale.set(1.05, 1.05);
+		FlxTween.tween(currentCharacter, {"scale.x": 1, "scale.y": 1}, 0.3, {ease: FlxEase.quartOut});
 
         // reload char
 		currentCharacter.loadGraphic(Paths.image('credits2/people/${developers[curSelected][1]}'));
@@ -138,7 +151,7 @@ class CreditsStateYSides extends MusicBeatState
 		add(currentCharacter);
 
         // reload info
-        devInfo.refresh(developers[curSelected][0], developers[curSelected][2], developers[curSelected][3]);
+        devInfo.refresh(developers[curSelected][0], developers[curSelected][2], developers[curSelected][3], developers[curSelected][4]);
     }
 }
 
@@ -150,7 +163,7 @@ class InfoAboutPerson extends FlxSpriteGroup
 	var socialMediasGrp:FlxSpriteGroup;
 	var socialMedias:Array<Dynamic> = [];
 
-	public function new(name:String, rols:Array<String>, avaibleSocialMedias:Array<Dynamic>)
+	public function new(name:String, rols:Array<String>, avaibleSocialMedias:Array<Dynamic>, color:FlxColor)
 	{
 		super();
 
@@ -168,6 +181,7 @@ class InfoAboutPerson extends FlxSpriteGroup
 		personName.setScale(0.85);
 		personName.x = squareBg.x + squareBg.width / 2 - personName.width / 2;
 		personName.scrollFactor.set();
+		personName.color = color;
 		add(personName);
 
 		rolsGrp = new FlxSpriteGroup();
@@ -191,7 +205,7 @@ class InfoAboutPerson extends FlxSpriteGroup
 			if(socialMediasGrp.members[i-1] != null) socialMediasGrp.members[i-1].x -= socialMediasGrp.members[i-1].width;
 
 			var socialMediaIcon = new FlxSprite();
-			trace('Loading the following social media: ${avaibleSocialMedias[i][0]}');
+			trace('Loading the following social media ($name): ${avaibleSocialMedias[i][0]}');
 			switch(avaibleSocialMedias[i][0])
 			{
 				case 'yt':
@@ -209,10 +223,13 @@ class InfoAboutPerson extends FlxSpriteGroup
 		}
 	}
 
-    public function refresh(name:String, rols:Array<String>, avaibleSocialMedias:Array<Dynamic>)
+    public function refresh(name:String, rols:Array<String>, avaibleSocialMedias:Array<Dynamic>, color:FlxColor)
     {
+		socialMedias = avaibleSocialMedias;
+
         personName.text = name;
 		personName.x = squareBg.x + squareBg.width / 2 - personName.width / 2;
+		if(color != personName.color) personName.color = color;
         
         // reset groups
         rolsGrp.forEach(function(obj:FlxSprite) { rolsGrp.remove(obj); });
@@ -233,7 +250,7 @@ class InfoAboutPerson extends FlxSpriteGroup
 			if(socialMediasGrp.members[i-1] != null) socialMediasGrp.members[i-1].x -= socialMediasGrp.members[i-1].width;
 
 			var socialMediaIcon = new FlxSprite();
-			trace('Loading the following social media: ${avaibleSocialMedias[i][0]}');
+			trace('Loading the following social media ($name): ${avaibleSocialMedias[i][0]}');
 			switch(avaibleSocialMedias[i][0])
 			{
 				case 'yt':

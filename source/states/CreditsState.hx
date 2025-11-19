@@ -180,6 +180,7 @@ class CreditsState extends MusicBeatState
 			if (controls.BACK)
 			{
 				FlxG.sound.play(Paths.sound('cancelMenu'));
+				
 				MusicBeatState.switchState(new CreditsStateYSides());
 				quitting = true;
 			}
