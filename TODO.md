@@ -64,14 +64,14 @@
 - [x] Boyfriend Death (SPOOKY VERSION)
 - [x] Boyfriend Death (PICO VERSION)
 - [x] Spooky kids
-- [ ] Monster
+- [x] Monster
 - [x] Pico
 
 ## HUD
 
 - [x] Pico icons
 - [x] Spooky kids icons
-- [ ] Monster icons
+- [x] Monster icons
 
 ## MENUS
 
@@ -86,15 +86,13 @@
 
 ## OTHER
 
-- [ ] IMPROVE WEEK 1 MECHANIC EXPLANATION
+- [x] IMPROVE WEEK 1 MECHANIC EXPLANATION
 
 - [ ] Week 2 Award
 - [ ] Week 3 Award
 
 - [x] Background (Week 2)
 - [x] Background (Week 3)
-
-- [ ] Cutscene???
 
 - [x] New loading screen
 - [x] New volume soundtray
