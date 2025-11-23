@@ -88,8 +88,10 @@
 
 - [x] IMPROVE WEEK 1 MECHANIC EXPLANATION
 
-- [ ] Week 2 Award
-- [ ] Week 3 Award
+- [x] Week 2 Award
+- [x] Week 3 Award
+
+- [x] Cutscene (Week 2)
 
 - [x] Background (Week 2)
 - [x] Background (Week 3)
