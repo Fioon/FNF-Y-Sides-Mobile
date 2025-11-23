@@ -199,6 +199,13 @@ class AchievementsMenuState extends MusicBeatState
 				_changeSelection();
 			}
 
+			#if debug
+			if(FlxG.keys.justPressed.TAB)
+			{
+				Achievements.unlockAll();
+			}
+			#end
+
 			if(options.length > MAX_PER_ROW)
 			{
 				var add:Int = 0;

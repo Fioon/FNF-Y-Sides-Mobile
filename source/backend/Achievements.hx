@@ -76,6 +76,17 @@ class Achievements {
 		}
 	}
 
+	#if debug
+	public static function unlockAll():Void
+	{
+		for(key => achievement in achievements)
+		{
+			if(!isUnlocked(key))
+				unlock(key, false);
+		}
+	}
+	#end
+
 	public static function save():Void
 	{
 		FlxG.save.data.achievementsUnlocked = achievementsUnlocked;
