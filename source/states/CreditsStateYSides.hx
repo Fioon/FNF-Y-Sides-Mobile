@@ -12,9 +12,9 @@ class CreditsStateYSides extends MusicBeatState
 	var wentBack:Bool = false;
 
     var developers:Array<Dynamic> = [
-        ['gBv2209',         'gbv',      ['Concept Artist', 'Artist', 'Animator', 'Musician', 'Charter', 'Coder'], 		[['yt', 'https://www.youtube.com/@gBv2209'], ['x', 'https://x.com/gbv2209']], 0xFF2F6662],
-        ['Mr. Madera',      'madera',   ['Main Coder', 'Charter'], 						                                [['yt', 'https://www.youtube.com/@mrmadera1235'], ['x', 'https://x.com/MrMadera625']], 0xFF8ACCE1],
-        ['SFoxyDAC',        'foxy',     ['Artist', 'Animator'], 					                                    [['yt', 'https://www.youtube.com/@SFoxyDAC'], ['x', 'https://x.com/SFoxyDAC']], 0xFFDC7D6F],
+        ['gBv2209',         'gbv',      ['Director', 'Concept Artist', 'Artist', 'Animator', 'Musician', 'Charter', 'Coder'], 		[['yt', 'https://www.youtube.com/@gBv2209'], ['x', 'https://x.com/gbv2209']], 0xFF2F6662],
+        ['Mr. Madera',      'madera',   ['Director', 'Main Coder', 'Charter'], 						                                [['yt', 'https://www.youtube.com/@mrmadera1235'], ['x', 'https://x.com/MrMadera625']], 0xFF8ACCE1],
+        ['SFoxyDAC',        'foxy',     ['Co-Director', 'Artist', 'Animator'], 					                                    [['yt', 'https://www.youtube.com/@SFoxyDAC'], ['x', 'https://x.com/SFoxyDAC']], 0xFFDC7D6F],
         ['Zhadnii',         'ema',  ['Musician'], 					                                                [['yt', 'https://youtube.com/@zhadnii_']], 0xFF363676],
         ['FlashMan07',      'flash',    ['Musician', 'Concept Artist', 'Artist'],                                       [['yt', 'https://www.youtube.com/@FlashMan07']], 0xFF912197],
         ['Heromax',         'hero',     ['Concept Artist', 'Artist', 'Charter'], 			                            [['x', 'https://x.com/heromax_2498']], 0xFF424452],
@@ -197,6 +197,7 @@ class InfoAboutPerson extends FlxSpriteGroup
 		{
 			var rolTxt = new Alphabet(0, 0, rols[i], true);
 			rolTxt.setScale(0.7);
+			if(rols[i] == 'Director' || rols[i] == 'Co-Director') rolTxt.color = 0xFFECD032;
 			rolTxt.y = personName.y + personName.height + 30 + ((rolTxt.height + 10) * i);
 			rolTxt.scrollFactor.set();
 			rolTxt.screenCenter(X);
@@ -242,6 +243,7 @@ class InfoAboutPerson extends FlxSpriteGroup
 		{
 			var rolTxt = new Alphabet(0, 0, rols[i], true);
 			rolTxt.setScale(0.7);
+			if(rols[i] == 'Director' || rols[i] == 'Co-Director') rolTxt.color = 0xFFECD032;
 			rolTxt.y = personName.y + personName.height + 30 + ((rolTxt.height + 10) * i);
 			rolTxt.scrollFactor.set();
 			rolTxt.screenCenter(X);
