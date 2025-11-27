@@ -72,8 +72,8 @@ class ControlsSubState extends MusicBeatSubstate
 		options.push([true]);
 		options.push([true, defaultKey]);
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = keyboardColor;
+		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFFBFB4F1);
+		//bg.color = keyboardColor;
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.screenCenter();
 		add(bg);
@@ -501,8 +501,8 @@ class ControlsSubState extends MusicBeatSubstate
 
 	function swapMode()
 	{
-		FlxTween.cancelTweensOf(bg);
-		FlxTween.color(bg, 0.5, bg.color, onKeyboardMode ? gamepadColor : keyboardColor, {ease: FlxEase.linear});
+		//FlxTween.cancelTweensOf(bg);
+		//FlxTween.color(bg, 0.5, bg.color, onKeyboardMode ? gamepadColor : keyboardColor, {ease: FlxEase.linear});
 		onKeyboardMode = !onKeyboardMode;
 
 		curSelected = 0;
