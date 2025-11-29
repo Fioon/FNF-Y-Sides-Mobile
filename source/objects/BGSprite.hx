@@ -3,6 +3,7 @@ package objects;
 class BGSprite extends FlxSprite
 {
 	private var idleAnim:String;
+	public var animOffsets:Array<Dynamic> = [];
 	public function new(image:String, x:Float = 0, y:Float = 0, ?scrollX:Float = 1, ?scrollY:Float = 1, ?animArray:Array<String> = null, ?loop:Bool = false) {
 		super(x, y);
 
@@ -14,6 +15,7 @@ class BGSprite extends FlxSprite
 				if(idleAnim == null) {
 					idleAnim = anim;
 					animation.play(anim);
+					if(animOffsets.length > 0) offset.set(animOffsets[i][0], animOffsets[i][1]);
 				}
 			}
 		} else {

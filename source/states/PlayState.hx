@@ -417,6 +417,7 @@ class PlayState extends MusicBeatState
 			case 'stage': new StageWeek1();
 			case 'halloween': new HalloweenStage();
 			case 'halloweenCreepy': new HalloweenCreepyStage();
+			case 'picoBG': new PicoStage();
 		}
 		if(isPixelStage) introSoundsSuffix = '-pixel';
 
