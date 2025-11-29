@@ -52,6 +52,11 @@ class CreditsStateYSides extends MusicBeatState
 		FlxTransitionableState.skipNextTransIn = true;
 		FlxTransitionableState.skipNextTransOut = true;
 
+		if(FlxG.sound.music.volume < 0.1) {
+			FlxG.sound.playMusic(Paths.music('creditsMenu'));
+			FlxG.sound.music.fadeIn(1);
+		}
+
 		bg = new FlxSprite(-80).makeGraphic(1280, 720, 0xFFBFB4F1);
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
@@ -127,6 +132,7 @@ class CreditsStateYSides extends MusicBeatState
 
 		if (controls.BACK && !watchingCredits) {
 
+			FlxG.sound.music.fadeOut(0.65);
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			wentBack = true;
 
@@ -139,9 +145,12 @@ class CreditsStateYSides extends MusicBeatState
 			MainMenuState.iconsPos.insert(0, icons.x);
 			MainMenuState.iconsPos.insert(1, icons.y);
 
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new MainMenuState());
+			new FlxTimer().start(1, function(tmr:FlxTimer)
+			{
+				FlxTransitionableState.skipNextTransIn = true;
+				FlxTransitionableState.skipNextTransOut = true;
+				MusicBeatState.switchState(new MainMenuState());
+			});
 		}
 
 		if (FlxG.sound.music != null)

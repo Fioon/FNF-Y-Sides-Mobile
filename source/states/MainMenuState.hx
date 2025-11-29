@@ -157,7 +157,8 @@ class MainMenuState extends MusicBeatState
 			FlxTween.tween(characters, {alpha: 1}, 0.7, {ease: FlxEase.quartOut});
 		}
 		else if(CreditsStateYSides.backFromCredits) {
-			CreditsStateYSides.backFromCredits = false;
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.music.fadeIn(1);
 
 			characters.alpha = 0;
 			FlxTween.cancelTweensOf(characters);
@@ -207,6 +208,19 @@ class MainMenuState extends MusicBeatState
 		transition.scale.set(1, 1.2);
 		add(transition);
 
+		if(CreditsStateYSides.backFromCredits)
+		{
+			transition.x = -650;
+			selectedSomethin = true;
+			FlxTween.tween(transition, {x: -2100}, 0.5, {ease: FlxEase.quartOut, onComplete: function(twn:FlxTween)
+			{
+				selectedSomethin = false;
+				transition.x = FlxG.width;
+			}});
+
+			CreditsStateYSides.backFromCredits = false;
+		}
+
 		//FlxG.camera.follow(camFollow, null, 0.15);
 	}
 
@@ -231,9 +245,6 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.sound.music.volume < 0.8)
-			FlxG.sound.music.volume = Math.min(FlxG.sound.music.volume + 0.5 * elapsed, 0.8);
-
 		final hudMousePos = FlxG.mouse.getScreenPosition(FlxG.cameras.list[FlxG.cameras.list.length - 1]);
 
 		var multX = (hudMousePos.x - (FlxG.width / 2)) / (FlxG.width / 2);
@@ -244,6 +255,9 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
+			if (FlxG.sound.music.volume < 0.8)
+				FlxG.sound.music.volume = Math.min(FlxG.sound.music.volume + 0.5 * elapsed, 0.8);
+
 			var allowMouse:Bool = allowMouse;
 			if (allowMouse && ((FlxG.mouse.deltaScreenX != 0 && FlxG.mouse.deltaScreenY != 0) || FlxG.mouse.justPressed)) //FlxG.mouse.deltaScreenX/Y checks is more accurate than FlxG.mouse.justMoved
 			{
@@ -512,6 +526,7 @@ class MainMenuState extends MusicBeatState
 
 	function transitionToCredits()
 	{
+		FlxG.sound.music.fadeOut(0.65);
 		new FlxTimer().start(0.4, function(tmr:FlxTimer)
 		{
 			FlxTween.tween(transition, {x: -650}, 1, {ease: FlxEase.quartOut});
