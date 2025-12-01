@@ -29,6 +29,7 @@ class GalleryStateMusic extends MusicBeatState
         'test',
         'spookeez',
         'south',
+        'monster',
         'pico',
         'philly-nice',
         'blammed'
