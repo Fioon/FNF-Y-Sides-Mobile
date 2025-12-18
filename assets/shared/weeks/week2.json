@@ -2,7 +2,7 @@
 	"songs": [
 		["Spookeez", "frank", [233, 234, 255]],
 		["South", "frank", [233, 234, 255]],
-		["Monster", "monster", [233, 234, 255]]
+		["Monster", "monster", [153, 51, 102]]
 	],
 
 	"weekCharacters": [

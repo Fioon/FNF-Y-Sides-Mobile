@@ -1,0 +1,41 @@
+{
+	"events": [
+		[
+			5962.73291925466,
+			[
+				["camera_flash", "1", ""]
+			]
+		],
+		[
+			79799.4987468672,
+			[
+				["smooth_camera_zoom", "0.75", "0.9, quartOut"]
+			]
+		],
+		[
+			88743.5981257492,
+			[
+				["smooth_camera_zoom", "0.7", "0.9, quartOut"]
+			]
+		],
+		[
+			99178.3807344448,
+			[
+				["Change Scroll Speed", "1.2", "0.1"]
+			]
+		],
+		[
+			100669.063964258,
+			[
+				["camera_flash", "1", ""]
+			]
+		],
+		[
+			100680.028876539,
+			[
+				["smooth_camera_zoom", "0.65", "0.9, quartOut"]
+			]
+		]
+	],
+	"format": "psych_v1"
+}

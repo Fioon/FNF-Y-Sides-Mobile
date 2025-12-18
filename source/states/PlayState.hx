@@ -299,6 +299,10 @@ class PlayState extends MusicBeatState
 	];
 	public var use3Player:Bool = false;
 
+	// monster specific stuff (sprites, stuff, stuff...)
+	var blackThing:FlxSprite;
+	var vignette:FlxSprite;
+
 	private static var _lastLoadedModDirectory:String = '';
 	public static var nextReloadAll:Bool = false;
 	override public function create()
@@ -523,6 +527,12 @@ class PlayState extends MusicBeatState
 		add(uiGroup);
 		add(noteGroup);
 
+		vignette = new FlxSprite().loadGraphic(Paths.image('vignette'));
+		vignette.alpha = 0.85;
+		vignette.cameras = [camHUD];
+		if(curSong != 'Monster') vignette.alpha = 0;
+		add(vignette);
+
 		Conductor.songPosition = -Conductor.crochet * 5 + Conductor.offset;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
 
@@ -734,6 +744,13 @@ class PlayState extends MusicBeatState
 		uiGroup.cameras = [camHUD];
 		noteGroup.cameras = [camHUD];
 		comboGroup.cameras = [camHUD];
+
+		blackThing = new FlxSprite().makeGraphic(1280, 1280, 0xFF000000);
+		if(curSong != 'Monster') blackThing.alpha = 0;
+		blackThing.cameras = [camHUD];
+		add(blackThing);
+
+		if(curSong == 'Monster') skipCountdown = true;
 
 		startingSong = true;
 
@@ -1907,7 +1924,8 @@ class PlayState extends MusicBeatState
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 	var freezeCamera:Bool = false;
-	var allowDebugKeys:Bool = #if debug true #else false #end;
+	//var allowDebugKeys:Bool = #if debug true #else false #end; 
+	var allowDebugKeys:Bool = true;
 
 	var isLiftMechanicEnabled:Bool = true;
 	var liftAmount:Int = 0;
@@ -4110,6 +4128,28 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(songCard, {alpha: 1, y: songCard.y - 10}, 0.3);
 					case 64:
 						FlxTween.tween(songCard, {alpha: 0, y: songCard.y - 10}, 0.3);
+				}
+			case 'Monster':
+				switch(curStep)
+				{
+					case 64:
+						blackThing.alpha = 0;
+
+						/*
+						for(obj in uiGroup)
+						{
+							var targetAlpha = obj.alpha;
+							obj.alpha = 0;
+							FlxTween.tween(obj, {alpha: targetAlpha}, 2);
+						}
+
+						for(obj in strumLineNotes)
+						{
+							var targetAlpha = obj.alpha;
+							obj.alpha = 0;
+							FlxTween.tween(obj, {alpha: targetAlpha}, 2);
+						}
+						*/
 				}
 			case 'Pico':
 				switch(curStep)
