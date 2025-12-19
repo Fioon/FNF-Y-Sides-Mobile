@@ -528,7 +528,7 @@ class PlayState extends MusicBeatState
 		if(SONG.song != 'Monster') vignette.alpha = 0;
 		add(vignette);
 
-		blackThingBelow = new FlxSprite().makeGraphic(1280, 1280, 0xFF000000);
+		blackThingBelow = new FlxSprite().makeGraphic(1480, 1280, 0xFF000000);
 		if(SONG.song != 'Monster') blackThingBelow.alpha = 0;
 		blackThingBelow.cameras = [camHUD];
 		add(blackThingBelow);
@@ -760,7 +760,7 @@ class PlayState extends MusicBeatState
 		noteGroup.cameras = [camHUD];
 		comboGroup.cameras = [camHUD];
 
-		blackThing = new FlxSprite().makeGraphic(1280, 1280, 0xFF000000);
+		blackThing = new FlxSprite().makeGraphic(1480, 1280, 0xFF000000);
 		if(curSong != 'Monster') blackThing.alpha = 0;
 		blackThing.cameras = [camHUD];
 		add(blackThing);
