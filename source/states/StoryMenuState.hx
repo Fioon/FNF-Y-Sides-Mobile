@@ -150,7 +150,9 @@ class StoryMenuState extends MusicBeatState
 					lock.animation.addByPrefix('lock', 'lock');
 					lock.animation.play('lock');
 					lock.ID = i;
-					grpLocks.add(lock);
+					//grpLocks.add(lock);
+
+					weekThing.color = 0xFF777777;
 				}
 				num++;
 			}
@@ -572,7 +574,7 @@ class StoryMenuState extends MusicBeatState
 		for (num => item in grpWeekText.members)
 		{
 			item.alpha = 0;
-			if (num - curWeek == 0 && unlocked) {
+			if (num - curWeek == 0) {
 				item.alpha = 1;
 			}
 		}

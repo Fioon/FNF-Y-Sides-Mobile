@@ -12,10 +12,10 @@
 	],
 	"weekBackground": "stage",
 
-	"storyName": "Daddy Dearest",
-	"weekBefore": "tutorial",
-	"weekName": "Week 1",
-	"startUnlocked": true,
+	"storyName": "Spooky Month",
+	"weekBefore": "week1",
+	"weekName": "Week 2",
+	"startUnlocked": false,
 
 	"hideStoryMode": false,
 	"hideFreeplay": false
