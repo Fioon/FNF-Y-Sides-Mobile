@@ -528,7 +528,7 @@ class PlayState extends MusicBeatState
 		if(SONG.song != 'Monster') vignette.alpha = 0;
 		add(vignette);
 
-		blackThingBelow = new FlxSprite().makeGraphic(1280, 720, 0xFF000000);
+		blackThingBelow = new FlxSprite().makeGraphic(1280, 1280, 0xFF000000);
 		if(SONG.song != 'Monster') blackThingBelow.alpha = 0;
 		blackThingBelow.cameras = [camHUD];
 		add(blackThingBelow);
