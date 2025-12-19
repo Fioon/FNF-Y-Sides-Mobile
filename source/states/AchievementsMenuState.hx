@@ -374,6 +374,7 @@ class AchievementsMenuState extends MusicBeatState
 	{
 		for(achievement => data in Achievements.achievements)
 		{
+			if(data.hidden) continue;
 			if(!Achievements.isUnlocked(achievement))
 				return false;
 		}

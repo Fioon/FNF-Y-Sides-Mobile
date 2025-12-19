@@ -39,6 +39,7 @@ class Achievements {
 		createAchievement('weekTest_nomissfreeplay',	{name: "You definitely tested it", description: "Play test with no Misses."});
 		createAchievement('dumbbells',					{name: "Stop playing with those dumbbells", description: "Lift dumbbells 50 times.", maxScore: 50, maxDecimals: 0});
 		createAchievement('click',						{name: "The art of clicks", description: "Click 1000 times", maxScore: 1000, maxDecimals: 0, hidden: true});
+		createAchievement('click2',						{name: "Are you seriously still clicking?", description: "Click 2000 times", maxScore: 2000, maxDecimals: 0, hidden: true});
 		
 		//dont delete this thing below
 		_originalLength = _sortID + 1;
