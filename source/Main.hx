@@ -97,10 +97,13 @@ class Main extends Sprite
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
-		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		//Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		StorageUtil.requestPermissions();
+		Sys.setCwd(StorageUtil.getStorageDirectory());
 		#elseif ios
 		Sys.setCwd(lime.system.System.applicationStorageDirectory);
 		#end
+			
 		#if VIDEOS_ALLOWED
 		hxvlc.util.Handle.init(#if (hxvlc >= "1.8.0")  ['--no-lua'] #end);
 		#end
@@ -182,7 +185,7 @@ class Main extends Sprite
 		game._customSoundTray = backend.CustomSoundTray;
 		addChild(game);
 
-		#if !mobile
+		//#if !mobile
 		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -190,7 +193,7 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
-		#end
+		//#end
 
 		#if linux
 		var icon = Image.fromFile("icon.png");
@@ -205,6 +208,13 @@ class Main extends Sprite
 		FlxG.fixedTimestep = false;
 		FlxG.game.focusLostFramerate = 60;
 		FlxG.keys.preventDefaultKeys = [TAB];
+
+		#if mobile
+		#if android 
+		FlxG.android.preventDefaultKeys = [BACK]; 
+		#end
+		LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver;
+		#end
 		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
