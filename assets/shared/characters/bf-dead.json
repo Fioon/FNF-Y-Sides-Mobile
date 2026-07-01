@@ -1,39 +1,55 @@
 {
 	"animations": [
 		{
-			"offsets": [20, 0],
-			"loop": false,
-			"fps": 24,
-			"anim": "firstDeath",
-			"indices": [],
-			"name": "firstdeath"
-		},
-		{
-			"offsets": [-53, -101],
 			"loop": true,
-			"fps": 24,
+			"offsets": [3, 2],
 			"anim": "deathLoop",
-			"indices": [],
-			"name": "deathloop"
+			"fps": 24,
+			"name": "deathLoop",
+			"indices": []
 		},
 		{
-			"offsets": [-53, 110],
 			"loop": false,
+			"offsets": [3, 2],
+			"anim": "firstDeath",
 			"fps": 24,
-			"anim": "deathConfirm",
-			"indices": [],
-			"name": "deathend"
+			"name": "firstDeath",
+			"indices": []
 		}
 	],
 	"vocals_file": "",
 	"no_antialiasing": false,
-	"image": "characters/BF-Death",
-	"position": [-210, 0],
+	"censor_offset_right": [
+		0,
+		0
+	],
+	"image": "characters/bfDeath-V2",
+	"position": [-482, -249],
+	"icon_offset": [
+		0,
+		0
+	],
 	"healthicon": "face",
+	"censor_offset_down": [
+		0,
+		0
+	],
+	"censor_offset_idle": [
+		0,
+		0
+	],
+	"censor_offset_left": [
+		0,
+		0
+	],
 	"flip_x": true,
 	"healthbar_colors": [49, 176, 209],
-	"camera_position": [0, 0],
+	"censor_offset_up": [
+		0,
+		0
+	],
+	"camera_position": [-100, 70],
 	"sing_duration": 4,
-	"scale": 1,
+	"scale": 0.95,
 	"_editor_isPlayer": true
 }

@@ -4,46 +4,54 @@
 			"loop": true,
 			"offsets": [0, 0],
 			"anim": "idle",
-			"fps": 24,
+			"fps": 12,
 			"name": "idle",
 			"indices": []
 		},
 		{
 			"loop": true,
-			"offsets": [39, 8],
+			"offsets": [0, 0],
 			"anim": "happy",
-			"fps": 24,
+			"fps": 6,
 			"name": "happy",
 			"indices": []
 		},
 		{
 			"loop": true,
-			"offsets": [-21, -4],
+			"offsets": [-1, 1],
 			"anim": "shocked",
-			"fps": 24,
+			"fps": 6,
 			"name": "shocked",
 			"indices": []
 		},
 		{
 			"loop": true,
-			"offsets": [14, 0],
+			"offsets": [1, 0],
 			"anim": "laugh",
-			"fps": 24,
+			"fps": 6,
 			"name": "laugh",
 			"indices": []
 		},
 		{
 			"loop": true,
-			"offsets": [-90, 0],
+			"offsets": [6, 0],
 			"anim": "question",
-			"fps": 24,
+			"fps": 6,
 			"name": "question",
 			"indices": []
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [],
+			"fps": 6,
+			"anim": "talk",
+			"loop": true,
+			"name": "talk"
 		}
 	],
 	"vocals_file": "",
 	"no_antialiasing": false,
-	"image": "optionsMenu/options-guy",
+	"image": "optionsMenu/new/optionsGuyNew",
 	"position": [0, 0],
 	"healthicon": "face",
 	"flip_x": false,

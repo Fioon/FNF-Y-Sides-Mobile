@@ -25,6 +25,9 @@ class MusicBeatState extends FlxState
 	public static function getVariables()
 		return getState().variables;
 
+	static var iconTransitionActive:Bool = false;
+	static var lastIconName:String = '';
+	static var lastDuration:Float = 0.5;
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		#if MODS_ALLOWED Mods.updatedOnState = false; #end
@@ -34,7 +37,15 @@ class MusicBeatState extends FlxState
 		super.create();
 
 		if(!skip) {
-			openSubState(new CustomFadeTransition(0.5, true));
+			if(iconTransitionActive) 
+			{	
+				persistentUpdate = true;
+				openSubState(new IconFadeTransition(lastDuration, lastIconName, false, function() {IconFadeTransition.instance?.close();}));
+			}
+			else
+			{
+				openSubState(new CustomFadeTransition(0.5, true));
+			}
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 		timePassedOnState = 0;
@@ -69,10 +80,12 @@ class MusicBeatState extends FlxState
 
 		if(FlxG.mouse.justPressed) {
 			if(FlxG.mouse.visible) {
-				var clicks = Achievements.addScore('click');
-				var clicks2 = Achievements.addScore('click2');
+				var clicks = Achievements.addScore('click', #if debug 100 #else 1 #end);
+				var clicks2 = Achievements.addScore('click2', #if debug 100 #else 1 #end);
+				var clicks3 = Achievements.addScore('click3', #if debug 100 #else 1 #end);
 				trace('Clicked $clicks times...');
 				trace('Clicked $clicks2 times... (V2)');
+				trace('Clicked $clicks3 times... (V3)'); // when is this ending...
 			}
 		}
 
@@ -109,15 +122,17 @@ class MusicBeatState extends FlxState
     function createSplash()
 	{
         trace('creating splash');
-		var splash = new FlxSprite(FlxG.mouse.x, FlxG.mouse.y);
+		var position = FlxG.mouse.getScreenPosition(FlxG.cameras.list[FlxG.cameras.list.length - 1]);
+		var splash = new FlxSprite(position.x, position.y);
 		splash.frames = Paths.getSparrowAtlas("boing");
 		splash.animation.addByPrefix('s', 'boing', 24, false);
 		splash.animation.play('s');
 		splash.offset.set(30, 35);
 		splash.antialiasing = ClientPrefs.data.antialiasing;
+		splash.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]]; // add to the last camera (the one that draws on top of the others)
 		add(splash);
 
-		trace('splash position: ${splash.x}, ${splash.y} | mouse position: ${FlxG.mouse.x}, ${FlxG.mouse.y}');
+		trace('splash position: ${splash.x}, ${splash.y} | mouse position: ${position.x}, ${position.y}');
 
 		splash.animation.finishCallback = function(name:String)
 		{
@@ -189,6 +204,19 @@ class MusicBeatState extends FlxState
 		else startTransition(nextState);
 		FlxTransitionableState.skipNextTransIn = false;
 	}
+	
+	public static function switchStateIcon(nextState:FlxState = null, iconName:String, duration:Float) {
+		if(nextState == null) nextState = FlxG.state;
+		if(nextState == FlxG.state)
+		{
+			resetState();
+			return;
+		}
+
+		if(FlxTransitionableState.skipNextTransIn) FlxG.switchState(nextState);
+		else startIconTransition(nextState, iconName, duration);
+		FlxTransitionableState.skipNextTransIn = false;
+	}
 
 	public static function resetState() {
 		if(FlxTransitionableState.skipNextTransIn) FlxG.resetState();
@@ -202,11 +230,32 @@ class MusicBeatState extends FlxState
 		if(nextState == null)
 			nextState = FlxG.state;
 
+		iconTransitionActive = false;
+
 		FlxG.state.openSubState(new CustomFadeTransition(0.5, false));
 		if(nextState == FlxG.state)
 			CustomFadeTransition.finishCallback = function() FlxG.resetState();
 		else
 			CustomFadeTransition.finishCallback = function() FlxG.switchState(nextState);
+	}
+
+	public static function startIconTransition(nextState:FlxState = null, iconName:String, duration:Float, ?transIn:Bool = true)
+	{
+		if(nextState == null)
+			nextState = FlxG.state;
+
+		lastDuration = duration;
+		iconTransitionActive = true;
+		lastIconName = iconName;
+		var callback:Void->Void = function() {};
+		if(transIn)
+		{
+			callback = function()
+			{
+				FlxG.switchState(nextState);
+			}
+		}
+		FlxG.state.openSubState(new IconFadeTransition(duration, iconName, transIn, callback));
 	}
 
 	public static function getState():MusicBeatState {

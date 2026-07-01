@@ -7,34 +7,42 @@ import flixel.FlxObject;
 import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 
-import states.StoryMenuState;
-import states.FreeplayState;
+import states.NewStoryMenuState;
+import states.NewFreeplayState;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
 	public var boyfriend:Character;
+	public var boyfriendHey:Character;
 	var camFollow:FlxObject;
 
 	var stagePostfix:String = "";
 
-	public static var characterName:String = 'bf-dead';
+	public static var characterName:String = 'bf-dead-new';
 	public static var deathSoundName:String = 'fnf_loss_sfx';
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
 	public static var deathDelay:Float = 0;
 
+	public var firstDeathDelay:Float = 0;
+
+	public var currentCamPos:FlxObject;
+
+	var blackBackground:FlxSprite;
+
 	public static var instance:GameOverSubstate;
-	public function new(?playStateBoyfriend:Character = null)
+	public function new(?playStateBoyfriend:Character = null, currentCamPos:FlxObject)
 	{
 		if(playStateBoyfriend != null && playStateBoyfriend.curCharacter == characterName) //Avoids spawning a second boyfriend cuz animate atlas is laggy
 		{
 			this.boyfriend = playStateBoyfriend;
 		}
+		if(currentCamPos != null) this.camFollow = currentCamPos;
 		super();
 	}
 
 	public static function resetVariables() {
-		characterName = 'bf-dead';
+		characterName = 'bf-dead-new';
 		deathSoundName = 'fnf_loss_sfx';
 		loopSoundName = 'gameOver';
 		endSoundName = 'gameOverEnd';
@@ -53,40 +61,168 @@ class GameOverSubstate extends MusicBeatSubstate
 	var charX:Float = 0;
 	var charY:Float = 0;
 
+	var tomatosFrontGrp:FlxTypedGroup<FlxSprite>;
+	var tomatosBackGrp:FlxTypedGroup<FlxSprite>;
+
+	var coolLight:FlxSprite;
+	var retryButton:FlxSprite;
+
 	var overlay:FlxSprite;
 	var overlayConfirmOffsets:FlxPoint = FlxPoint.get();
 	override function create()
 	{
 		instance = this;
 
+		bgColor = FlxColor.TRANSPARENT;
+
 		Conductor.songPosition = 0;
+
+		blackBackground = new FlxSprite();
+		blackBackground.makeGraphic(FlxG.width * 2, FlxG.height * 2, 0xFF000000);
+		blackBackground.alpha = 0;
+		blackBackground.screenCenter();
+		blackBackground.scrollFactor.set();
+		add(blackBackground);
+
+		FlxTween.tween(blackBackground, {alpha: 0.6}, 1.2);
+
+		tomatosBackGrp = new FlxTypedGroup<FlxSprite>();
+		add(tomatosBackGrp);
 
 		if(boyfriend == null)
 		{
-			boyfriend = new Character(PlayState.instance.boyfriend.getScreenPosition().x, PlayState.instance.boyfriend.getScreenPosition().y, characterName, true);
+			boyfriend = new Character(PlayState.instance.boyfriend.getPosition().x, PlayState.instance.boyfriend.getPosition().y, characterName, true);
+			//boyfriend.x += boyfriend.positionArray[0] - PlayState.instance.boyfriend.positionArray[0];
+			//boyfriend.y += boyfriend.positionArray[1] - PlayState.instance.boyfriend.positionArray[1];
 			boyfriend.x += boyfriend.positionArray[0] - PlayState.instance.boyfriend.positionArray[0];
 			boyfriend.y += boyfriend.positionArray[1] - PlayState.instance.boyfriend.positionArray[1];
+			// if(PlayState.instance.boyfriend.shader != null) boyfriend.shader = PlayState.instance.boyfriend.shader;
+
 		}
 		boyfriend.skipDance = true;
 		add(boyfriend);
 
+		if(boyfriendHey == null)
+		{
+			var targetName:String = '';
+			switch(characterName)
+			{
+				case 'bf-xmas-dead': targetName = 'bf-christmas';
+				case 'bf-spooky-dead': targetName = 'bf-spooky';
+				default: targetName = 'bf';
+			}
+			boyfriendHey = new Character(PlayState.instance.boyfriend.getPosition().x, PlayState.instance.boyfriend.getPosition().y, targetName, true);
+			//boyfriend.x += boyfriend.positionArray[0] - PlayState.instance.boyfriend.positionArray[0];
+			//boyfriend.y += boyfriend.positionArray[1] - PlayState.instance.boyfriend.positionArray[1];
+			boyfriendHey.x += boyfriendHey.positionArray[0] - PlayState.instance.boyfriend.positionArray[0];
+			boyfriendHey.y += boyfriendHey.positionArray[1] - PlayState.instance.boyfriend.positionArray[1];
+			// if(PlayState.instance.boyfriend.shader != null) boyfriendHey.shader = PlayState.instance.boyfriend.shader;
+			boyfriendHey.visible = false;
+		}
+		boyfriendHey.skipDance = true;
+		add(boyfriendHey);
+
+		retryButton = new FlxSprite();
+		retryButton.frames = Paths.getSparrowAtlas('gameover/retryButton');
+		retryButton.animation.addByPrefix('idle', 'idle', 4, true);
+		retryButton.animation.play('idle', true);
+		retryButton.antialiasing = ClientPrefs.data.antialiasing;
+		retryButton.alpha = 0;
+		retryButton.x = boyfriend.getGraphicMidpoint().x - (retryButton.width / 2) + 40;
+		if(CharSelectState.currentFreeplaySelectedName == 'pico') retryButton.x = boyfriend.getGraphicMidpoint().x - (retryButton.width / 2) + 40 + 130;
+		retryButton.y = boyfriend.y + 250 - retryButton.height - 0;
+		if(CharSelectState.currentFreeplaySelectedName == 'pico') retryButton.y += -40;
+		add(retryButton);
+
+		coolLight = new FlxSprite();
+		coolLight.loadGraphic(Paths.image('gameover/light'));
+		//coolLight.scrollFactor.set(0, 0);
+		coolLight.alpha = 0;
+		coolLight.antialiasing = ClientPrefs.data.antialiasing;
+		coolLight.blend = ADD;
+		coolLight.screenCenter(X);
+		coolLight.scale.set(1.1, 1.1);
+		coolLight.updateHitbox();
+		//coolLight.y += -36;
+		coolLight.x = boyfriend.getGraphicMidpoint().x - (coolLight.width / 2);
+		if(CharSelectState.currentFreeplaySelectedName == 'pico') coolLight.x = boyfriend.getGraphicMidpoint().x - (coolLight.width / 2) + 130;
+		coolLight.y = boyfriend.y + 250 - 400;
+		add(coolLight);
+
+		tomatosFrontGrp = new FlxTypedGroup<FlxSprite>();
+		add(tomatosFrontGrp);
+
+		new FlxTimer().start(3, function(tmr:FlxTimer)
+		{
+			var tomatoBack = new FlxSprite();
+			tomatoBack.loadGraphic(Paths.image('gameover/tomatoback'));
+			tomatoBack.antialiasing = ClientPrefs.data.antialiasing;
+			tomatoBack.scrollFactor.set();
+			tomatoBack.y = FlxG.random.int(-200, -250);
+			tomatoBack.x = FlxG.random.int(-30, FlxG.width - 50);
+			tomatoBack.velocity.set(0, 70);
+			tomatosBackGrp.add(tomatoBack);
+
+			var tomatoFront = new FlxSprite();
+			tomatoFront.loadGraphic(Paths.image('gameover/tomatofront'));
+			tomatoFront.antialiasing = ClientPrefs.data.antialiasing;
+			tomatoFront.scrollFactor.set();
+			tomatoFront.y = FlxG.random.int(-200, -250);
+			tomatoFront.x = FlxG.random.int(-30, FlxG.width - 50);
+			tomatoFront.velocity.set(0, 85);
+			tomatosFrontGrp.add(tomatoFront);
+		}, 0);
+
+		// lights sequence
+		new FlxTimer().start(1.73, function(tmr:FlxTimer)
+		{
+			coolLight.alpha = 0.87;
+		});
+
+		new FlxTimer().start(1.83, function(tmr:FlxTimer)
+		{
+			coolLight.alpha = 0;
+		});
+
+		new FlxTimer().start(1.94, function(tmr:FlxTimer)
+		{
+			coolLight.alpha = 1;
+		});
+
+		new FlxTimer().start(2.02, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(retryButton, {alpha: 1}, 0.7);
+		});
+
 		FlxG.sound.play(Paths.sound(deathSoundName));
-		FlxG.camera.scroll.set();
-		FlxG.camera.target = null;
+		//FlxG.camera.scroll.set();
+		//FlxG.camera.target = null;
 
 		boyfriend.playAnim('firstDeath');
 
-		camFollow = new FlxObject(0, 0, 1, 1);
+		if(camFollow == null) 
+		{
+			camFollow = new FlxObject(0, 0, 1, 1);
+			add(camFollow);
+		}
+
+		//FlxG.camera.scroll.x = camFollow.x;
+		//FlxG.camera.scroll.y = camFollow.y;
+
 		camFollow.setPosition(boyfriend.getGraphicMidpoint().x + boyfriend.cameraPosition[0], boyfriend.getGraphicMidpoint().y + boyfriend.cameraPosition[1]);
-		FlxG.camera.focusOn(new FlxPoint(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
-		FlxG.camera.follow(camFollow, LOCKON, 0.01);
-		add(camFollow);
+		//FlxG.camera.focusOn(new FlxPoint(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
+		//FlxG.camera.follow(camFollow, LOCKON, 0.015);
+
+		FlxG.camera.followLerp = 0.02;
+
+		FlxTween.cancelTweensOf(FlxG.camera);
+		FlxTween.tween(FlxG.camera, {zoom: 0.9}, 3, {ease: FlxEase.smoothStepInOut});
 		
 		PlayState.instance.setOnScripts('inGameOver', true);
 		PlayState.instance.callOnScripts('onGameOverStart', []);
 		FlxG.sound.music.loadEmbedded(Paths.music(loopSoundName), true);
 
-		if(characterName == 'pico-dead')
+		if(characterName == 'pico-dead-og')
 		{
 			overlay = new FlxSprite(boyfriend.x + 205, boyfriend.y - 80);
 			overlay.frames = Paths.getSparrowAtlas('Pico_Death_Retry');
@@ -136,6 +272,26 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
+		tomatosBackGrp.forEach(function(spr:FlxSprite)
+		{
+			spr.angle += 15 * elapsed;
+			if(spr.y > 800) 
+			{
+				tomatosBackGrp.remove(spr);
+				spr.destroy();
+			}
+		});
+
+		tomatosFrontGrp.forEach(function(spr:FlxSprite)
+		{
+			spr.angle += 15.5 * elapsed;
+			if(spr.y > 800) 
+			{
+				tomatosFrontGrp.remove(spr);
+				spr.destroy();
+			}
+		});
+
 		PlayState.instance.callOnScripts('onUpdate', [elapsed]);
 
 		var justPlayedLoop:Bool = false;
@@ -167,9 +323,9 @@ class GameOverSubstate extends MusicBeatSubstate
 	
 				Mods.loadTopMod();
 				if (PlayState.isStoryMode)
-					MusicBeatState.switchState(new StoryMenuState());
+					MusicBeatState.switchState(new NewStoryMenuState());
 				else
-					MusicBeatState.switchState(new FreeplayState());
+					MusicBeatState.switchState(new NewFreeplayState(CharSelectState.currentFreeplaySelectedName == 'pico'));
 	
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				PlayState.instance.callOnScripts('onGameOverConfirm', [false]);
@@ -215,11 +371,21 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		if (!isEnding)
 		{
+			FlxTimer.globalManager.clear();
+			
+			FlxTween.cancelTweensOf(retryButton);
+
+			FlxTween.tween(retryButton, {alpha: 0, y: retryButton.y + 10}, 1.2, {ease: FlxEase.quartOut});
+
 			isEnding = true;
 			if(boyfriend.hasAnimation('deathConfirm'))
 				boyfriend.playAnim('deathConfirm', true);
-			else if(boyfriend.hasAnimation('deathLoop'))
-				boyfriend.playAnim('deathLoop', true);
+			else
+			{
+				boyfriend.visible = false;
+				boyfriendHey.visible = true;
+				boyfriendHey.playAnim('hey', true);
+			}
 
 			if(overlay != null && overlay.animation.exists('deathConfirm'))
 			{

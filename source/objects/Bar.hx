@@ -100,6 +100,11 @@ class Bar extends FlxSpriteGroup
 			leftBar.setPosition(bg.x, bg.y);
 			rightBar.setPosition(bg.x, bg.y);
 		}
+		else
+		{
+			leftBar.setPosition(bg.x + 36 , bg.y + 25);
+			rightBar.setPosition(bg.x + 36, bg.y + 25);
+		}
 
 		var leftSize:Float = 0;
 		if(leftToRight) leftSize = FlxMath.lerp(0, leftBar.width, percent / 100);

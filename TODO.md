@@ -122,3 +122,66 @@
 - [x] RECOMMENDATION: Needs more difficulty, new players ain't playing Y Sides first so we can add something to make it a bit harder (such as health drain)
 - [x] NEW: Add a "Time Played" system, where the game constantly record how much have you been playing the mod
 - [x] NEW: Animated icons
+
+# WEEK 4 & 5 UPDATE
+
+## SONGS
+- [x] Satin Panties
+- [x] High
+- [x] MILF
+- [x] Cocoa
+- [x] Eggnog
+
+## HUD
+
+- [x] Mommy sprites
+- [x] Mommy icons
+- [x] Mommy and daddy xmas sprites
+- [x] Mommy and daddy xmas icons
+- [x] BF (Hair Blow Version)
+- [x] GF (Hair Blow Version)
+- [x] BF (Xmas Version)
+- [x] GF (Xmas Version)
+
+## MENUS
+
+- [x] Save files
+
+## OTHER
+
+- [x] RAM Mechanic
+- [x] Satin Panties (SONGCARD)
+- [x] High (SONGCARD)
+- [x] MILF (SONGCARD)
+- [x] Cocoa (SONGCARD)
+- [x] Eggnog (SONGCARD)
+- [x] Improbable Outset (SONGCARD)
+- [x] Madness (SONGCARD)
+- [x] RAM (SONGCARD)
+- [x] Returny (SONGCARD)
+- [x] Fresh (Pico Mix) (SONGCARD)
+- [x] South (Pico Mix) (SONGCARD)
+- [x] High (Pico Mix) (SONGCARD)
+- [x] MILF (Pico Mix) (SONGCARD)
+
+- [x] Week 4 Award
+- [x] Week 5 Award
+- [x] First purchase Award
+
+- [x] Pico resulsts screen sprites
+- [x] New simple events for Pico (+ speed up chart)
+
+- [x] Performance Menu overhaul
+- [x] Main Menu Overhaul
+- [x] Story Menu Overhaul
+- [x] Freeplay Menu Overhaul
+    - [x] Character selector
+- [x] Gallery Overhaul
+- [x] Vault Menu
+    - [x] Shop Menu
+    - [x] Collectionables Menu
+    - [x] Awards Menu
+
+## SPECIFIC
+
+- [x] ENHANCEMENT: Mechanics are easier in normal and easy difficulties

@@ -9,8 +9,8 @@ import flixel.addons.display.FlxBackdrop;
 
 import flixel.util.FlxStringUtil;
 import flixel.math.FlxMath;
-import states.StoryMenuState;
-import states.FreeplayState;
+import states.NewStoryMenuState;
+import states.NewFreeplayState;
 
 class NewPauseSubState extends MusicBeatSubstate
 {
@@ -83,6 +83,12 @@ class NewPauseSubState extends MusicBeatSubstate
         });
 
         camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
+
+        // because it's the first one displayed and no controls are input, the resume button has to already start with the animation
+        resumeAngleTween = FlxTween.num(-coolAnimAngleValue, coolAnimAngleValue, coolAnimDurationValue, {ease: coolAnimEaseValue, type: PINGPONG}, function(v:Float)
+        {
+            resumeAngleTarget = v;
+        });
     }
 
 	public static var songName:String = null;
@@ -98,29 +104,113 @@ class NewPauseSubState extends MusicBeatSubstate
     var restartButtonScale:Float = 1;
     var exitButtonScale:Float = 1;
 
+    var resumeAngleTarget:Float = 0;
+    var restartAngleTarget:Float = 0;
+    var exitAngleTarget:Float = 0;
+
+    var resumeAngleTween:FlxTween;
+    var restartAngleTween:FlxTween;
+    var exitAngleTween:FlxTween;
+
+    var coolAnimAngleValue:Float = 2;
+    var coolAnimDurationValue:Float = 1.5;
+    var coolAnimEaseValue:EaseFunction = FlxEase.smoothStepInOut;
+
     override function update(elapsed:Float)
     {
         super.update(elapsed);
 
         var lerpSpeed:Float = elapsed * 10;
+
         var resumeMult:Float = FlxMath.lerp(paperObject.resumeButton.scale.x, resumeButtonScale, lerpSpeed);
         var restartMult:Float = FlxMath.lerp(paperObject.restartButton.scale.x, restartButtonScale, lerpSpeed);
         var exitMult:Float = FlxMath.lerp(paperObject.exitButton.scale.x, exitButtonScale, lerpSpeed);
+
+        var resumeAngle:Float = FlxMath.lerp(paperObject.resumeButton.angle, resumeAngleTarget, lerpSpeed);
+        var restartAngle:Float = FlxMath.lerp(paperObject.restartButton.angle, restartAngleTarget, lerpSpeed);
+        var exitAngle:Float = FlxMath.lerp(paperObject.exitButton.angle, exitAngleTarget, lerpSpeed);
 
         paperObject.resumeButton.scale.set(resumeMult, resumeMult);
         paperObject.restartButton.scale.set(restartMult, restartMult);
         paperObject.exitButton.scale.set(exitMult, exitMult);
 
+        paperObject.resumeButton.angle = resumeAngle;
+        paperObject.restartButton.angle = restartAngle;
+        paperObject.exitButton.angle = exitAngle;
+
         if(controls.UI_UP_P || controls.UI_DOWN_P)
         {
             FlxG.sound.play(Paths.sound('scrollMenu'), 1);
             isResumeSelected = !isResumeSelected;
+            if(isResumeSelected)
+            {
+                resumeAngleTween = FlxTween.num(-coolAnimAngleValue, coolAnimAngleValue, coolAnimDurationValue, {ease: coolAnimEaseValue, type: PINGPONG}, function(v:Float)
+                {
+                    resumeAngleTarget = v;
+                });
+                if(restartAngleTween != null) restartAngleTween.cancel();
+                if(exitAngleTween != null) exitAngleTween.cancel();
+
+                restartAngleTarget = 0;
+                exitAngleTarget = 0;
+            }
+            else
+            {
+                if(isRestartSelected)
+                {
+                    if(resumeAngleTween != null) resumeAngleTween.cancel();
+                    resumeAngleTarget = 0;
+                    restartAngleTween = FlxTween.num(-coolAnimAngleValue, coolAnimAngleValue, coolAnimDurationValue, {ease: coolAnimEaseValue, type: PINGPONG}, function(v:Float)
+                    {
+                        restartAngleTarget = v;
+                    });
+                    if(exitAngleTween != null) exitAngleTween.cancel();
+                    exitAngleTarget = 0;
+                }
+                else
+                {
+                    if(resumeAngleTween != null) resumeAngleTween.cancel();
+                    if(restartAngleTween != null) restartAngleTween.cancel();
+                    if(exitAngleTween != null) exitAngleTween.cancel();
+
+                    resumeAngleTarget = 0;
+                    restartAngleTarget = 0;
+                    exitAngleTween = FlxTween.num(-coolAnimAngleValue, coolAnimAngleValue, coolAnimDurationValue, {ease: coolAnimEaseValue, type: PINGPONG}, function(v:Float)
+                    {
+                        exitAngleTarget = v;
+                    });
+                }
+            }
         }
 
         if(controls.UI_LEFT_P || controls.UI_RIGHT_P)
         {
             FlxG.sound.play(Paths.sound('scrollMenu'), 1);
             isRestartSelected = !isRestartSelected;
+            if(isRestartSelected)
+            {
+                if(resumeAngleTween != null) resumeAngleTween.cancel();
+                resumeAngleTarget = 0;
+                restartAngleTween = FlxTween.num(-coolAnimAngleValue, coolAnimAngleValue, coolAnimDurationValue, {ease: coolAnimEaseValue, type: PINGPONG}, function(v:Float)
+                {
+                    restartAngleTarget = v;
+                });
+                if(exitAngleTween != null) exitAngleTween.cancel();
+                exitAngleTarget = 0;
+            }
+            else
+            {
+                if(resumeAngleTween != null) resumeAngleTween.cancel();
+                if(restartAngleTween != null) restartAngleTween.cancel();
+                if(exitAngleTween != null) exitAngleTween.cancel();
+
+                resumeAngleTarget = 0;
+                restartAngleTarget = 0;
+                exitAngleTween = FlxTween.num(-coolAnimAngleValue, coolAnimAngleValue, coolAnimDurationValue, {ease: coolAnimEaseValue, type: PINGPONG}, function(v:Float)
+                {
+                    exitAngleTarget = v;
+                });
+            }
         }
 
         if(controls.ACCEPT)
@@ -132,14 +222,17 @@ class NewPauseSubState extends MusicBeatSubstate
             else if(isRestartSelected) restartSong();
             else
             {
+		        //if(Achievements.getScore('50misses') < 50) Achievements.setScore('50misses', 0);
+                //if(Achievements.getScore('10deaths') < 10) Achievements.setScore('10deaths', 0);
+
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 				PlayState.deathCounter = 0;
 				PlayState.seenCutscene = false;
 				Mods.loadTopMod();
 				if (PlayState.isStoryMode)
-					MusicBeatState.switchState(new StoryMenuState());
+					MusicBeatState.switchState(new NewStoryMenuState());
 				else
-					MusicBeatState.switchState(new FreeplayState());
+					MusicBeatState.switchState(new NewFreeplayState(CharSelectState.currentFreeplaySelectedName == 'pico'));
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				PlayState.changedDifficulty = false;
 				PlayState.chartingMode = false;
@@ -252,14 +345,14 @@ class PaperObject extends FlxSpriteGroup
         add(exitButton);
 
         progressBar = new FlxSprite();
-        progressBar.loadGraphic(Paths.image('pause/new/progressbar'));
+        progressBar.loadGraphic(Paths.image('pause/new/progressBar'));
         centerSprite(progressBar, paperBack);
         progressBar.y += 150;
         progressBar.antialiasing = ClientPrefs.data.antialiasing;
         add(progressBar);
 
         progressArrow = new FlxSprite();
-        progressArrow.loadGraphic(Paths.image('pause/new/progressarrow'));
+        progressArrow.loadGraphic(Paths.image('pause/new/progressArrow'));
         progressArrow.antialiasing = ClientPrefs.data.antialiasing;
         progressArrow.y = progressBar.y - 25;
         progressArrow.x = progressBar.x;

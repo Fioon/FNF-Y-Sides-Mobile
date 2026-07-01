@@ -2,38 +2,62 @@
 	"animations": [
 		{
 			"loop": false,
-			"offsets": [20, 0],
-			"anim": "firstDeath",
+			"offsets": [2, -7],
+			"anim": "deathConfirm",
 			"fps": 24,
-			"name": "firstdeath",
+			"name": "deathConfirm",
 			"indices": []
 		},
 		{
 			"loop": true,
-			"offsets": [-26, -263],
+			"offsets": [2, -7],
 			"anim": "deathLoop",
 			"fps": 24,
-			"name": "deathloop",
+			"name": "deathLoop",
 			"indices": []
 		},
 		{
 			"loop": false,
-			"offsets": [-26, -191],
-			"anim": "deathConfirm",
+			"offsets": [2, -7],
+			"anim": "firstDeath",
 			"fps": 24,
-			"name": "deathend",
+			"name": "firstDeath",
 			"indices": []
 		}
 	],
 	"vocals_file": "",
 	"no_antialiasing": false,
-	"image": "characters/bf_HALLOWEEN_DeathScreen",
-	"position": [0, -160],
+	"censor_offset_right": [
+		0,
+		0
+	],
+	"image": "characters/bfDeath-spooky-V2",
+	"position": [-482, -249],
+	"icon_offset": [
+		0,
+		0
+	],
 	"healthicon": "face",
+	"censor_offset_down": [
+		0,
+		0
+	],
+	"censor_offset_idle": [
+		0,
+		0
+	],
+	"censor_offset_left": [
+		0,
+		0
+	],
 	"flip_x": true,
 	"healthbar_colors": [49, 176, 209],
-	"camera_position": [0, 0],
+	"censor_offset_up": [
+		0,
+		0
+	],
+	"camera_position": [-100, 70],
 	"sing_duration": 4,
-	"scale": 1,
+	"scale": 0.95,
 	"_editor_isPlayer": true
 }

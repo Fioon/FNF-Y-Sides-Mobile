@@ -29,8 +29,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 	public var bg:FlxSprite;
 	var icons:FlxBackdrop;
-	var verticalTriangleLeft:FlxBackdrop;
-	var verticalTriangleRight:FlxBackdrop;
 
 	public var character:Character;
 	var isDoingSpecialAnim:Bool = false;
@@ -40,6 +38,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 	public var thingTimer:Float = 1.8;
 
+	var behindPoloUp:FlxSprite;
+	var songThing:FlxBackdrop;
+	var poloUp:FlxSprite;
+	var poloDown:FlxSprite;
 	public function new()
 	{
 		super();
@@ -51,37 +53,25 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		DiscordClient.changePresence(rpcTitle, null);
 		#end
 		
-		bg = new FlxSprite().makeGraphic(1280, 720, 0xFFBFB4F1);
+		var bgColor = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF6C75D4);
+		add(bgColor);
+
+		bg = new FlxSprite();
+		//bg.makeGraphic(1280, 720, 0xFFBFB4F1);
+		bg.loadGraphic(Paths.image('optionsMenu/new/bg'));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.updateHitbox();
 
 		bg.screenCenter();
 		add(bg);
 
-		icons = new FlxBackdrop(Paths.image('mainmenu/icons'), XY);
+		icons = new FlxBackdrop(Paths.image('optionsMenu/new/checkerthing'), XY);
 		icons.velocity.set(10, 10);
-		icons.alpha = 0.2;
+		icons.alpha = 1;
 		icons.antialiasing = ClientPrefs.data.antialiasing;
 		add(icons);
 
 		icons.setPosition(OptionsState.iconsPos[0], OptionsState.iconsPos[1]);
-
-		verticalTriangleLeft = new FlxBackdrop(Paths.image('optionsMenu/verticalTriangleThing'), Y);
-		verticalTriangleLeft.velocity.set(0, 20);
-		verticalTriangleLeft.x = 138;
-		verticalTriangleLeft.antialiasing = ClientPrefs.data.antialiasing;
-		add(verticalTriangleLeft);
-
-		verticalTriangleRight = new FlxBackdrop(Paths.image('optionsMenu/verticalTriangleThing'), Y);
-
-		verticalTriangleRight.angle = 180;
-		//verticalTriangleRight.flipX = true;
-		verticalTriangleRight.updateHitbox();
-
-		verticalTriangleRight.velocity.set(0, -20);
-		verticalTriangleRight.x = FlxG.width - verticalTriangleRight.width - 138;
-		verticalTriangleRight.antialiasing = ClientPrefs.data.antialiasing;
-		add(verticalTriangleRight);
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -93,15 +83,34 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
 		add(checkboxGroup);
 
-		var boardThing:FlxSprite = new FlxSprite().loadGraphic(Paths.image('optionsMenu/boardThing'));
-		boardThing.screenCenter();
-		boardThing.antialiasing = ClientPrefs.data.antialiasing;
-		add(boardThing);
-
-		character = new Character(800, 200, 'options-guy');
-		character.playAnim('idle');
+		character = new Character(730, 140, 'options-guy');
+		character.playAnim('idle', false, false, OptionsState.currentFrame);
 		character.antialiasing = ClientPrefs.data.antialiasing;
 		add(character);
+
+		behindPoloUp = new FlxSprite(0, 56);
+		behindPoloUp.loadGraphic(Paths.image('optionsMenu/new/poloUpBehind'));
+		behindPoloUp.antialiasing = ClientPrefs.data.antialiasing;
+		add(behindPoloUp);
+
+		songThing = new FlxBackdrop(Paths.image('optionsMenu/new/song'), X);
+		songThing.antialiasing = ClientPrefs.data.antialiasing;
+		//songThing.x = 50;
+		songThing.x = OptionsState.songThingPos[0];
+		songThing.y = behindPoloUp.y + behindPoloUp.height / 2 - songThing.height / 2;
+		songThing.velocity.set(10, 0);
+		add(songThing);
+
+		poloUp = new FlxSprite();
+		poloUp.loadGraphic(Paths.image('optionsMenu/new/poloUp'));
+		poloUp.antialiasing = ClientPrefs.data.antialiasing;
+		add(poloUp);
+
+		poloDown = new FlxSprite();
+		poloDown.loadGraphic(Paths.image('optionsMenu/new/poloDown'));
+		poloDown.antialiasing = ClientPrefs.data.antialiasing;
+		poloDown.y = FlxG.height - poloDown.height;
+		add(poloDown);
 
 		dialogueBox = new FlxSprite(40, 600).makeGraphic(1200, 80, FlxColor.BLACK);
 		dialogueBox.alpha = 0;
@@ -117,7 +126,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 		for (i in 0...optionsArray.length)
 		{
-			var optionText:Alphabet = new Alphabet(150, 260, optionsArray[i].name, false);
+			var optionText:Alphabet = new Alphabet(50, 260, optionsArray[i].name, false);
 			optionText.setScale(0.9, 0.9);
 			optionText.isMenuItem = true;
 			/*optionText.forceX = 300;
@@ -172,6 +181,11 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
+		if(character != null)
+		{
+			OptionsState.currentFrame = character.animation.curAnim.name == 'idle' ? character.animation.curAnim.curFrame : 0;
+		}
+
 		if(bindingKey)
 		{
 			bindingKeyUpdate(elapsed);
@@ -191,6 +205,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			OptionsState.iconsPos.insert(0, icons.x);
 			OptionsState.iconsPos.insert(1, icons.y);
 
+			OptionsState.songThingPos.insert(0, songThing.x);
+			OptionsState.songThingPos.insert(1, songThing.y);
+
 			close();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
@@ -202,7 +219,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				case BOOL:
 					if(controls.ACCEPT)
 					{
-						FlxG.sound.play(Paths.sound('scrollMenu'));
+						FlxG.sound.play(Paths.sound('options/optionsScrollMenu'));
 						curOption.setValue((curOption.getValue() == true) ? false : true);
 						curOption.change();
 						reloadCheckboxes();
@@ -229,7 +246,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 						bindingKey = true;
 						holdingEsc = 0;
 						ClientPrefs.toggleVolumeKeys(false);
-						FlxG.sound.play(Paths.sound('scrollMenu'));
+						FlxG.sound.play(Paths.sound('options/optionsScrollMenu'));
 					}
 
 				default:
@@ -280,7 +297,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 								}
 								updateTextFrom(curOption);
 								curOption.change();
-								FlxG.sound.play(Paths.sound('scrollMenu'));
+								FlxG.sound.play(Paths.sound('options/optionsScrollMenu'));
 							}
 							else if(curOption.type != STRING)
 							{
@@ -308,7 +325,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					}
 					else if(controls.UI_LEFT_R || controls.UI_RIGHT_R)
 					{
-						if(holdTime > 0.5) FlxG.sound.play(Paths.sound('scrollMenu'));
+						if(holdTime > 0.5) FlxG.sound.play(Paths.sound('options/optionsScrollMenu'));
 						holdTime = 0;
 					}
 			}
@@ -360,7 +377,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	public function endDialogue()
 	{
 		if(character != null) try {
-			character.playAnim('idle');
+			character.playAnim('idle', false, false, OptionsState.currentFrame);
 		}
 		catch(exc) { trace ('Error: $exc'); }
 		
@@ -572,7 +589,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 
 		curOption = optionsArray[curSelected]; //shorter lol
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(Paths.sound('options/optionsScrollMenu'));
 	}
 
 	function reloadCheckboxes()

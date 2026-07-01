@@ -1,0 +1,22 @@
+{
+	"songs": [
+		["Satin Panties", "mom", [202, 55, 127]],
+		["High", "mom", [202, 55, 127], true],
+		["Milf", "mom", [202, 55, 127], true]
+	],
+
+	"weekCharacters": [
+		"mom",
+		"bf",
+		"gf"
+	],
+	"weekBackground": "stage",
+
+	"storyName": "Mommy Mearest!",
+	"weekBefore": "week3",
+	"weekName": "Week 4",
+	"startUnlocked": false,
+
+	"hideStoryMode": false,
+	"hideFreeplay": false
+}

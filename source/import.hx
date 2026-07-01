@@ -28,10 +28,12 @@ import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;
 import backend.ClientPrefs;
+import backend.BeatenSongs;
 import backend.Conductor;
 import backend.BaseStage;
 import backend.Difficulty;
 import backend.Mods;
+import backend.Saves;
 import backend.Language;
 
 import backend.ui.*; //Psych-UI
@@ -41,6 +43,7 @@ import objects.BGSprite;
 
 import states.PlayState;
 import states.LoadingState;
+import states.vault.ShopSubState;
 
 #if flxanimate
 import flxanimate.*;
@@ -62,6 +65,8 @@ import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.transition.FlxTransitionableState;
+
+import states.CharSelectState;
 
 using StringTools;
 #end

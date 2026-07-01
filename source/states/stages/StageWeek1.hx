@@ -7,17 +7,33 @@ class StageWeek1 extends BaseStage
 {
 	override function create()
 	{
-		var sky:BGSprite = new BGSprite('sky', -1300, -840, 0.8, 0.8);
-		add(sky);
+		if(!ClientPrefs.data.lowQuality)
+		{
+			var sky:BGSprite = new BGSprite('stages/stage/sky', -1350, -1020, 0.2, 0.2);
+			add(sky);
+		}
 
-		var gym:BGSprite = new BGSprite('gym', -1300, -840, 1, 1);
+		var city:BGSprite = new BGSprite('stages/stage/city', -1350, -640, 0.8, 0.8);
+		add(city);
+
+		if(!ClientPrefs.data.lowQuality)
+		{
+			var lights:BGSprite = new BGSprite('stages/stage/lights', -1350, -1000, 1, 1);
+			lights.blend = ADD;
+			add(lights);
+		}
+
+		var gym:BGSprite = new BGSprite('stages/stage/gym', -1350, -1000, 1, 1);
 		add(gym);
 	}
 
 	override function createPost()
 	{
-		var front:BGSprite = new BGSprite('front', -1300, -840, 1.1, 1.1);
-		add(front);
+		if(!ClientPrefs.data.lowQuality)
+		{
+			var front:BGSprite = new BGSprite('stages/stage/front', -1350, 300, 1.2, 1.2);
+			add(front);
+		}
 	}
 	
 	/*

@@ -1,57 +1,77 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [0, 0],
-			"loop": false,
-			"fps": 24,
 			"anim": "idle",
-			"indices": [],
-			"name": "idle"
+			"fps": 12,
+			"name": "idle",
+			"indices": []
 		},
 		{
-			"offsets": [52, 6],
 			"loop": false,
-			"fps": 24,
+			"offsets": [55, 1],
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "left"
+			"fps": 12,
+			"name": "left0",
+			"indices": []
 		},
 		{
-			"offsets": [8, -19],
 			"loop": false,
-			"fps": 24,
+			"offsets": [3, -1],
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "down"
+			"fps": 12,
+			"name": "down0",
+			"indices": []
 		},
 		{
-			"offsets": [-16, 32],
 			"loop": false,
-			"fps": 24,
+			"offsets": [2, 0],
 			"anim": "singUP",
-			"indices": [],
-			"name": "up"
+			"fps": 12,
+			"name": "up0",
+			"indices": []
 		},
 		{
-			"offsets": [-65, 1],
+			"loop": false,
+			"offsets": [0, 1],
+			"anim": "singRIGHT",
+			"fps": 12,
+			"name": "right0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [-1, 1],
+			"anim": "burp",
+			"fps": 12,
+			"name": "burp",
+			"indices": []
+		},
+		{
+			"offsets": [54, 3],
 			"loop": false,
 			"fps": 24,
-			"anim": "singRIGHT",
+			"anim": "shoot",
 			"indices": [],
-			"name": "right"
+			"name": "shoot"
 		}
 	],
 	"vocals_file": "",
 	"no_antialiasing": false,
 	"image": "characters/Pico-Ysides",
-	"position": [120, -60],
+	"position": [120, -87],
 	"healthicon": "pico",
 	"flip_x": false,
+	"icon_offset": [-10, -20],
 	"healthbar_colors": [254, 0, 103],
-	"icon_offset": [0, -25],
-	"flip_health_icon": true,
 	"camera_position": [0, 0],
+	"censor_offset_idle": [380, 220],
+	"censor_offset_left": [320, 210],
+	"censor_offset_down": [330, 240],
+	"censor_offset_up": [370, 190],
+	"censor_offset_right": [400, 200],
 	"sing_duration": 4,
-	"scale": 1.1,
+	"scale": 0.97,
 	"_editor_isPlayer": false
 }

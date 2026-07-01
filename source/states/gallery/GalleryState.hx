@@ -29,9 +29,26 @@ class GalleryState extends MusicBeatState
     public static var linesPos:Array<Float> = [0, 0];
     private static var curSelected:Int = 0;
 
+    public static var comingFromGallery:Bool = false;
+
     override function create() 
     {
         super.create();
+
+		#if DISCORD_ALLOWED
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Gallery", null);
+		#end
+
+		if(FlxG.sound.music != null)
+		{
+			if(!FlxG.sound.music.playing)
+			{
+				trace('Main menu music is not playing, starting gallery menu music!');
+                FlxG.sound.playMusic(Paths.music('galleryMenu'), 0);
+				FlxG.sound.music.fadeIn(1);
+			}
+		}
 
         FlxG.mouse.visible = true;
 
@@ -188,6 +205,9 @@ class GalleryState extends MusicBeatState
                 alreadyPressedSmth = true;
                 updateArrowScale = false;
 
+			    FlxG.sound.music.fadeOut(0.2);
+                comingFromGallery = true;
+
                 FlxTween.cancelTweensOf(barTop);
                 FlxTween.cancelTweensOf(barBottom);
                 FlxTween.cancelTweensOf(bfIconsTop);
@@ -209,7 +229,7 @@ class GalleryState extends MusicBeatState
                 FlxTween.tween(optGrp.members[curSelected], {y: 800}, 0.4, {ease: FlxEase.quartOut});
                 FlxTween.tween(rightArrow, {y: 800}, 0.4, {ease: FlxEase.quartOut});
 
-                StoryMenuState.backFromStoryMode = true;
+                NewStoryMenuState.backFromStoryMode = true;
 
                 new FlxTimer().start(0.8, function(t:FlxTimer)
                 {
@@ -334,31 +354,6 @@ class GalleryState extends MusicBeatState
 			if (item.targetX == 0) item.alpha = 1;
             if (firstTime) item.snapToPosition();
 		}
-    }
-}
-
-class GalleryObject extends FlxSprite
-{
-    public var targetX:Float = 0;
-    public var distancePerItem:FlxPoint = new FlxPoint(1280, 0);
-    public var startPosition:FlxPoint = new FlxPoint(0, 0);
-    
-    public function new(x:Float = 0, y:Float = 0, ?graphic:Dynamic = null)
-    {
-        super(x, y, graphic);
-    }
-
-    override function update(elapsed:Float)
-    {
-        super.update(elapsed);
-
-		var lerpVal:Float = Math.exp(-elapsed * 9.6);
-		x = FlxMath.lerp((targetX * distancePerItem.x) + startPosition.x, x, lerpVal);
-    }
-
-    public function snapToPosition()
-    {
-        x = startPosition.x + (targetX * distancePerItem.x);
     }
 }
 
@@ -571,7 +566,7 @@ class GalleryStateImages extends MusicBeatState
 
 		    		FlxTransitionableState.skipNextTransIn = true;
 		    		FlxTransitionableState.skipNextTransOut = true;
-                    MusicBeatState.switchState(new GalleryState());
+                    MusicBeatState.switchState(new NewGalleryState());
                 });
             }
         }

@@ -6,19 +6,25 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
+import flixel.util.FlxSave;
 import flixel.input.gamepad.FlxGamepad;
+import flixel.util.FlxGradient;
 import haxe.Json;
 
 import openfl.filters.ShaderFilter;
 import shaders.BloomShader;
+
+import objects.ParticleGroup;
 
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 
 import shaders.ColorSwap;
+import shaders.DeflectiveLens;
+import shaders.ChromaticAberration;
 
-import states.StoryMenuState;
+import states.NewStoryMenuState;
 import states.MainMenuState;
 
 import flixel.addons.display.FlxBackdrop;
@@ -51,8 +57,22 @@ class TitleState extends MusicBeatState
 	var credGroup:FlxGroup = new FlxGroup();
 	var textGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 	var blackScreen:FlxSprite;
+	var particles:ParticleGroup;
+	var blackScreenGradient:FlxSprite;
+	var blackScreenGradient2:FlxSprite;
 	var credTextShit:Alphabet;
 	var ngSpr:FlxSprite;
+
+	var bloomShader:BloomShader;
+	var bloomFilter:ShaderFilter;
+	var bloomTween:FlxTween;
+	var bloomTween2:FlxTween;
+	var deflectiveLensShader:DeflectiveLens;
+	var deflectiveLensFilter:ShaderFilter;
+	var deflectiveLensTween:FlxTween;
+	var rgbShader:ChromaticAberration;
+	var rgbFilter:ShaderFilter;
+	var rgbTween:FlxTween;
 	
 	var titleTextColors:Array<FlxColor> = [0xFF33FFFF, 0xFF3333CC];
 	var titleTextAlphas:Array<Float> = [1, .64];
@@ -69,13 +89,26 @@ class TitleState extends MusicBeatState
 	var easterEggKeysBuffer:String = '';
 	#end
 
-	var bloom:BloomShader;
+	var bg:FlxSprite;
 
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
 		super.create();
 		Paths.clearUnusedMemory();
+
+		if(FlxG.save.data.money == null) FlxG.save.data.money = 0;
+		if(FlxG.save.data.boughtItems == null) FlxG.save.data.boughtItems = ShopSubState.buildItemsList();
+		if(FlxG.save.data.unlockedModSongs == null) FlxG.save.data.unlockedModSongs = NewFreeplayState.unlockedModSongs;
+		ShopSubState.money = FlxG.save.data.money;
+		ShopSubState.boughtItems = FlxG.save.data.boughtItems;
+		BeatenSongs.init();
+		FlxG.save.flush();
+
+		FlxG.save.data.firstTimeTitleState = FlxG.save.data.firstTimeTitleState != null ? FlxG.save.data.firstTimeTitleState : true;
+
+		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF030007);
+		add(bg);
 
 		if(!initialized)
 		{
@@ -98,16 +131,40 @@ class TitleState extends MusicBeatState
 
 		if (FlxG.save.data.weekCompleted != null)
 		{
-			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
+			NewStoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
-		MusicBeatState.switchState(new FreeplayState());
+		MusicBeatState.switchState(new NewFreeplayState(CharSelectState.currentFreeplaySelectedName == 'pico'));
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
 		#else
-		if(FlxG.save.data.flashing == null && !FlashingState.leftState)
+		
+		bloomShader = new BloomShader();
+		bloomShader.dim.value = [2.0]; // 1.8
+		bloomShader.Directions.value = [10.0]; // 2.0, 100.0 to remove
+		bloomShader.Quality.value = [8.0]; // 8.0
+		bloomShader.Size.value = [0.0]; // 8.0, 1.0
+
+		bloomFilter = new ShaderFilter(bloomShader);
+
+		deflectiveLensShader = new DeflectiveLens();
+		deflectiveLensShader.distortionScale.value = [0.0];
+		//deflectiveLensShader.fringeScale.value = [0.02];
+		deflectiveLensFilter = new ShaderFilter(deflectiveLensShader);
+
+		rgbShader = new ChromaticAberration();
+		rgbShader.rOffset.value = [0.0];
+		rgbShader.gOffset.value = [0.0];
+		rgbShader.bOffset.value = [0.0];
+		rgbFilter = new ShaderFilter(rgbShader);
+
+		if(ClientPrefs.data.shaders) FlxG.camera.filters = [bloomFilter, deflectiveLensFilter, rgbFilter];
+
+		var preferences:FlxSave = new FlxSave();
+		preferences.bind('preferences', CoolUtil.getSavePath());
+		if(preferences.data.flashing == null && !FlashingState.leftState)
 		{
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
@@ -122,15 +179,6 @@ class TitleState extends MusicBeatState
 		else
 			startIntro();
 		#end
-
-		bloom = new BloomShader();
-		bloom.dim.value = [2.0]; // 1.8
-		bloom.Directions.value = [10.0]; // 2.0, 100.0 to remove
-		bloom.Quality.value = [8.0]; // 8.0
-		bloom.Size.value = [0.0]; // 8.0, 1.0
-
-		var shaderFilter = new ShaderFilter(bloom);
-		FlxG.camera.filters = [shaderFilter];
 	}
 
 	var backgroundGraphic:FlxSprite;
@@ -214,10 +262,35 @@ class TitleState extends MusicBeatState
 		titleText.screenCenter(X);
 		titleText.updateHitbox();
 
-		blackScreen = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-		blackScreen.scale.set(FlxG.width, FlxG.height);
+		blackScreen = new FlxSprite().makeGraphic(Std.int(FlxG.width * 1.2), Std.int(FlxG.height * 1.2), 0xFF030007);
+		//blackScreen.scale.set(FlxG.width, FlxG.height);
 		blackScreen.updateHitbox();
 		credGroup.add(blackScreen);
+
+		particles = new ParticleGroup(0, 0, FlxG.width, 400, 'particle');
+		//particles.y = FlxG.height - particles.height;
+		particles.startY = FlxG.height;
+		particles.endY = FlxG.height - 450;
+		particles.initialScale = 0.4;
+		particles.fadeSpeed = 0.8;
+		particles.randomX = 90;
+		particles.randomY = 90;
+		credGroup.add(particles);
+
+		blackScreenGradient = FlxGradient.createGradientFlxSprite(FlxG.width, FlxG.height, ([0xFF030007, 0xFF4B2E71]));
+		//blackScreenGradient.alpha = 0.45;
+		blackScreenGradient.alpha = 0;
+		credGroup.add(blackScreenGradient);
+
+		blackScreenGradient2 = FlxGradient.createGradientFlxSprite(FlxG.width, Std.int(FlxG.height * 0.5), ([0xFF030007, 0xFFFFFFFF]));
+		//blackScreenGradient2.alpha = 0.15;
+		blackScreenGradient2.alpha = 0;
+		blackScreenGradient2.blend = ADD;
+		blackScreenGradient2.y = FlxG.height - blackScreenGradient2.height;
+		credGroup.add(blackScreenGradient2);
+
+		FlxTween.tween(blackScreenGradient, {alpha: 0.45}, 10);
+		FlxTween.tween(blackScreenGradient2, {alpha: 0.15}, 10);
 
 		var gradient:FlxSprite = new FlxSprite().loadGraphic(Paths.image('gradient'));
 		gradient.alpha = 0;
@@ -251,6 +324,16 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		else
 			initialized = true;
+		
+		if (initialized && FlxG.sound.music == null)
+		{
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			FlxG.sound.music.fadeIn(4, 0, 0.7);
+
+			// idk why mouse unloads like lol ok! :)
+			var sprite = new FlxSprite().loadGraphic(Paths.image('mouse'));
+			FlxG.mouse.load(sprite.pixels);
+		}
 
 		// credGroup.add(credTextShit);
 	}
@@ -435,17 +518,17 @@ class TitleState extends MusicBeatState
 
 				FlxTween.num(1.7, 2, 1.3, {ease: FlxEase.quartOut}, function(v:Float)
 				{
-					bloom.dim.value[0] = v;
+					bloomShader.dim.value[0] = v;
 				});
 
-				FlxTween.num(1.7, 10, 1.3, {ease: FlxEase.quartOut}, function(v:Float)
+				FlxTween.num(1.55, 10, 1.3, {ease: FlxEase.quartOut}, function(v:Float)
 				{
-					bloom.Directions.value[0] = v;
+					bloomShader.Directions.value[0] = v;
 				});
 
 				FlxTween.num(4, 0, 1.3, {ease: FlxEase.quartOut}, function(v:Float)
 				{
-					bloom.Size.value[0] = v;
+					bloomShader.Size.value[0] = v;
 				});
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
@@ -458,7 +541,7 @@ class TitleState extends MusicBeatState
 					FlxTween.tween(gfLeft, {alpha: 0, y: gfLeft.y - 10}, 0.6, {ease: FlxEase.quartOut, startDelay: 0.3, 
 						onComplete: function(twn:FlxTween)
 						{
-							StoryMenuState.backFromStoryMode = true;
+							NewStoryMenuState.backFromStoryMode = true;
 							FlxTransitionableState.skipNextTransIn = true;
 							FlxTransitionableState.skipNextTransOut = true;
 							MusicBeatState.switchState(new MainMenuState());
@@ -524,6 +607,8 @@ class TitleState extends MusicBeatState
 
 		if (initialized && pressedEnter && !skippedIntro)
 		{
+			if(FlxG.save.data.firstTimeTitleState) return;
+
 			skipIntro();
 		}
 
@@ -592,6 +677,14 @@ class TitleState extends MusicBeatState
 		if(!closedState)
 		{
 			sickBeats++;
+
+			if(sickBeats > 17)
+			{
+				resetShaderEffect();
+			}
+
+			if(skippedIntro) return;
+
 			switch (sickBeats)
 			{
 				case 1:
@@ -624,6 +717,43 @@ class TitleState extends MusicBeatState
 					addMoreText('I\' tired af lol');
 				case 12:
 					deleteCoolText();
+
+					var tweenDuration:Float = 3.15;
+					FlxTween.tween(FlxG.camera, {zoom: 1.35}, tweenDuration / 0.8, {ease: FlxEase.cubeIn});
+
+					deflectiveLensTween = FlxTween.num(0, 1.8, tweenDuration, {ease: FlxEase.cubeIn, onComplete: function(twn:FlxTween)
+					{
+						deflectiveLensTween = null;	
+					}}, function(v:Float)
+            		{
+						deflectiveLensShader.distortionScale.value[0] = v;
+            		});
+
+					rgbTween = FlxTween.num(0, 0.005, tweenDuration, {ease: FlxEase.cubeIn, onComplete: function(twn:FlxTween)
+					{
+						rgbTween = null;	
+					}}, function(v:Float)
+            		{
+						rgbShader.rOffset.value[0] = v;
+						rgbShader.gOffset.value[0] = 0;
+						rgbShader.bOffset.value[0] = -v;
+            		});
+
+					bloomTween = FlxTween.num(10, 1.55, tweenDuration, {ease: FlxEase.cubeIn, onComplete: function(twn:FlxTween)
+					{
+						bloomTween = null;	
+					}}, function(v:Float)
+            		{
+						bloomShader.Directions.value[0] = v;
+            		});
+
+					bloomTween2 = FlxTween.num(2, 1.45, tweenDuration, {ease: FlxEase.cubeIn, onComplete: function(twn:FlxTween)
+					{
+						bloomTween2 = null;	
+					}}, function(v:Float)
+            		{
+						bloomShader.dim.value[0] = v;
+            		});
 				case 13:
 					addMoreText('Friday');
 					for(obj in textGroup)
@@ -655,12 +785,55 @@ class TitleState extends MusicBeatState
 		}
 	}
 
+	function resetShaderEffect()
+	{
+		FlxTween.cancelTweensOf(FlxG.camera);
+		FlxG.camera.zoom = 1;
+
+		if(deflectiveLensTween != null)
+		{
+			deflectiveLensTween.cancel();
+			deflectiveLensTween = null;
+		}
+
+		if(rgbTween != null)
+		{
+			rgbTween.cancel();
+			rgbTween = null;
+		}
+
+		if(bloomTween != null)
+		{
+			bloomTween.cancel();
+			bloomTween = null;
+		}
+
+		if(bloomTween2 != null)
+		{
+			bloomTween2.cancel();
+			bloomTween2 = null;
+		}
+
+		deflectiveLensShader.distortionScale.value[0] = 0;
+		rgbShader.rOffset.value[0] = 0.0;
+		rgbShader.gOffset.value[0] = 0.0;
+		rgbShader.bOffset.value[0] = 0.0;
+		bloomShader.Directions.value[0] = 10;
+		bloomShader.dim.value[0] = 2;
+		//deflectiveLensShader.fringeScale.value[0] = 0;
+	}
+
 	var skippedIntro:Bool = false;
 	var increaseVolume:Bool = false;
 	function skipIntro():Void
 	{
 		if (!skippedIntro)
 		{
+			FlxG.save.data.firstTimeTitleState = false;
+			FlxG.save.flush();
+			
+			resetShaderEffect();
+
 			#if TITLE_SCREEN_EASTER_EGG
 			if (playJingle) //Ignore deez
 			{
@@ -722,7 +895,7 @@ class TitleState extends MusicBeatState
 			{
 				remove(ngSpr);
 				remove(credGroup);
-				FlxG.camera.flash(FlxColor.WHITE, 0.8);
+				if(ClientPrefs.data.flashing) FlxG.camera.flash(FlxColor.WHITE, 0.8);
 
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
 				if (easteregg == null) easteregg = '';

@@ -1,0 +1,27 @@
+{
+	"directory": "",
+	"defaultZoom": 0.45,
+	"stageUI": "",
+
+	"boyfriend": [920, 10],
+	"girlfriend": [1800, 120],
+	"opponent": [-100, -20],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [0, -170],
+	"camera_opponent": [0, 0],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1,
+
+	"preload": {
+		"images/sky": 3,
+		"images/gym": 3,
+		"images/front": 2
+	},
+
+	"_editorMeta": {
+		"dad": "dad",
+		"boyfriend": "bf",
+		"gf": "gf"
+	}
+}

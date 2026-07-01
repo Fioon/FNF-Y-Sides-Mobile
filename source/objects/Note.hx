@@ -47,7 +47,8 @@ class Note extends FlxSprite
 		'Hurt Note',
 		'GF Sing',
 		'No Animation',
-		'Third Player Note'
+		'Third Player Note',
+		'Censor Note'
 	];
 
 	public var extraData:Map<String, Dynamic> = new Map<String, Dynamic>();
@@ -77,6 +78,10 @@ class Note extends FlxSprite
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
+	public var isHoldNote:Bool = false;
+	public var isTailNote:Bool = false;
+	public var isLastTailNote:Bool = false;
+	public var holdSplashCreated:Bool = false;
 	public var noteType(default, set):String = null;
 
 	public var eventName:String = '';
@@ -91,6 +96,7 @@ class Note extends FlxSprite
 	public var animSuffix:String = '';
 	public var gfNote:Bool = false;
 	public var thirdPlayerNote:Bool = false;
+	public var censorNote:Bool = false;
 	public var earlyHitMult:Float = 1;
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
@@ -229,6 +235,8 @@ class Note extends FlxSprite
 					gfNote = true;
 				case 'Third Player Note':
 					thirdPlayerNote = true;
+				case 'Censor Note':
+					censorNote = true;
 			}
 			if (value != null && value.length > 1) NoteTypesConfig.applyNoteTypeData(this, value);
 			if (hitsound != 'hitsound' && hitsoundVolume > 0) Paths.sound(hitsound); //precache new sound for being idiot-proof

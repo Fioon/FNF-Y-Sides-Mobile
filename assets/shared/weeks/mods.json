@@ -1,0 +1,23 @@
+{
+	"songs": [
+		["Improbable Outset", "triko", [150, 150, 150], false, "Tricky Sign"],
+		["Madness", "tiky", [150, 150, 150], false, "Tricky Sign"],
+		["R.A.M", "hex", [150, 150, 150], false, "Tennis Racket"],
+		["Returny", "groon", [150, 150, 150], false, "Banana"]
+	],
+
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"weekBackground": "stage",
+
+	"storyName": "Mods Y Sides",
+	"weekBefore": "week5",
+	"weekName": "Mods",
+	"startUnlocked": true,
+
+	"hideStoryMode": true,
+	"hideFreeplay": false
+}

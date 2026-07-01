@@ -56,6 +56,8 @@ class Paths
 	// define the locally tracked assets
 	public static var localTrackedAssets:Array<String> = [];
 
+	public static var permanentTrackedAssets:Map<String, Dynamic> = new Map<String, Dynamic>();
+
 	@:access(flixel.system.frontEnds.BitmapFrontEnd._cache)
 	public static function clearStoredMemory()
 	{
@@ -221,12 +223,14 @@ class Paths
 	inline static public function music(key:String, ?modsAllowed:Bool = true):Sound
 		return returnSound('music/$key', modsAllowed);
 
-	inline static public function inst(song:String, ?modsAllowed:Bool = true):Sound
-		return returnSound('${formatToSongPath(song)}/Inst', 'songs', modsAllowed);
-
-	inline static public function voices(song:String, postfix:String = null, ?modsAllowed:Bool = true):Sound
+	inline static public function inst(song:String, char:String, ?modsAllowed:Bool = true):Sound
 	{
-		var songKey:String = '${formatToSongPath(song)}/Voices';
+		return returnSound('${formatToSongPath(song)}/Inst-${char}', 'songs', modsAllowed);
+	}
+
+	inline static public function voices(song:String, postfix:String = null, char:String, ?modsAllowed:Bool = true):Sound
+	{
+		var songKey:String = '${formatToSongPath(song)}/Voices-${char}';
 		if(postfix != null) songKey += '-' + postfix;
 		//trace('songKey test: $songKey');
 		return returnSound(songKey, 'songs', modsAllowed, false);

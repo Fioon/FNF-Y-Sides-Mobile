@@ -23,6 +23,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			'If checked, disables some background details,\ndecreases loading times and improves performance.', //Description
 			'lowQuality', //Save data variable name
 			BOOL); //Variable type
+		option.onChange = onChangeLowQuality;
 		addOption(option);
 
 		var option:Option = new Option('Anti-Aliasing',
@@ -37,6 +38,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			"If unchecked, disables shaders.\nIt's used for some visual effects, and also CPU intensive for weaker PCs.", //Description
 			'shaders',
 			BOOL);
+		option.onChange = onChangeShaders;
 		addOption(option);
 
 		var option:Option = new Option('GPU Caching', //Name
@@ -102,6 +104,55 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		{
 			FlxG.drawFramerate = ClientPrefs.data.framerate;
 			FlxG.updateFramerate = ClientPrefs.data.framerate;
+		}
+	}
+
+	var alreadyTalked2:Bool = false;
+	function onChangeShaders()
+	{
+		if(!ClientPrefs.data.shaders && !alreadyTalked2)
+		{
+			alreadyTalked2 = true;
+			startDialogue('question');
+			dialogueText.resetText("Do you hate em or it's just your PC not handling properly their beauty?");
+			dialogueText.start(0.04, true);
+			dialogueText.completeCallback = function() 
+			{
+				new FlxTimer().start(thingTimer, function(t:FlxTimer)
+				{
+					endDialogue();
+				});
+			}
+		}
+
+		if(ClientPrefs.data.framerate > FlxG.drawFramerate)
+		{
+			FlxG.updateFramerate = ClientPrefs.data.framerate;
+			FlxG.drawFramerate = ClientPrefs.data.framerate;
+		}
+		else
+		{
+			FlxG.drawFramerate = ClientPrefs.data.framerate;
+			FlxG.updateFramerate = ClientPrefs.data.framerate;
+		}
+	}
+
+	var alreadyTalked3:Bool = false;
+	function onChangeLowQuality()
+	{
+		if(ClientPrefs.data.lowQuality && !alreadyTalked3)
+		{
+			alreadyTalked3 = true;
+			startDialogue('laugh');
+			dialogueText.resetText("Get ready to play the Nintendo Switch version of this mod!!!");
+			dialogueText.start(0.04, true);
+			dialogueText.completeCallback = function() 
+			{
+				new FlxTimer().start(thingTimer, function(t:FlxTimer)
+				{
+					endDialogue();
+				});
+			}
 		}
 	}
 

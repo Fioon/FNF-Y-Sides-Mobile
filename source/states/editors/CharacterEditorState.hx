@@ -2,7 +2,7 @@ package states.editors;
 
 import flixel.graphics.FlxGraphic;
 
-//import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
+import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import flixel.util.FlxDestroyUtil;
 
 import openfl.net.FileReference;
@@ -109,7 +109,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 
 		addCharacter();
 
-		cameraFollowPointer = new FlxSprite().makeGraphic(16, 16, FlxColor.TRANSPARENT);
+		cameraFollowPointer = new FlxSprite().loadGraphic(FlxGraphic.fromClass(GraphicCursorCross));
 		cameraFollowPointer.setGraphicSize(40, 40);
 		cameraFollowPointer.updateHitbox();
 
@@ -1292,6 +1292,12 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 
 			"position":	character.positionArray,
 			"camera_position": character.cameraPosition,
+			"icon_offset": character.iconOffset,
+			"censor_offset_idle": character.censorIdleOffset,
+			"censor_offset_left": character.censorLeftOffset,
+			"censor_offset_down": character.censorDownOffset,
+			"censor_offset_up": character.censorUpOffset,
+			"censor_offset_right":character.censorRightOffset,
 
 			"flip_x": character.originalFlipX,
 			"no_antialiasing": character.noAntialiasing,

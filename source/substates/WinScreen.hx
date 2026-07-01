@@ -3,7 +3,7 @@ package substates;
 import backend.WeekData;
 import flixel.addons.display.FlxBackdrop;
 import states.FreeplayState;
-import states.StoryMenuState;
+import states.NewStoryMenuState;
 
 import objects.Character;
 
@@ -249,13 +249,13 @@ class WinScreen extends MusicBeatSubstate
                 {
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
-                    MusicBeatState.switchState(new StoryMenuState());
+                    MusicBeatState.switchState(new NewStoryMenuState());
                 }
                 else
                 {
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
-                    MusicBeatState.switchState(new FreeplayState());
+                    MusicBeatState.switchState(new FreeplayState(CharSelectState.currentFreeplaySelectedName == 'pico'));
                 }
             }});
         }

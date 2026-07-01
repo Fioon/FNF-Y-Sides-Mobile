@@ -9,6 +9,8 @@ import haxe.Json;
 import psychlua.FunkinLua;
 #end
 
+import flixel.util.FlxSave;
+
 typedef Achievement =
 {
 	var name:String;
@@ -36,13 +38,25 @@ class Achievements {
 		createAchievement('week1_nomiss',				{name: "She Calls Me Daddy Too", description: "Beat Week 1 on Hard with no Misses."});
 		createAchievement('week2_nomiss',				{name: "SPOOKY MONTH!!!", description: "Beat Week 2 on Hard with no Misses."});
 		createAchievement('week3_nomiss',				{name: "No money needed to beat you!", description: "Beat Week 3 on Hard with no Misses."});
-		createAchievement('weekTest_nomissfreeplay',	{name: "You definitely tested it", description: "Play test with no Misses."});
+		createAchievement('week4_nomiss',				{name: "Mom ordered to Full Combo", description: "Beat Week 4 on Hard with no Misses."});
+		createAchievement('week5_nomiss',				{name: "Santa, gimme gifts!", description: "Beat Week 5 on Hard with no Misses."});
+		createAchievement('weekTest_nomissfreeplay',	{name: "Thanks for testing!", description: "Play test with no Misses."});
+		createAchievement('unlock_pico',				{name: "Welcome to the group!", description: "Unlock Pico as a playable character."});
+		createAchievement('beat_tricky',				{name: "YOU BEAT CLOWN!", description: "Beat Tricky"});
+		createAchievement('beat_returny',				{name: "Springfunked!", description: "Beat Groon"});
+		createAchievement('beat_ram',					{name: "Well played, funker!", description: "Beat Hex"});
+		createAchievement('50misses',					{name: "Buy new hands...", description: "Get 50 misses in a song"});
+		createAchievement('10deaths',					{name: "Go play anything else please.", description: "Die 10 times in the same song"});
 		createAchievement('dumbbells',					{name: "Stop playing with those dumbbells", description: "Lift dumbbells 50 times.", maxScore: 50, maxDecimals: 0});
-		createAchievement('click',						{name: "The art of clicks", description: "Click 1000 times", maxScore: 1000, maxDecimals: 0, hidden: true});
-		createAchievement('click2',						{name: "Are you seriously still clicking?", description: "Click 2000 times", maxScore: 2000, maxDecimals: 0, hidden: true});
+		createAchievement('first_purchase',				{name: "Gimme your yoins!", description: "Purchase an item for the first time."});
+		createAchievement('click',						{name: "The art of clicks", description: "Click 1000 times", maxScore: 1000, maxDecimals: 0});
+		createAchievement('click2',						{name: "Are you seriously still clicking?", description: "Click 2000 times", maxScore: 2000, maxDecimals: 0});
+		createAchievement('click3',						{name: "Stop please...", description: "Click 3000 times", maxScore: 3000, maxDecimals: 0});
 		
 		//dont delete this thing below
 		_originalLength = _sortID + 1;
+
+		FlxG.save.data.gotPlatiniumAchievement = FlxG.save.data.gotPlatiniumAchievement == null ? false : FlxG.save.data.gotPlatiniumAchievement;
 	}
 
 	public static var achievements:Map<String, Achievement> = new Map<String, Achievement>();
@@ -137,6 +151,37 @@ class Achievements {
 		return -1;
 	}
 
+	public static function checkPlatiniumAchievement():Bool
+	{
+		for(achievement => data in Achievements.achievements)
+		{
+			if(data.hidden) continue;
+			if(!Achievements.isUnlocked(achievement))
+				return false;
+		}
+
+		GameProgress.completeTask(11);
+		return true;
+	}
+
+	public static function checkPlatiniumAchievementFromSave(saveSlot:Int):Bool
+	{
+		var saveData = new FlxSave();
+		saveData.bind('funkin$saveSlot', CoolUtil.getSavePath());
+		var achievementsData:Array<String> = saveData.data.achievementsUnlocked;
+		trace('$achievementsData from slot $saveSlot');
+		if(achievementsData == null || achievementsData.length == 0) return false; // literally no achievements lmao
+		for(achievement in achievementsData)
+		{
+        	var data = achievements.get(achievement);
+			if(data.hidden) continue;
+			trace('Checking achievement $data from slot $saveSlot and its unlocked state is ${Achievements.isUnlockedFromSave(achievement, saveSlot)} (hidden: ${data.hidden})');
+			if(!Achievements.isUnlockedFromSave(achievement, saveSlot))
+				return false;
+		}
+		return true;
+	}
+
 	static var _lastUnlock:Int = -999;
 	public static function unlock(name:String, autoStartPopup:Bool = true):String {
 		if(!achievements.exists(name))
@@ -159,6 +204,8 @@ class Achievements {
 			_lastUnlock = time;
 		}
 
+		if(checkPlatiniumAchievement()) FlxG.save.data.gotPlatiniumAchievement = true;
+
 		Achievements.save();
 		FlxG.save.flush();
 
@@ -168,6 +215,16 @@ class Achievements {
 
 	inline public static function isUnlocked(name:String)
 		return achievementsUnlocked.contains(name);
+
+	inline public static function isUnlockedFromSave(name:String, saveSlot:Int)
+	{
+		var saveData = new FlxSave();
+		saveData.bind('funkin$saveSlot', CoolUtil.getSavePath());
+		var achievementsData:Array<String> = saveData.data.achievementsUnlocked;
+		if(achievementsData == null || achievementsData.length == 0) return false; // literally no achievements lmao
+		//return achievementsData != null && achievementsData.contains(name);
+		return achievementsData.contains(name);
+	}
 
 	@:allow(objects.AchievementPopup)
 	private static var _popups:Array<AchievementPopup> = [];

@@ -33,6 +33,7 @@ class ControlsSubState extends MusicBeatSubstate
 		[true, 'Accept', 'accept', 'Accept'],
 		[true, 'Back', 'back', 'Back'],
 		[true, 'Pause', 'pause', 'Pause'],
+		[true, 'Mechanic', 'mechanic', 'Mechanic'],
 		[false],
 		[false, 'VOLUME'],
 		[false, 'Mute', 'volume_mute', 'Volume Mute'],
@@ -72,7 +73,7 @@ class ControlsSubState extends MusicBeatSubstate
 		options.push([true]);
 		options.push([true, defaultKey]);
 
-		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFFBFB4F1);
+		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0xFF6C75D4);
 		//bg.color = keyboardColor;
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.screenCenter();

@@ -12,6 +12,7 @@ import flixel.addons.display.FlxBackdrop;
 import objects.MenuItem;
 import objects.MenuCharacter;
 
+import options.OptionsState;
 import options.GameplayChangersSubstate;
 import substates.ResetScoreSubState;
 
@@ -62,9 +63,12 @@ class StoryMenuState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+        OptionsState.playsSongFromOptions = false;
+
 		persistentUpdate = persistentDraw = true;
 		PlayState.isStoryMode = true;
 		WeekData.reloadWeekFiles(true);
+		// BeatenSongs.init();
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
@@ -340,10 +344,15 @@ class StoryMenuState extends MusicBeatState
 			var changeDiff = false;
 			if (controls.UI_UP_P)
 			{
-				weekArrowUp.animation.play('press');
+				weekArrowUp.animation.play('press', true);
+				weekArrowUp.offset.set(5, 10);
 				weekArrowUp.animation.finishCallback = function(name:String)
 				{
-					if(name == 'press') weekArrowUp.animation.play('idle');
+					if(name == 'press') 
+					{
+						weekArrowUp.animation.play('idle', true);
+						weekArrowUp.offset.set(0, 0);
+					}
 				}
 				changeWeek(-1);
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -352,10 +361,10 @@ class StoryMenuState extends MusicBeatState
 
 			if (controls.UI_DOWN_P)
 			{
-				weekArrowDown.animation.play('press');
+				weekArrowDown.animation.play('press', true);
 				weekArrowDown.animation.finishCallback = function(name:String)
 				{
-					if(name == 'press') weekArrowDown.animation.play('idle');
+					if(name == 'press') weekArrowDown.animation.play('idle', true);
 				}
 				changeWeek(1);
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -470,12 +479,13 @@ class StoryMenuState extends MusicBeatState
 	
 				PlayState.storyDifficulty = curDifficulty;
 	
-				Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+				Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() +  '-' + CharSelectState.currentFreeplaySelectedName + diffic, PlayState.storyPlaylist[0].toLowerCase());
 
 				PlayState.totalSongsPlayed = 0;
 				PlayState.campaignScore = 0;
 				PlayState.campaignMisses = 0;
 				PlayState.campaignRating = 0;
+				PlayState.totalPlayedWeek = 0;
 
 				PlayState.campaignSicks = 0;
 				PlayState.campaignGoods = 0;
@@ -550,7 +560,7 @@ class StoryMenuState extends MusicBeatState
 		lastDifficultyName = diff;
 
 		#if !switch
-		intendedScore = Highscore.getWeekScore(loadedWeeks[curWeek].fileName, curDifficulty);
+		intendedScore = Highscore.getWeekScore(loadedWeeks[curWeek].fileName, CharSelectState.currentFreeplaySelectedName, curDifficulty);
 		#end
 	}
 
@@ -636,7 +646,7 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.x = tracksSpriteBack.x + 15;
 
 		#if !switch
-		intendedScore = Highscore.getWeekScore(loadedWeeks[curWeek].fileName, curDifficulty);
+		intendedScore = Highscore.getWeekScore(loadedWeeks[curWeek].fileName, CharSelectState.currentFreeplaySelectedName, curDifficulty);
 		#end
 	}
 }

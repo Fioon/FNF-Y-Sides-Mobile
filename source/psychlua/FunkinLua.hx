@@ -24,8 +24,8 @@ import objects.NoteSplash;
 import objects.Character;
 
 import states.MainMenuState;
-import states.StoryMenuState;
-import states.FreeplayState;
+import states.NewStoryMenuState;
+import states.NewFreeplayState;
 
 import substates.PauseSubState;
 import substates.GameOverSubstate;
@@ -380,7 +380,7 @@ class FunkinLua {
 			if (difficultyNum == -1)
 				difficultyNum = PlayState.storyDifficulty;
 
-			var poop = Highscore.formatSong(name, difficultyNum);
+			var poop = Highscore.formatSong(name, CharSelectState.currentFreeplaySelectedName, difficultyNum);
 			Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
 			FlxG.state.persistentUpdate = false;
@@ -752,9 +752,9 @@ class FunkinLua {
 			}
 
 			if(PlayState.isStoryMode)
-				MusicBeatState.switchState(new StoryMenuState());
+				MusicBeatState.switchState(new NewStoryMenuState());
 			else
-				MusicBeatState.switchState(new FreeplayState());
+				MusicBeatState.switchState(new NewFreeplayState(CharSelectState.currentFreeplaySelectedName == 'pico'));
 
 			#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
