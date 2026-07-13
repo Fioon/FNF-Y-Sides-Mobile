@@ -385,6 +385,9 @@ class MainMenuState extends MusicBeatState
         }
 
         //openSubState(new backend.IconFadeTransition(4, 'test', true));
+		#if android
+		addTouchPad('LEFT_FULL', 'A_B_C');
+		#end
     }
 
     var circleAngleSpeed:Float = 10;
@@ -421,8 +424,8 @@ class MainMenuState extends MusicBeatState
             
             FlxG.mouse.visible = usingMouse;
 
-            #if develop
-            if(FlxG.keys.pressed.SHIFT && FlxG.keys.justPressed.R)
+            #if (develop || android)
+            if(#if android touchPad.buttonC.justPressed #else FlxG.keys.justPressed.R #end)
             {
                 GameProgress.reset();
                 ShopSubState.reset();
