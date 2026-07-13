@@ -188,6 +188,11 @@ class FlashingState extends MusicBeatState
 		rgbShader.gOffset.value = [0.0];
 		rgbShader.bOffset.value = [0.0];
 		rgbFilter = new ShaderFilter(rgbShader);
+		#if android
+		addTouchPad('NONE', 'A');
+		touchPad.alpha = 0;
+		FlxTween.tween(touchPad, {alpha: 1.0}, 0.5);
+		#end
 	}
 
 	override function update(elapsed:Float)
