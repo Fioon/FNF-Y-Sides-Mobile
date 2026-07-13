@@ -241,6 +241,7 @@ class NewStoryMenuState extends MusicBeatState
 		changeDifficulty();
 
 		initTransition();
+		addTouchPad('LEFT_FULL', 'A_B');
     }
 
     var characterScaleX:Float = 0.85;
