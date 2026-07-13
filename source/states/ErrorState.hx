@@ -31,6 +31,7 @@ class ErrorState extends MusicBeatState
 		errorText.borderSize = 2;
 		errorText.screenCenter();
 		add(errorText);
+		addTouchPad('NONE', 'A_B');
 		super.create();
 	}
 
