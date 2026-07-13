@@ -69,8 +69,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		optionsArray.push(new GameplayOption('Instakill on Miss', 'instakill', BOOL, false));
 		optionsArray.push(new GameplayOption('Practice Mode', 'practice', BOOL, false));
 		optionsArray.push(new GameplayOption('Botplay', 'botplay', BOOL, false));
-		addTouchPad('LEFT_FULL', 'A_B_C');
-		addTouchPadCamera();
 	}
 
 	public function getOptionByName(name:String)
@@ -139,6 +137,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		changeSelection();
 		reloadCheckboxes();
+		addTouchPad('LEFT_FULL', 'A_B_C');
+		addTouchPadCamera();
 	}
 
 	var nextAccept:Int = 5;
@@ -304,6 +304,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		if(nextAccept > 0) {
 			nextAccept -= 1;
+		}
+		if (touchPad == null) { //sometimes it dosent add the tpad, hopefully this fixes it
+			addTouchPad('LEFT_FULL', 'A_B_C');
+			addTouchPadCamera();
 		}
 		super.update(elapsed);
 	}
