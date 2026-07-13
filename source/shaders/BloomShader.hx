@@ -7,7 +7,7 @@ class BloomShader extends FlxGraphicsShader
 	@glFragmentSource("
 	#pragma header
 
-	const float amount = 2.0;
+	//const float amount = 2.0;
 	
 	// GAUSSIAN BLUR SETTINGS
 	uniform float dim;
@@ -15,12 +15,11 @@ class BloomShader extends FlxGraphicsShader
 	uniform float Quality;
 	uniform float Size;
 	
-	vec2 Radius = Size/openfl_TextureSize.xy;
-	
 	void main(void)
 	{
 		vec2 uv = openfl_TextureCoordv.xy;
 		vec2 pixel  = uv * openfl_TextureSize.xy;
+  vec2 Radius = Size/openfl_TextureSize.xy;
 	  float Pi = 6.28318530718; // Pi*2
 	  vec4 Color = texture2D(bitmap, uv);
 	  for(float d = 0.0; d < Pi; d += Pi / Directions)
