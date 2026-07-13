@@ -291,6 +291,7 @@ class VaultState extends MusicBeatState
         initTransition();
 		#if android
 		addTouchPad('UP_DOWN', 'A_B');
+		addTouchPadCamera();
 		#end
 
         // handle spawn times
@@ -972,6 +973,9 @@ class VaultState extends MusicBeatState
         super.closeSubState();
 		removeTouchPad();
 		addTouchPad('UP_DOWN', 'A_B');
+		addTouchPadCamera();
+		controls.isInSubstate = false;
+		persistentUpdate = true;
 
         if(isOnCollectionables)
         {
