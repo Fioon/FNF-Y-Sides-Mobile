@@ -484,6 +484,9 @@ class NewFreeplayState extends MusicBeatState
         changeSelect(0, true);
 
         initTransition();
+		#if android
+		addTouchPad('LEFT_FULL', 'A_B_C_X_Y_Z');
+		#end
     }
 
     public function hasModdedSongs():Bool
@@ -783,10 +786,10 @@ class NewFreeplayState extends MusicBeatState
                 _updateSongLastDifficulty();
             }
 
-            if(FlxG.keys.justPressed.Q)
+            if(FlxG.keys.justPressed.Q || touchPad.buttonX.justPressed)
                 changeCategory(OG);
 
-            if(FlxG.keys.justPressed.E)
+            if(FlxG.keys.justPressed.E || touchPad.buttonY.justPressed)
                 changeCategory(MODS);
 
             if(controls.BACK)
@@ -890,7 +893,7 @@ class NewFreeplayState extends MusicBeatState
                 #end
             }
 
-            if(FlxG.keys.justPressed.TAB)
+            if(FlxG.keys.justPressed.TAB || touchPad.buttonZ.justPressed)
             {
                 if(!unlockedPico) return;
                 
