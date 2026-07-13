@@ -325,6 +325,9 @@ class NewGalleryState extends MusicBeatState
         add(curtainsTransition);
 
         changeSelect(0, true);
+		#if android
+		addTouchPad('LEFT_RIGHT', 'B');
+		#end
     }
 
     var tweenTransSpeed:Float = 0.4;
