@@ -387,6 +387,7 @@ class MainMenuState extends MusicBeatState
         //openSubState(new backend.IconFadeTransition(4, 'test', true));
 		#if android
 		addTouchPad('LEFT_FULL', 'A_B_C');
+		touchPad.alpha = 0.7;
 		#end
     }
 
