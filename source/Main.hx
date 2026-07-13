@@ -179,13 +179,18 @@ class Main extends Sprite
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
+		#if mobile
+		FlxG.signals.postGameStart.addOnce(() -> {
+			FlxG.scaleMode = new MobileScaleMode();
+		});
+		#end
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
-		var game = new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
+		var game = new FlxGame(game.width, game.height, #if COPYSTATE_ALLOWED !CopyState.checkExistingFiles() ? CopyState : #end game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
 		@:privateAccess
 		game._customSoundTray = backend.CustomSoundTray;
 		addChild(game);
 
-		//#if !mobile
+		#if (mobile || desktop)
 		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -193,7 +198,7 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
-		//#end
+		#end
 
 		#if linux
 		var icon = Image.fromFile("icon.png");
@@ -215,6 +220,7 @@ class Main extends Sprite
 		#end
 		LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver;
 		#end
+		Application.current.window.vsync = ClientPrefs.data.vsync;
 		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
