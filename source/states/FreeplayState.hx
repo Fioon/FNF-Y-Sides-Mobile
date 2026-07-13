@@ -295,6 +295,9 @@ class FreeplayState extends MusicBeatState
 		
 		changeSelection(true, false);
 		updateTexts();
+		#if android
+		addTouchPad('LEFT_FULL', 'A_B_C_X_Y_Z');
+		#end
 		super.create();
 	}
 
@@ -302,6 +305,10 @@ class FreeplayState extends MusicBeatState
 	{
 		changeSelection(0, false);
 		persistentUpdate = true;
+		#if android
+		removeTouchPad();
+		addTouchPad('LEFT_FULL', 'A_B_C_X_Y_Z');
+		#end
 		super.closeSubState();
 	}
 
@@ -366,7 +373,7 @@ class FreeplayState extends MusicBeatState
 			ratingSplit[1] += '0';
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
+		if(FlxG.keys.pressed.SHIFT || touchPad.buttonZ.pressed) shiftMult = 3;
 
 		if (!player.playingMusic)
 		{
@@ -502,12 +509,12 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
-		if(FlxG.keys.justPressed.CONTROL && !player.playingMusic)
+		if((FlxG.keys.justPressed.CONTROL || touchPad.buttonC.justPressed) && !player.playingMusic)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
-		else if(FlxG.keys.justPressed.SPACE)
+		else if(FlxG.keys.justPressed.SPACE || touchPad.buttonX.justPressed)
 		{
 			if(instPlaying != curSelected && !player.playingMusic)
 			{
@@ -632,7 +639,7 @@ class FreeplayState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		}
-		else if(controls.RESET && !player.playingMusic)
+		else if((controls.RESET || touchPad.buttonY.justPressed) && !player.playingMusic)
 		{
 			persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
