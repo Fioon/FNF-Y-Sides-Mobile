@@ -1,10 +1,5 @@
 {
-    "dependencies": [
-        {
-            "name": "lime",
-            "type": "haxelib",
-            "version": "8.1.2"
-        },
+    "dependencies": [        
         {
             "name": "openfl",
             "type": "haxelib",
@@ -37,7 +32,13 @@
           "ref": "4e24283a047f11bded6affabbc9ec405156e026e",
           "url": "https://github.com/FunkinCrew/hxcpp"
         },
-
+        {
+          "name": "lime",
+          "type": "git",
+          "dir": null,
+          "ref": "main",
+          "url": "https://github.com/kittycathy233/lime"
+        },
         {
             "name": "hxcpp-debug-server",
             "type": "haxelib",
@@ -69,8 +70,8 @@
             "name": "linc_luajit",
             "type": "git",
             "dir": null,
-            "ref": "master",
-            "url": "https://github.com/superpowers04/linc_luajit.git"
+            "ref": "main",
+            "url": "https://github.com/kittycathy233/linc_luajit"
         },
         {
             "name": "extended-flixel",
