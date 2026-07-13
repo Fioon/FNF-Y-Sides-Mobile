@@ -179,6 +179,9 @@ class CharSelectState extends MusicBeatState
         add(poloDown);
 
         changeSelect();
+		#if android
+		addTouchPad('LEFT_RIGHT', 'A_B');
+		#end
     }
 
     public static var currentFreeplaySelectedName:String = 'bf';
