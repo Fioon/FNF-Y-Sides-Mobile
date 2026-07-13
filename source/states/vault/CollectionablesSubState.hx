@@ -267,6 +267,9 @@ class CollectionablesSubState extends MusicBeatSubstate
 
         setCurrentPage(currentPage);
         initTransition();
+		#if android
+		addTouchPad('NONE', 'B');
+		#end
     }
 
     function onUnlock(targetFigurine:FlxSprite)
