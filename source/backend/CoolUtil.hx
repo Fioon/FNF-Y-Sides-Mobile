@@ -185,4 +185,18 @@ class CoolUtil
 				text.borderStyle = NONE;
 		}
 	}
+	public static function showPopUp(message:String, title:String):Void
+	{		
+		//AndroidTools.showAlertDialog(title, message, {name: "OK", func: null}, null);
+		FlxG.stage.window.alert(message, title);
+	}
+	#if cpp
+    @:functionCode('
+        return std::thread::hardware_concurrency();
+    ')
+	#end
+    public static function getCPUThreadsCount():Int
+    {
+        return 1;
+	}
 }
