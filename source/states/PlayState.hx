@@ -552,7 +552,12 @@ class PlayState extends MusicBeatState
 				#end
 			}
 		#end
-			
+
+		addMobileControls();
+		mobileControls.instance.visible = true;
+		mobileControls.onButtonDown.add(onButtonPress);
+		mobileControls.onButtonUp.add(onButtonRelease);
+
 		var camPos:FlxPoint = FlxPoint.get(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
 		{
@@ -2759,7 +2764,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if ((controls.PAUSE #if android || FlxG.android.justReleased.BACK #end) && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnScripts('onPause', null, true);
 			if(ret != LuaUtils.Function_Stop) {
@@ -3696,6 +3701,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		mobileControls.instance.visible = #if !android touchPad.visible = #end false;
 		timeBar.visible = false;
 		clockIndicator.visible = false;
 		clockIndicator2.visible = false;
