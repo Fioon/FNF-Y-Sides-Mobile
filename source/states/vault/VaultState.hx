@@ -289,6 +289,9 @@ class VaultState extends MusicBeatState
         FlxTween.tween(dialogueBoxContinueSprite, {x: dialogueBoxContinueSprite.x - 15}, 0.92, {ease: FlxEase.cubeInOut, type: PINGPONG});
 
         initTransition();
+		#if android
+		addTouchPad('UP_DOWN', 'A_B');
+		#end
 
         // handle spawn times
         new FlxTimer().start(16, function(tmr:FlxTimer)
@@ -965,8 +968,10 @@ class VaultState extends MusicBeatState
 
     public static var blurShaderTween:FlxTween;
     override function closeSubState()
-    {
+    {		
         super.closeSubState();
+		removeTouchPad();
+		addTouchPad('UP_DOWN', 'A_B');
 
         if(isOnCollectionables)
         {
