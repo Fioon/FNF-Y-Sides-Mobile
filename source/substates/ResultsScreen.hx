@@ -241,6 +241,7 @@ class ResultsScreen extends MusicBeatSubstate
         ratingAnimData();
         bfAnimChoose();
         initTransition();
+		addTouchPad('NONE', 'A');
         //startBfAnim();
 
         new FlxTimer().start(2, (_) -> {
