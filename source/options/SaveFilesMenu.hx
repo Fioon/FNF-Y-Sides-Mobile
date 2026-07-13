@@ -176,6 +176,7 @@ class SaveFilesMenu extends MusicBeatState
 
         blurFilter = new ShaderFilter(blurShader);
         FlxG.camera.filters = [blurFilter];
+		addTouchPad('NONE', 'E');
     }
 
     var curSelected:Int = 0;
@@ -183,7 +184,7 @@ class SaveFilesMenu extends MusicBeatState
     {
         super.update(elapsed);
 
-        if (FlxG.keys.justPressed.ESCAPE)
+        if (touchPad.buttonE.justPressed || FlxG.keys.justPressed.ESCAPE)
         {
             if(!canInteract) return;
             comingFromSaveFilesMenu = true;
