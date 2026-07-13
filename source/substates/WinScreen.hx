@@ -228,6 +228,8 @@ class WinScreen extends MusicBeatSubstate
         blackScreen = new FlxSprite().makeGraphic(1280, 720, 0xFF000000);
         blackScreen.alpha = 0;
         add(blackScreen);
+
+		addTouchPad('NONE', 'A');
     }
 
     override function update(elapsed:Float)
