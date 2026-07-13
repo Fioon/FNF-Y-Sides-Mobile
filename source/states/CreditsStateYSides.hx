@@ -329,6 +329,9 @@ class CreditsStateYSides extends MusicBeatState
 		FlxG.sound.list.add(callMeAGoodBOOOY);
 		callMeAGoodBOOOY.volume = 0;
 		callMeAGoodBOOOY.play();
+		#if android
+		addTouchPad('LEFT_RIGHT', 'B');
+		#end
 	}
 
 	var psychScale:Float = 1;
