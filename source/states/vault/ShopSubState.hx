@@ -232,6 +232,7 @@ class ShopSubState extends MusicBeatSubstate
         changeSelection();
 		#if android
 		addTouchPad('UP_DOWN', 'A_B');
+  #end
     }
 
     function initTransition()
