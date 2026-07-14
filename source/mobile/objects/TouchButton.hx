@@ -26,6 +26,7 @@ import flixel.input.FlxInput;
 import flixel.input.FlxPointer;
 import flixel.input.IFlxInput;
 import flixel.util.FlxDestroyUtil.IFlxDestroyable;
+import mobile.input.MobileInputManager;
 #if mac
 import flixel.input.mouse.FlxMouseButton;
 #end
