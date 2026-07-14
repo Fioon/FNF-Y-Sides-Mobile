@@ -2,6 +2,9 @@ package backend;
 
 import flixel.FlxState;
 import backend.PsychCamera;
+import flixel.FlxCamera;
+import mobile.objects.TouchPad;
+import mobile.objects.IMobileControls;
 
 class MusicBeatState extends FlxState
 {
