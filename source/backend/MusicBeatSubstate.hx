@@ -1,6 +1,9 @@
 package backend;
 
 import flixel.FlxSubState;
+import flixel.FlxCamera;
+import mobile.objects.TouchPad;
+import mobile.objects.IMobileControls;
 
 class MusicBeatSubstate extends FlxSubState
 {
