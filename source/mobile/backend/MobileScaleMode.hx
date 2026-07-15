@@ -23,7 +23,8 @@
 package mobile.backend;
 
 import flixel.system.scaleModes.BaseScaleMode;
-
+import backend.ClientPrefs;
+import flixel.FlxG;
 /**
  * ...
  * @author: Karim Akra
